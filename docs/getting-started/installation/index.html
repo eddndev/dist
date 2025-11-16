@@ -1,0 +1,762 @@
+<!DOCTYPE html><html lang="en" class="h-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Installation guide, REPL usage, and your first Achronyme program"><meta name="generator" content="Astro v5.15.8"><link rel="canonical" href="http://localhost:4321/docs/getting-started/installation/"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Getting Started with Achronyme | Achronyme</title><!-- Preload fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="/_astro/_slug_.CyadsZWk.css">
+<style>[data-astro-cid-k5z7lb4y][x-cloak]{display:none!important}
+</style><script type="module" src="/_astro/page.BE54bNVT.js"></script></head> <body class="h-full bg-slate-950" x-data>  <div class="min-h-full"> <header class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur supports-[backdrop-filter]:bg-slate-950/80"> <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex h-16 items-center justify-between"> <!-- Logo --> <div class="flex items-center"> <a href="/" class="flex items-center space-x-3"> <picture> <source srcset="/logo.avif" type="image/avif"> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';"> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden"> <span class="text-white font-bold text-sm">A</span> </div> <span class="font-display text-xl font-semibold text-white">
+Achronyme
+</span> </a> </div> <!-- Center navigation --> <nav class="hidden md:flex items-center justify-center flex-1 space-x-6"> <a href="/docs" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">
+Documentation
+</a> <a href="https://github.com/achronyme/achronyme-core" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-slate-400 hover:text-white transition-colors inline-flex items-center"> <svg class="mr-1.5 h-4 w-4" fill="currentColor" viewBox="0 0 24 24"> <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path> </svg>
+GitHub
+</a> </nav> <!-- Right side - Changelog link + Mobile menu button --> <div class="flex items-center space-x-4"> <a href="/changelog" class="hidden md:block text-sm font-medium text-slate-400 hover:text-white transition-colors">
+Changelog
+</a> <button type="button" class="md:hidden rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.toggle()"> <span class="sr-only">Open menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path> </svg> </button> </div> </div> </div> </header> <div class="fixed inset-0 z-40 lg:hidden" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-cloak data-astro-cid-k5z7lb4y> <!-- Backdrop --> <div class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm" @click="$store.nav.close()" data-astro-cid-k5z7lb4y></div> <!-- Sidebar --> <div class="fixed inset-y-0 left-0 w-full max-w-xs bg-slate-900 shadow-xl" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full" data-astro-cid-k5z7lb4y> <div class="flex h-16 items-center justify-between px-6 border-b border-slate-800" data-astro-cid-k5z7lb4y> <a href="/" class="flex items-center space-x-2" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <picture data-astro-cid-k5z7lb4y> <source srcset="/logo.avif" type="image/avif" data-astro-cid-k5z7lb4y> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';" data-astro-cid-k5z7lb4y> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden" data-astro-cid-k5z7lb4y> <span class="text-white font-bold text-sm" data-astro-cid-k5z7lb4y>A</span> </div> <span class="font-display text-xl font-semibold text-white" data-astro-cid-k5z7lb4y>
+Achronyme
+</span> </a> <button type="button" class="rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <span class="sr-only" data-astro-cid-k5z7lb4y>Close menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-astro-cid-k5z7lb4y> <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" data-astro-cid-k5z7lb4y></path> </svg> </button> </div> <nav class="overflow-y-auto p-6 space-y-8" data-astro-cid-k5z7lb4y> <div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Getting Started </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/introduction" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Introduction </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/installation" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Installation </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/syntax-basics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Syntax Basics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Core Language </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/data-types" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Data Types </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/operators" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Operators </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/variables" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Variables </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/control-flow" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Control Flow </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Data Structures </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/arrays-tensors" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Arrays &amp; Tensors </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/indexing-slicing" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Indexing &amp; Slicing </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/records" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Records </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/strings" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Strings </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Functional Programming </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/higher-order-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Higher-Order Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/do-blocks" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Do Blocks </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/recursion" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Recursion </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Mathematical Computing </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/mathematical-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mathematical Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/linear-algebra" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Linear Algebra </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/complex-numbers" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Complex Numbers </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/numerical-analysis" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Numerical Analysis </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/statistics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Statistics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Specialized Modules </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/dsp" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> DSP </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/graph-theory" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Graph Theory </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/optimization" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Optimization </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Advanced Topics </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/best-practices" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Best Practices </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/examples" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Examples </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/performance" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Performance </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/mutability" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mutability </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/io-persistence" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div>  <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex"> <!-- Left sidebar (navigation) --> <div class="hidden lg:flex lg:flex-shrink-0"> <div class="w-64 py-8 pr-8 border-r border-slate-800"> <div class="sticky top-20"> <nav class="space-y-8"> <div> <h3 class="font-display text-sm font-semibold text-white"> Getting Started </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/getting-started/introduction" class="block text-sm transition-colors text-slate-400 hover:text-white"> Introduction </a> </li><li> <a href="/docs/getting-started/installation" class="block text-sm transition-colors text-slate-400 hover:text-white"> Installation </a> </li><li> <a href="/docs/getting-started/syntax-basics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Syntax Basics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Core Language </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/core-language/data-types" class="block text-sm transition-colors text-slate-400 hover:text-white"> Data Types </a> </li><li> <a href="/docs/core-language/operators" class="block text-sm transition-colors text-slate-400 hover:text-white"> Operators </a> </li><li> <a href="/docs/core-language/variables" class="block text-sm transition-colors text-slate-400 hover:text-white"> Variables </a> </li><li> <a href="/docs/core-language/functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Functions </a> </li><li> <a href="/docs/core-language/control-flow" class="block text-sm transition-colors text-slate-400 hover:text-white"> Control Flow </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Data Structures </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/data-structures/arrays-tensors" class="block text-sm transition-colors text-slate-400 hover:text-white"> Arrays &amp; Tensors </a> </li><li> <a href="/docs/data-structures/indexing-slicing" class="block text-sm transition-colors text-slate-400 hover:text-white"> Indexing &amp; Slicing </a> </li><li> <a href="/docs/data-structures/records" class="block text-sm transition-colors text-slate-400 hover:text-white"> Records </a> </li><li> <a href="/docs/data-structures/strings" class="block text-sm transition-colors text-slate-400 hover:text-white"> Strings </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Functional Programming </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/functional-programming/higher-order-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Higher-Order Functions </a> </li><li> <a href="/docs/functional-programming/do-blocks" class="block text-sm transition-colors text-slate-400 hover:text-white"> Do Blocks </a> </li><li> <a href="/docs/functional-programming/recursion" class="block text-sm transition-colors text-slate-400 hover:text-white"> Recursion </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Mathematical Computing </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/mathematical-computing/mathematical-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mathematical Functions </a> </li><li> <a href="/docs/mathematical-computing/linear-algebra" class="block text-sm transition-colors text-slate-400 hover:text-white"> Linear Algebra </a> </li><li> <a href="/docs/mathematical-computing/complex-numbers" class="block text-sm transition-colors text-slate-400 hover:text-white"> Complex Numbers </a> </li><li> <a href="/docs/mathematical-computing/numerical-analysis" class="block text-sm transition-colors text-slate-400 hover:text-white"> Numerical Analysis </a> </li><li> <a href="/docs/mathematical-computing/statistics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Statistics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Specialized Modules </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/specialized-modules/dsp" class="block text-sm transition-colors text-slate-400 hover:text-white"> DSP </a> </li><li> <a href="/docs/specialized-modules/graph-theory" class="block text-sm transition-colors text-slate-400 hover:text-white"> Graph Theory </a> </li><li> <a href="/docs/specialized-modules/optimization" class="block text-sm transition-colors text-slate-400 hover:text-white"> Optimization </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Advanced Topics </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/advanced-topics/best-practices" class="block text-sm transition-colors text-slate-400 hover:text-white"> Best Practices </a> </li><li> <a href="/docs/advanced-topics/examples" class="block text-sm transition-colors text-slate-400 hover:text-white"> Examples </a> </li><li> <a href="/docs/advanced-topics/performance" class="block text-sm transition-colors text-slate-400 hover:text-white"> Performance </a> </li><li> <a href="/docs/advanced-topics/mutability" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mutability </a> </li><li> <a href="/docs/advanced-topics/io-persistence" class="block text-sm transition-colors text-slate-400 hover:text-white"> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div> </div> <!-- Main content --> <div class="min-w-0 flex-1 py-8 lg:pl-8"> <article class="prose prose-invert max-w-none"> <h1 class="font-display text-4xl font-bold tracking-tight text-white"> Getting Started with Achronyme </h1> <p class="lead text-xl text-slate-400"> Installation guide, REPL usage, and your first Achronyme program </p>  <p>This guide will help you get started with the Achronyme programming language.</p>
+<h2 id="what-youll-learn">What You’ll Learn</h2>
+<ul>
+<li>How to run Achronyme programs</li>
+<li>Using the interactive REPL</li>
+<li>Your first Achronyme program</li>
+<li>Basic workflow</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Rust toolchain installed (for building from source)</li>
+<li>Basic understanding of programming concepts</li>
+<li>Familiarity with mathematical notation is helpful but not required</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<h3 id="building-from-source">Building from Source</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Clone the repository</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> clone</span><span style="color:#9ECBFF"> https://github.com/anthropics/achronyme-core.git</span></span>
+<span class="line"><span style="color:#79B8FF">cd</span><span style="color:#9ECBFF"> achronyme-core</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Build the project</span></span>
+<span class="line"><span style="color:#B392F0">cargo</span><span style="color:#9ECBFF"> build</span><span style="color:#79B8FF"> --release</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># The REPL will be available in target/release/</span></span></code></pre>
+<h2 id="running-achronyme">Running Achronyme</h2>
+<h3 id="interactive-repl">Interactive REPL</h3>
+<p>The easiest way to get started is with the interactive REPL (Read-Eval-Print Loop):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">cargo</span><span style="color:#9ECBFF"> run</span><span style="color:#79B8FF"> --bin</span><span style="color:#9ECBFF"> achronyme-repl</span></span></code></pre>
+<p>You’ll see a prompt like this:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Achronyme REPL v0.1.0</span></span>
+<span class="line"><span>Type 'exit' or 'quit' to exit, 'help' for help, 'clear' to clear screen</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>ach[1]></span></span></code></pre>
+<h3 id="running-soc-files">Running .soc Files</h3>
+<p>To run a <code>.soc</code> file:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">cargo</span><span style="color:#9ECBFF"> run</span><span style="color:#79B8FF"> --bin</span><span style="color:#9ECBFF"> achronyme-repl</span><span style="color:#F97583"> &#x3C;</span><span style="color:#9ECBFF"> myprogram.soc</span></span></code></pre>
+<p>Or if you have a runner script:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">./run_soc</span><span style="color:#9ECBFF"> myprogram.soc</span></span></code></pre>
+<h2 id="your-first-program">Your First Program</h2>
+<h3 id="hello-world-the-mathematical-way">Hello, World! (The Mathematical Way)</h3>
+<p>In the REPL, type:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#9ECBFF">"Hello, World!"</span></span></code></pre>
+<p>Output:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>"Hello, World!"</span></span></code></pre>
+<h3 id="basic-arithmetic">Basic Arithmetic</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#79B8FF"> 2</span><span style="color:#F97583"> +</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"><span style="color:#79B8FF">4</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#79B8FF"> 3.14</span><span style="color:#F97583"> *</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"><span style="color:#79B8FF">6.28</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#79B8FF"> 2</span><span style="color:#F97583">^</span><span style="color:#79B8FF">10</span></span>
+<span class="line"><span style="color:#79B8FF">1024</span></span></code></pre>
+<h3 id="using-variables">Using Variables</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#F97583"> let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 42</span></span>
+<span class="line"><span style="color:#79B8FF">42</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"><span style="color:#79B8FF">84</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#F97583"> let</span><span style="color:#E1E4E8"> y </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 8</span></span>
+<span class="line"><span style="color:#79B8FF">50</span></span></code></pre>
+<h3 id="defining-functions">Defining Functions</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">7</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#F97583"> let</span><span style="color:#B392F0"> square</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#B392F0">Function</span><span style="color:#E1E4E8">(UserDefined)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#B392F0"> square</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">25</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">9</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#F97583"> let</span><span style="color:#B392F0"> add</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">a</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">b</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> b</span></span>
+<span class="line"><span style="color:#B392F0">Function</span><span style="color:#E1E4E8">(UserDefined)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#B392F0"> add</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">20</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">30</span></span></code></pre>
+<h3 id="working-with-arrays">Working with Arrays</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">11</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#F97583"> let</span><span style="color:#E1E4E8"> numbers </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">12</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#F97583"> let</span><span style="color:#E1E4E8"> doubled </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">, numbers)</span></span>
+<span class="line"><span style="color:#E1E4E8">[</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">13</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#B392F0"> sum</span><span style="color:#E1E4E8">(numbers)</span></span>
+<span class="line"><span style="color:#79B8FF">15</span></span></code></pre>
+<h2 id="repl-commands">REPL Commands</h2>
+<p>The REPL supports several special commands:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Command</th><th>Description</th></tr></thead><tbody><tr><td><code>help</code></td><td>Show help message</td></tr><tr><td><code>exit</code> or <code>quit</code></td><td>Exit the REPL</td></tr><tr><td><code>clear</code></td><td>Clear the screen</td></tr></tbody></table>
+<h2 id="creating-your-first-soc-file">Creating Your First .soc File</h2>
+<p>Create a file called <code>first.soc</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// first.soc - My first Achronyme program</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Define a factorial function using rec</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> factorial</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> n</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">&#x3C;=</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, n </span><span style="color:#F97583">*</span><span style="color:#B392F0"> rec</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Calculate some factorials</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> f5 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> factorial</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> f10 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> factorial</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Display results</span></span>
+<span class="line"><span style="color:#E1E4E8">f5</span></span>
+<span class="line"><span style="color:#E1E4E8">f10</span></span></code></pre>
+<p>Run it:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">cargo</span><span style="color:#9ECBFF"> run</span><span style="color:#79B8FF"> --bin</span><span style="color:#9ECBFF"> achronyme-repl</span><span style="color:#F97583"> &#x3C;</span><span style="color:#9ECBFF"> first.soc</span></span></code></pre>
+<h2 id="comments">Comments</h2>
+<p>Achronyme supports single-line comments:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// This is a comment</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 42</span><span style="color:#6A737D">  // Comments can go at the end of lines</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Multi-line comments are done with multiple // lines</span></span>
+<span class="line"><span style="color:#6A737D">// like this</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> y </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 10</span></span></code></pre>
+<h2 id="basic-workflow">Basic Workflow</h2>
+<h3 id="1-experiment-in-the-repl">1. Experiment in the REPL</h3>
+<p>Use the REPL for quick calculations and testing:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#B392F0"> sin</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3.14159</span><span style="color:#F97583"> /</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">0.9999999999991198</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#F97583"> let</span><span style="color:#E1E4E8"> data </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#B392F0"> mean</span><span style="color:#E1E4E8">(data)</span></span>
+<span class="line"><span style="color:#79B8FF">3</span></span></code></pre>
+<h3 id="2-write-soc-files-for-larger-programs">2. Write .soc Files for Larger Programs</h3>
+<p>For more complex programs, write <code>.soc</code> files:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// analysis.soc</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> data </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">23</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">45</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">67</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">12</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">89</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">34</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">56</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> stats </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    count: </span><span style="color:#B392F0">length</span><span style="color:#E1E4E8">(data),</span></span>
+<span class="line"><span style="color:#E1E4E8">    total: </span><span style="color:#B392F0">sum</span><span style="color:#E1E4E8">(data),</span></span>
+<span class="line"><span style="color:#E1E4E8">    average: </span><span style="color:#B392F0">mean</span><span style="color:#E1E4E8">(data),</span></span>
+<span class="line"><span style="color:#E1E4E8">    spread: </span><span style="color:#B392F0">std</span><span style="color:#E1E4E8">(data)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">stats</span></span></code></pre>
+<h3 id="3-load-and-test-functions">3. Load and Test Functions</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// functions.soc</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> fibonacci</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> n</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">&#x3C;=</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">, n, </span><span style="color:#B392F0">rec</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">+</span><span style="color:#B392F0"> rec</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Test the function</span></span>
+<span class="line"><span style="color:#B392F0">fibonacci</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<h2 id="common-patterns">Common Patterns</h2>
+<h3 id="mathematical-computations">Mathematical Computations</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Calculate area under curve</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> f</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> area </span><span style="color:#F97583">=</span><span style="color:#B392F0"> integral</span><span style="color:#E1E4E8">(f, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Find derivative</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> df </span><span style="color:#F97583">=</span><span style="color:#B392F0"> diff</span><span style="color:#E1E4E8">(f)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> slope_at_5 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> df</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<h3 id="data-processing">Data Processing</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Load and process data</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> raw_data </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1.2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3.4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2.1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4.5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3.2</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Normalize (z-score)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> mu </span><span style="color:#F97583">=</span><span style="color:#B392F0"> mean</span><span style="color:#E1E4E8">(raw_data)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> sigma </span><span style="color:#F97583">=</span><span style="color:#B392F0"> std</span><span style="color:#E1E4E8">(raw_data)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> normalized </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> (x </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> mu) </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> sigma, raw_data)</span></span></code></pre>
+<h3 id="signal-processing">Signal Processing</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Generate a signal</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> t </span><span style="color:#F97583">=</span><span style="color:#B392F0"> linspace</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> sin</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#F97583"> *</span><span style="color:#79B8FF"> 3.14159</span><span style="color:#F97583"> *</span><span style="color:#79B8FF"> 5</span><span style="color:#F97583"> *</span><span style="color:#E1E4E8"> x), t)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Apply FFT</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> spectrum </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft</span><span style="color:#E1E4E8">(signal)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> magnitude </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_mag</span><span style="color:#E1E4E8">(signal)</span></span></code></pre>
+<h2 id="tips-for-beginners">Tips for Beginners</h2>
+<h3 id="1-use-the-repl-for-learning">1. Use the REPL for Learning</h3>
+<p>The REPL provides immediate feedback. Try things out!</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#F97583"> let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 10</span></span>
+<span class="line"><span style="color:#79B8FF">10</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#B392F0"> describe</span><span style="color:#E1E4E8">(x)</span></span>
+<span class="line"><span style="color:#B392F0">Number</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">10</span></span></code></pre>
+<h3 id="2-functions-are-values">2. Functions are Values</h3>
+<p>Don’t forget that functions are first-class values:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#F97583"> let</span><span style="color:#E1E4E8"> operations </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">    (</span><span style="color:#FFAB70">a</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">b</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> b,</span></span>
+<span class="line"><span style="color:#E1E4E8">    (</span><span style="color:#FFAB70">a</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">b</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> b,</span></span>
+<span class="line"><span style="color:#E1E4E8">    (</span><span style="color:#FFAB70">a</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">b</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> a</span><span style="color:#F97583">^</span><span style="color:#E1E4E8">b</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#E1E4E8"> operations[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">](</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">5</span></span></code></pre>
+<h3 id="3-explore-built-in-functions">3. Explore Built-in Functions</h3>
+<p>Use <code>describe</code> to learn about values:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#B392F0"> describe</span><span style="color:#E1E4E8">(sin)</span></span>
+<span class="line"><span style="color:#B392F0">Function</span><span style="color:#E1E4E8">(Builtin): sin</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#B392F0"> describe</span><span style="color:#E1E4E8">([</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#B392F0">Tensor</span><span style="color:#E1E4E8">(1</span><span style="color:#79B8FF">D</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#B392F0">  Shape</span><span style="color:#E1E4E8">: [</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#B392F0">  Data</span><span style="color:#E1E4E8">: [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span></code></pre>
+<h2 id="next-steps">Next Steps</h2>
+<p>Now that you can run Achronyme programs, continue to:</p>
+<ul>
+<li><a href="syntax-basics.md">Syntax Basics</a> - Learn the fundamental syntax</li>
+<li><a href="../core-language/data-types.md">Data Types</a> - Understand Achronyme’s type system</li>
+<li><a href="../core-language/functions.md">Functions</a> - Deep dive into functions and lambdas</li>
+<li><a href="../advanced-topics/examples.md">Examples</a> - See complete example programs</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="undefined-variable-or-constant">”Undefined variable or constant”</h3>
+<p>Make sure the function or variable is defined:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#B392F0"> myFunction</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#B392F0">Error</span><span style="color:#E1E4E8">: Undefined variable or </span><span style="color:#B392F0">constant</span><span style="color:#E1E4E8">: myFunction</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Define it first:</span></span>
+<span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#F97583"> let</span><span style="color:#B392F0"> myFunction</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"><span style="color:#B392F0">Function</span><span style="color:#E1E4E8">(UserDefined)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">ach[</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">></span><span style="color:#B392F0"> myFunction</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">20</span></span></code></pre>
+<h3 id="parse-error">“Parse error”</h3>
+<p>Check your syntax. Common issues:</p>
+<ul>
+<li>Missing parentheses in function calls</li>
+<li>Incorrect lambda syntax (should be <code>=></code> not <code>-></code>)</li>
+<li>Mismatched brackets/braces</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Wrong:</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> f </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Correct:</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> f</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span></span></code></pre>
+<h3 id="performance-issues">Performance Issues</h3>
+<p>If recursion is slow, make sure you’re using proper tail recursion or iterative approaches. See <a href="../functional-programming/recursion.md">Recursion Patterns</a>.</p>
+<hr>
+<p><strong>Next</strong>: <a href="syntax-basics.md">Syntax Basics</a></p>  </article> <div class="mt-12 border-t border-slate-800 pt-6"> <nav class="flex items-center justify-between"> <div></div> <div></div> </nav> </div> </div> <!-- Right sidebar (table of contents) --> <div class="hidden xl:flex xl:flex-shrink-0"> <div class="w-64 py-8 pl-8 border-l border-slate-800"> <div class="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto"> <div class="space-y-4"><h4 class="font-display text-sm font-semibold text-white">
+On this page
+</h4><nav><ul class="space-y-2.5 text-sm"><li class><a href="#what-youll-learn" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">What You’ll Learn</a></li><li class><a href="#prerequisites" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Prerequisites</a></li><li class><a href="#installation" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Installation</a></li><li class="ml-4"><a href="#building-from-source" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Building from Source</a></li><li class><a href="#running-achronyme" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Running Achronyme</a></li><li class="ml-4"><a href="#interactive-repl" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Interactive REPL</a></li><li class="ml-4"><a href="#running-soc-files" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Running .soc Files</a></li><li class><a href="#your-first-program" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Your First Program</a></li><li class="ml-4"><a href="#hello-world-the-mathematical-way" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Hello, World! (The Mathematical Way)</a></li><li class="ml-4"><a href="#basic-arithmetic" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Basic Arithmetic</a></li><li class="ml-4"><a href="#using-variables" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Using Variables</a></li><li class="ml-4"><a href="#defining-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Defining Functions</a></li><li class="ml-4"><a href="#working-with-arrays" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Working with Arrays</a></li><li class><a href="#repl-commands" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">REPL Commands</a></li><li class><a href="#creating-your-first-soc-file" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Creating Your First .soc File</a></li><li class><a href="#comments" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Comments</a></li><li class><a href="#basic-workflow" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Basic Workflow</a></li><li class="ml-4"><a href="#1-experiment-in-the-repl" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">1. Experiment in the REPL</a></li><li class="ml-4"><a href="#2-write-soc-files-for-larger-programs" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">2. Write .soc Files for Larger Programs</a></li><li class="ml-4"><a href="#3-load-and-test-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">3. Load and Test Functions</a></li><li class><a href="#common-patterns" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Common Patterns</a></li><li class="ml-4"><a href="#mathematical-computations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Mathematical Computations</a></li><li class="ml-4"><a href="#data-processing" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Data Processing</a></li><li class="ml-4"><a href="#signal-processing" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Signal Processing</a></li><li class><a href="#tips-for-beginners" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Tips for Beginners</a></li><li class="ml-4"><a href="#1-use-the-repl-for-learning" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">1. Use the REPL for Learning</a></li><li class="ml-4"><a href="#2-functions-are-values" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">2. Functions are Values</a></li><li class="ml-4"><a href="#3-explore-built-in-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">3. Explore Built-in Functions</a></li><li class><a href="#next-steps" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Next Steps</a></li><li class><a href="#troubleshooting" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Troubleshooting</a></li><li class="ml-4"><a href="#undefined-variable-or-constant" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">”Undefined variable or constant”</a></li><li class="ml-4"><a href="#parse-error" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">“Parse error”</a></li><li class="ml-4"><a href="#performance-issues" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Performance Issues</a></li></ul></nav></div> </div> </div> </div> </div> </div> </div>  </body></html>

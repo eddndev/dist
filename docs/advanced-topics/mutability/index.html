@@ -1,0 +1,1199 @@
+<!DOCTYPE html><html lang="en" class="h-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Mutable variables with mut keyword, mutable record fields, self-reference in methods, closures with mutable captures, and best practices for controlled mutation"><meta name="generator" content="Astro v5.15.8"><link rel="canonical" href="http://localhost:4321/docs/advanced-topics/mutability/"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Mutability | Achronyme</title><!-- Preload fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="/_astro/_slug_.CyadsZWk.css">
+<style>[data-astro-cid-k5z7lb4y][x-cloak]{display:none!important}
+</style><script type="module" src="/_astro/page.BE54bNVT.js"></script></head> <body class="h-full bg-slate-950" x-data>  <div class="min-h-full"> <header class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur supports-[backdrop-filter]:bg-slate-950/80"> <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex h-16 items-center justify-between"> <!-- Logo --> <div class="flex items-center"> <a href="/" class="flex items-center space-x-3"> <picture> <source srcset="/logo.avif" type="image/avif"> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';"> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden"> <span class="text-white font-bold text-sm">A</span> </div> <span class="font-display text-xl font-semibold text-white">
+Achronyme
+</span> </a> </div> <!-- Center navigation --> <nav class="hidden md:flex items-center justify-center flex-1 space-x-6"> <a href="/docs" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">
+Documentation
+</a> <a href="https://github.com/achronyme/achronyme-core" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-slate-400 hover:text-white transition-colors inline-flex items-center"> <svg class="mr-1.5 h-4 w-4" fill="currentColor" viewBox="0 0 24 24"> <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path> </svg>
+GitHub
+</a> </nav> <!-- Right side - Changelog link + Mobile menu button --> <div class="flex items-center space-x-4"> <a href="/changelog" class="hidden md:block text-sm font-medium text-slate-400 hover:text-white transition-colors">
+Changelog
+</a> <button type="button" class="md:hidden rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.toggle()"> <span class="sr-only">Open menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path> </svg> </button> </div> </div> </div> </header> <div class="fixed inset-0 z-40 lg:hidden" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-cloak data-astro-cid-k5z7lb4y> <!-- Backdrop --> <div class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm" @click="$store.nav.close()" data-astro-cid-k5z7lb4y></div> <!-- Sidebar --> <div class="fixed inset-y-0 left-0 w-full max-w-xs bg-slate-900 shadow-xl" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full" data-astro-cid-k5z7lb4y> <div class="flex h-16 items-center justify-between px-6 border-b border-slate-800" data-astro-cid-k5z7lb4y> <a href="/" class="flex items-center space-x-2" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <picture data-astro-cid-k5z7lb4y> <source srcset="/logo.avif" type="image/avif" data-astro-cid-k5z7lb4y> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';" data-astro-cid-k5z7lb4y> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden" data-astro-cid-k5z7lb4y> <span class="text-white font-bold text-sm" data-astro-cid-k5z7lb4y>A</span> </div> <span class="font-display text-xl font-semibold text-white" data-astro-cid-k5z7lb4y>
+Achronyme
+</span> </a> <button type="button" class="rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <span class="sr-only" data-astro-cid-k5z7lb4y>Close menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-astro-cid-k5z7lb4y> <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" data-astro-cid-k5z7lb4y></path> </svg> </button> </div> <nav class="overflow-y-auto p-6 space-y-8" data-astro-cid-k5z7lb4y> <div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Getting Started </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/introduction" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Introduction </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/installation" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Installation </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/syntax-basics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Syntax Basics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Core Language </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/data-types" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Data Types </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/operators" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Operators </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/variables" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Variables </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/control-flow" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Control Flow </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Data Structures </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/arrays-tensors" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Arrays &amp; Tensors </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/indexing-slicing" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Indexing &amp; Slicing </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/records" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Records </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/strings" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Strings </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Functional Programming </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/higher-order-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Higher-Order Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/do-blocks" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Do Blocks </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/recursion" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Recursion </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Mathematical Computing </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/mathematical-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mathematical Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/linear-algebra" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Linear Algebra </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/complex-numbers" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Complex Numbers </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/numerical-analysis" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Numerical Analysis </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/statistics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Statistics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Specialized Modules </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/dsp" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> DSP </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/graph-theory" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Graph Theory </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/optimization" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Optimization </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Advanced Topics </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/best-practices" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Best Practices </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/examples" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Examples </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/performance" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Performance </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/mutability" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mutability </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/io-persistence" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div>  <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex"> <!-- Left sidebar (navigation) --> <div class="hidden lg:flex lg:flex-shrink-0"> <div class="w-64 py-8 pr-8 border-r border-slate-800"> <div class="sticky top-20"> <nav class="space-y-8"> <div> <h3 class="font-display text-sm font-semibold text-white"> Getting Started </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/getting-started/introduction" class="block text-sm transition-colors text-slate-400 hover:text-white"> Introduction </a> </li><li> <a href="/docs/getting-started/installation" class="block text-sm transition-colors text-slate-400 hover:text-white"> Installation </a> </li><li> <a href="/docs/getting-started/syntax-basics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Syntax Basics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Core Language </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/core-language/data-types" class="block text-sm transition-colors text-slate-400 hover:text-white"> Data Types </a> </li><li> <a href="/docs/core-language/operators" class="block text-sm transition-colors text-slate-400 hover:text-white"> Operators </a> </li><li> <a href="/docs/core-language/variables" class="block text-sm transition-colors text-slate-400 hover:text-white"> Variables </a> </li><li> <a href="/docs/core-language/functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Functions </a> </li><li> <a href="/docs/core-language/control-flow" class="block text-sm transition-colors text-slate-400 hover:text-white"> Control Flow </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Data Structures </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/data-structures/arrays-tensors" class="block text-sm transition-colors text-slate-400 hover:text-white"> Arrays &amp; Tensors </a> </li><li> <a href="/docs/data-structures/indexing-slicing" class="block text-sm transition-colors text-slate-400 hover:text-white"> Indexing &amp; Slicing </a> </li><li> <a href="/docs/data-structures/records" class="block text-sm transition-colors text-slate-400 hover:text-white"> Records </a> </li><li> <a href="/docs/data-structures/strings" class="block text-sm transition-colors text-slate-400 hover:text-white"> Strings </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Functional Programming </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/functional-programming/higher-order-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Higher-Order Functions </a> </li><li> <a href="/docs/functional-programming/do-blocks" class="block text-sm transition-colors text-slate-400 hover:text-white"> Do Blocks </a> </li><li> <a href="/docs/functional-programming/recursion" class="block text-sm transition-colors text-slate-400 hover:text-white"> Recursion </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Mathematical Computing </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/mathematical-computing/mathematical-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mathematical Functions </a> </li><li> <a href="/docs/mathematical-computing/linear-algebra" class="block text-sm transition-colors text-slate-400 hover:text-white"> Linear Algebra </a> </li><li> <a href="/docs/mathematical-computing/complex-numbers" class="block text-sm transition-colors text-slate-400 hover:text-white"> Complex Numbers </a> </li><li> <a href="/docs/mathematical-computing/numerical-analysis" class="block text-sm transition-colors text-slate-400 hover:text-white"> Numerical Analysis </a> </li><li> <a href="/docs/mathematical-computing/statistics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Statistics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Specialized Modules </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/specialized-modules/dsp" class="block text-sm transition-colors text-slate-400 hover:text-white"> DSP </a> </li><li> <a href="/docs/specialized-modules/graph-theory" class="block text-sm transition-colors text-slate-400 hover:text-white"> Graph Theory </a> </li><li> <a href="/docs/specialized-modules/optimization" class="block text-sm transition-colors text-slate-400 hover:text-white"> Optimization </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Advanced Topics </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/advanced-topics/best-practices" class="block text-sm transition-colors text-slate-400 hover:text-white"> Best Practices </a> </li><li> <a href="/docs/advanced-topics/examples" class="block text-sm transition-colors text-slate-400 hover:text-white"> Examples </a> </li><li> <a href="/docs/advanced-topics/performance" class="block text-sm transition-colors text-slate-400 hover:text-white"> Performance </a> </li><li> <a href="/docs/advanced-topics/mutability" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mutability </a> </li><li> <a href="/docs/advanced-topics/io-persistence" class="block text-sm transition-colors text-slate-400 hover:text-white"> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div> </div> <!-- Main content --> <div class="min-w-0 flex-1 py-8 lg:pl-8"> <article class="prose prose-invert max-w-none"> <h1 class="font-display text-4xl font-bold tracking-tight text-white"> Mutability </h1> <p class="lead text-xl text-slate-400"> Mutable variables with mut keyword, mutable record fields, self-reference in methods, closures with mutable captures, and best practices for controlled mutation </p>  <p>While Achronyme follows an <strong>immutable-by-default</strong> philosophy, it provides controlled mutability through the <code>mut</code> keyword for scenarios where mutable state is more natural or efficient.</p>
+<h2 id="why-mutability">Why Mutability?</h2>
+<p>Immutability is powerful for functional programming, but some use cases benefit from mutation:</p>
+<ul>
+<li><strong>Stateful objects</strong>: Counters, accumulators, configuration objects</li>
+<li><strong>Performance</strong>: Avoiding unnecessary copies in hot loops</li>
+<li><strong>Natural modeling</strong>: Some algorithms are clearer with mutable state</li>
+<li><strong>Records as objects</strong>: Object-oriented patterns with encapsulated state</li>
+</ul>
+<h2 id="mutable-variables">Mutable Variables</h2>
+<h3 id="declaration">Declaration</h3>
+<p>Use <code>mut</code> instead of <code>let</code> to declare a mutable variable:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Immutable (default)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 10</span></span>
+<span class="line"><span style="color:#6A737D">// x = 20  // ERROR: Cannot reassign immutable variable</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Mutable</span></span>
+<span class="line"><span style="color:#E1E4E8">mut counter </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#E1E4E8">counter </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> counter </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#6A737D">  // OK: counter is now 1</span></span>
+<span class="line"><span style="color:#E1E4E8">counter </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 5</span><span style="color:#6A737D">            // OK: counter is now 5</span></span></code></pre>
+<h3 id="reassignment">Reassignment</h3>
+<p>Once declared with <code>mut</code>, a variable can be reassigned to any value:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">mut total </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#E1E4E8">total </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> total </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 10</span></span>
+<span class="line"><span style="color:#E1E4E8">total </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> total </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 20</span></span>
+<span class="line"><span style="color:#E1E4E8">total  </span><span style="color:#6A737D">// Returns: 30</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Can reassign to different types (dynamic typing)</span></span>
+<span class="line"><span style="color:#E1E4E8">mut x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 10</span></span>
+<span class="line"><span style="color:#E1E4E8">x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 20</span><span style="color:#6A737D">        // Number to Number</span></span>
+<span class="line"><span style="color:#E1E4E8">x </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "text"</span><span style="color:#6A737D">    // Number to String - OK</span></span>
+<span class="line"><span style="color:#E1E4E8">x </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">] </span><span style="color:#6A737D">// String to Array - OK</span></span>
+<span class="line"><span style="color:#B392F0">x</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#79B8FF"> 42</span><span style="color:#6A737D">  // Array to Function - OK</span></span></code></pre>
+<p><strong>Note</strong>: Achronyme uses dynamic typing. While you <em>can</em> change types, it’s the programmer’s responsibility to maintain type consistency for code clarity and correctness.</p>
+<h2 id="mutable-record-fields">Mutable Record Fields</h2>
+<p>Records can have a mix of mutable and immutable fields:</p>
+<h3 id="syntax">Syntax</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> config </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut valor: </span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">,        </span><span style="color:#6A737D">// Mutable field</span></span>
+<span class="line"><span style="color:#E1E4E8">    inmutable: </span><span style="color:#79B8FF">20</span><span style="color:#E1E4E8">,        </span><span style="color:#6A737D">// Immutable field</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut debug: </span><span style="color:#79B8FF">true</span><span style="color:#6A737D">       // Mutable field</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="field-assignment">Field Assignment</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Mutable fields can be reassigned</span></span>
+<span class="line"><span style="color:#E1E4E8">config.valor </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 30</span><span style="color:#6A737D">      // OK</span></span>
+<span class="line"><span style="color:#E1E4E8">config.debug </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> false</span><span style="color:#6A737D">   // OK</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Immutable fields cannot</span></span>
+<span class="line"><span style="color:#6A737D">// config.inmutable = 25  // ERROR: Cannot assign to immutable field</span></span></code></pre>
+<h3 id="complete-example">Complete Example</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> settings </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">    // Immutable configuration</span></span>
+<span class="line"><span style="color:#E1E4E8">    appName: </span><span style="color:#9ECBFF">"Calculator"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    version: </span><span style="color:#9ECBFF">"1.0"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // Mutable state</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut windowWidth: </span><span style="color:#79B8FF">800</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut windowHeight: </span><span style="color:#79B8FF">600</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut darkMode: </span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // Methods</span></span>
+<span class="line"><span style="color:#B392F0">    toggleDarkMode</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">        self.darkMode </span><span style="color:#F97583">=</span><span style="color:#F97583"> !</span><span style="color:#E1E4E8">self.darkMode</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    resize</span><span style="color:#E1E4E8">: (</span><span style="color:#FFAB70">w</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">h</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">        self.windowWidth </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> w</span></span>
+<span class="line"><span style="color:#E1E4E8">        self.windowHeight </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> h</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Usage</span></span>
+<span class="line"><span style="color:#E1E4E8">settings.</span><span style="color:#B392F0">toggleDarkMode</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">settings.</span><span style="color:#B392F0">resize</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1024</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">768</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<h2 id="methods-with-self-reference">Methods with Self-Reference</h2>
+<p>Records can have methods that mutate their own fields using <code>self</code>:</p>
+<h3 id="basic-counter">Basic Counter</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> contador </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut valor: </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    incrementar</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">        self.valor </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> self.valor </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    decrementar</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">        self.valor </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> self.valor </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    reset</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">        self.valor </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    obtener</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> self.valor</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Usage</span></span>
+<span class="line"><span style="color:#E1E4E8">contador.</span><span style="color:#B392F0">incrementar</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">contador.</span><span style="color:#B392F0">incrementar</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">contador.</span><span style="color:#B392F0">incrementar</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">contador.</span><span style="color:#B392F0">obtener</span><span style="color:#E1E4E8">()  </span><span style="color:#6A737D">// Returns: 3</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">contador.</span><span style="color:#B392F0">reset</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">contador.</span><span style="color:#B392F0">obtener</span><span style="color:#E1E4E8">()  </span><span style="color:#6A737D">// Returns: 0</span></span></code></pre>
+<h3 id="accumulator">Accumulator</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> acumulador </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut total: </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut count: </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    agregar</span><span style="color:#E1E4E8">: (</span><span style="color:#FFAB70">x</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">        self.total </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> self.total </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> x</span></span>
+<span class="line"><span style="color:#E1E4E8">        self.count </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> self.count </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    promedio</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#B392F0"> if</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">        self.count </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        self.total </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> self.count</span></span>
+<span class="line"><span style="color:#E1E4E8">    ),</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    reset</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">        self.total </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#E1E4E8">        self.count </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Usage</span></span>
+<span class="line"><span style="color:#E1E4E8">acumulador.</span><span style="color:#B392F0">agregar</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">acumulador.</span><span style="color:#B392F0">agregar</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">20</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">acumulador.</span><span style="color:#B392F0">agregar</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">30</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">acumulador.</span><span style="color:#B392F0">promedio</span><span style="color:#E1E4E8">()  </span><span style="color:#6A737D">// Returns: 20</span></span></code></pre>
+<h3 id="bank-account-example">Bank Account Example</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> cuenta </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    titular: </span><span style="color:#9ECBFF">"Alice"</span><span style="color:#E1E4E8">,          </span><span style="color:#6A737D">// Immutable</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut saldo: </span><span style="color:#79B8FF">1000</span><span style="color:#E1E4E8">,           </span><span style="color:#6A737D">// Mutable</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut transacciones: [],     </span><span style="color:#6A737D">// Mutable</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    depositar</span><span style="color:#E1E4E8">: (</span><span style="color:#FFAB70">monto</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">        self.saldo </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> self.saldo </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> monto</span></span>
+<span class="line"><span style="color:#E1E4E8">        self.transacciones </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">self.transacciones, {</span></span>
+<span class="line"><span style="color:#E1E4E8">            tipo: </span><span style="color:#9ECBFF">"deposito"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">            monto: monto</span></span>
+<span class="line"><span style="color:#E1E4E8">        }]</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    retirar</span><span style="color:#E1E4E8">: (</span><span style="color:#FFAB70">monto</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> if</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">        monto </span><span style="color:#F97583">></span><span style="color:#E1E4E8"> self.saldo,</span></span>
+<span class="line"><span style="color:#9ECBFF">        "Fondos insuficientes"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        do {</span></span>
+<span class="line"><span style="color:#E1E4E8">            self.saldo </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> self.saldo </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> monto</span></span>
+<span class="line"><span style="color:#E1E4E8">            self.transacciones </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">self.transacciones, {</span></span>
+<span class="line"><span style="color:#E1E4E8">                tipo: </span><span style="color:#9ECBFF">"retiro"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">                monto: monto</span></span>
+<span class="line"><span style="color:#E1E4E8">            }]</span></span>
+<span class="line"><span style="color:#9ECBFF">            "Retiro exitoso"</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">    ),</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    consultarSaldo: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> self.saldo</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Usage</span></span>
+<span class="line"><span style="color:#E1E4E8">cuenta.</span><span style="color:#B392F0">depositar</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">500</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">cuenta.</span><span style="color:#B392F0">consultarSaldo</span><span style="color:#E1E4E8">()  </span><span style="color:#6A737D">// Returns: 1500</span></span>
+<span class="line"><span style="color:#E1E4E8">cuenta.</span><span style="color:#B392F0">retirar</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">200</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">cuenta.</span><span style="color:#B392F0">consultarSaldo</span><span style="color:#E1E4E8">()  </span><span style="color:#6A737D">// Returns: 1300</span></span></code></pre>
+<h3 id="nested-configuration-example">Nested Configuration Example</h3>
+<p>Records can have deeply nested mutable state:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> application </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    name: </span><span style="color:#9ECBFF">"MyApp"</span><span style="color:#E1E4E8">,  </span><span style="color:#6A737D">// Immutable</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut settings: {</span></span>
+<span class="line"><span style="color:#E1E4E8">        mut theme: </span><span style="color:#9ECBFF">"dark"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        mut fontSize: </span><span style="color:#79B8FF">14</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        mut notifications: {</span></span>
+<span class="line"><span style="color:#E1E4E8">            mut email: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">            mut push: </span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">            mut sound: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // Methods that mutate nested state</span></span>
+<span class="line"><span style="color:#B392F0">    toggleTheme</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">        self.settings.theme </span><span style="color:#F97583">=</span><span style="color:#B392F0"> if</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">            self.settings.theme </span><span style="color:#F97583">==</span><span style="color:#9ECBFF"> "dark"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">            "light"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">            "dark"</span></span>
+<span class="line"><span style="color:#E1E4E8">        )</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    enableAllNotifications</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">        self.settings.notifications.email </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> true</span></span>
+<span class="line"><span style="color:#E1E4E8">        self.settings.notifications.push </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> true</span></span>
+<span class="line"><span style="color:#E1E4E8">        self.settings.notifications.sound </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> true</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    increaseFontSize</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">        self.settings.fontSize </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> self.settings.fontSize </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Usage - nested field assignment works!</span></span>
+<span class="line"><span style="color:#E1E4E8">application.settings.theme </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "light"</span></span>
+<span class="line"><span style="color:#E1E4E8">application.settings.notifications.push </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> true</span></span>
+<span class="line"><span style="color:#E1E4E8">application.</span><span style="color:#B392F0">toggleTheme</span><span style="color:#E1E4E8">()  </span><span style="color:#6A737D">// back to "dark"</span></span></code></pre>
+<h2 id="closures-and-mutable-captures">Closures and Mutable Captures</h2>
+<p>Lambdas can capture and mutate variables from outer scopes:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">mut counter </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> increment</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    counter </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> counter </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Each call mutates the captured variable</span></span>
+<span class="line"><span style="color:#B392F0">increment</span><span style="color:#E1E4E8">()  </span><span style="color:#6A737D">// counter = 1</span></span>
+<span class="line"><span style="color:#B392F0">increment</span><span style="color:#E1E4E8">()  </span><span style="color:#6A737D">// counter = 2</span></span>
+<span class="line"><span style="color:#B392F0">increment</span><span style="color:#E1E4E8">()  </span><span style="color:#6A737D">// counter = 3</span></span>
+<span class="line"><span style="color:#E1E4E8">counter      </span><span style="color:#6A737D">// Returns: 3</span></span></code></pre>
+<h3 id="factory-pattern">Factory Pattern</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> createCounter</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">initial</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut count </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> initial</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    {</span></span>
+<span class="line"><span style="color:#B392F0">        increment</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#F97583"> do</span><span style="color:#E1E4E8"> { count </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> count </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#B392F0">        decrement</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#F97583"> do</span><span style="color:#E1E4E8"> { count </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> count </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#B392F0">        get</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> count,</span></span>
+<span class="line"><span style="color:#B392F0">        reset</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#F97583"> do</span><span style="color:#E1E4E8"> { count </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> initial }</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Create independent counters</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> counter1 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> createCounter</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> counter2 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> createCounter</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">counter1.</span><span style="color:#B392F0">increment</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">counter1.</span><span style="color:#B392F0">increment</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">counter1.</span><span style="color:#B392F0">get</span><span style="color:#E1E4E8">()  </span><span style="color:#6A737D">// Returns: 2</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">counter2.</span><span style="color:#B392F0">increment</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">counter2.</span><span style="color:#B392F0">get</span><span style="color:#E1E4E8">()  </span><span style="color:#6A737D">// Returns: 101</span></span></code></pre>
+<h2 id="do-blocks-and-assignment">Do Blocks and Assignment</h2>
+<p>Assignments are statements, not expressions, so they require <code>do</code> blocks in certain contexts:</p>
+<h3 id="in-lambda-bodies">In Lambda Bodies</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ERROR: Assignment not allowed in expression context</span></span>
+<span class="line"><span style="color:#6A737D">// let f = () => x = 10</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Correct: Use do block</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> f</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 10</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="multiple-assignments">Multiple Assignments</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">mut x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#E1E4E8">mut y </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> update</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    x </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#E1E4E8">    y </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> y </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"><span style="color:#E1E4E8">    x + y  </span><span style="color:#6A737D">// Return value of do block</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">update</span><span style="color:#E1E4E8">()  </span><span style="color:#6A737D">// Returns: 3 (x=1, y=2)</span></span></code></pre>
+<h2 id="validation-and-restrictions">Validation and Restrictions</h2>
+<h3 id="lvalue-validation">Lvalue Validation</h3>
+<p>Only valid lvalues can be assignment targets:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">mut x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 10</span></span>
+<span class="line"><span style="color:#E1E4E8">x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 20</span><span style="color:#6A737D">           // OK: Variable</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> config </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> { mut valor: </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#E1E4E8">config.valor </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 8</span><span style="color:#6A737D">  // OK: Mutable field</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Invalid assignments</span></span>
+<span class="line"><span style="color:#6A737D">// 42 = x                  // ERROR: Cannot assign to literal</span></span>
+<span class="line"><span style="color:#6A737D">// (x + y) = 10            // ERROR: Cannot assign to expression</span></span>
+<span class="line"><span style="color:#6A737D">// getData() = x           // ERROR: Cannot assign to function call</span></span>
+<span class="line"><span style="color:#6A737D">// arr[0] = 10             // ERROR: Index assignment not yet supported</span></span></code></pre>
+<h3 id="immutability-enforcement">Immutability Enforcement</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Cannot reassign immutable variable</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 10</span></span>
+<span class="line"><span style="color:#6A737D">// x = 20  // ERROR: Cannot assign to immutable variable 'x'</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Cannot reassign immutable field</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> config </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> { valor: </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#6A737D">// config.valor = 8  // ERROR: Cannot assign to immutable field 'valor'</span></span></code></pre>
+<h3 id="dynamic-typing">Dynamic Typing</h3>
+<p>Achronyme uses dynamic typing, so variables can be reassigned to different types:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">mut x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 10</span></span>
+<span class="line"><span style="color:#E1E4E8">x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 20</span><span style="color:#6A737D">        // OK: Number to Number</span></span>
+<span class="line"><span style="color:#E1E4E8">x </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "text"</span><span style="color:#6A737D">    // OK: Reassign to String</span></span>
+<span class="line"><span style="color:#E1E4E8">x </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">] </span><span style="color:#6A737D">// OK: Reassign to Array</span></span>
+<span class="line"><span style="color:#B392F0">x</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#79B8FF"> 42</span><span style="color:#6A737D">  // OK: Reassign to Function</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// This is the programmer's responsibility</span></span>
+<span class="line"><span style="color:#6A737D">// Type checking happens at runtime when operations are performed</span></span></code></pre>
+<p><strong>Note</strong>: While this provides flexibility, it’s the programmer’s responsibility to maintain type consistency. Future versions may add optional type annotations.</p>
+<h2 id="patterns-and-best-practices">Patterns and Best Practices</h2>
+<h3 id="1-prefer-immutability">1. Prefer Immutability</h3>
+<p>Use mutation only when it improves clarity or performance:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Prefer immutable</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> sum </span><span style="color:#F97583">=</span><span style="color:#B392F0"> reduce</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">a</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">b</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> b, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, numbers)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Use mutable only if clearer</span></span>
+<span class="line"><span style="color:#E1E4E8">mut total </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> addToTotal</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    total </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> total </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> x</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(addToTotal, numbers)</span></span></code></pre>
+<h3 id="2-encapsulate-mutable-state">2. Encapsulate Mutable State</h3>
+<p>Keep mutable state private in records:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> createStack</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut items </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    {</span></span>
+<span class="line"><span style="color:#B392F0">        push</span><span style="color:#E1E4E8">: (</span><span style="color:#FFAB70">x</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#F97583"> do</span><span style="color:#E1E4E8"> { items </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">items, x] },</span></span>
+<span class="line"><span style="color:#B392F0">        pop</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#F97583"> do</span><span style="color:#E1E4E8"> { items </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> items[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">:</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">] },</span></span>
+<span class="line"><span style="color:#B392F0">        peek</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> items[</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#B392F0">        size</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(items)</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="3-clear-intent-with-naming">3. Clear Intent with Naming</h3>
+<p>Use descriptive names for mutable variables:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Clear that this will change</span></span>
+<span class="line"><span style="color:#E1E4E8">mut currentIndex </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#E1E4E8">mut accumulator </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#E1E4E8">mut isRunning </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> true</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Vs less clear</span></span>
+<span class="line"><span style="color:#E1E4E8">mut x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#E1E4E8">mut val </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#E1E4E8">mut flag </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> true</span></span></code></pre>
+<h3 id="4-minimize-scope">4. Minimize Scope</h3>
+<p>Declare mutable variables in the smallest scope possible:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> processData</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">items</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // Mutable only within this function</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut processed </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut errorCount </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // Process items...</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    { </span><span style="color:#B392F0">processed</span><span style="color:#E1E4E8">: processed, </span><span style="color:#B392F0">errors</span><span style="color:#E1E4E8">: errorCount }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="5-document-side-effects">5. Document Side Effects</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// BAD: Hidden mutation</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> incrementCounter</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    globalCounter </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> globalCounter </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// GOOD: Clear that it mutates</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> contador </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut valor: </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#6A737D">    // Clearly a mutating method</span></span>
+<span class="line"><span style="color:#B392F0">    incrementar</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">        self.valor </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> self.valor </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="common-patterns">Common Patterns</h2>
+<h3 id="state-machine">State Machine</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> trafficLight </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut state: </span><span style="color:#9ECBFF">"red"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    next</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">        self.state </span><span style="color:#F97583">=</span><span style="color:#B392F0"> if</span><span style="color:#E1E4E8">(self.state </span><span style="color:#F97583">==</span><span style="color:#9ECBFF"> "red"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"green"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">                     if</span><span style="color:#E1E4E8">(self.state </span><span style="color:#F97583">==</span><span style="color:#9ECBFF"> "green"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"yellow"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">                     "red"</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    getState</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> self.state</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="iterator">Iterator</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> createIterator</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">arr</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut index </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    {</span></span>
+<span class="line"><span style="color:#B392F0">        hasNext</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> index </span><span style="color:#F97583">&#x3C;</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(arr),</span></span>
+<span class="line"><span style="color:#B392F0">        next</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#F97583"> do</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">            let</span><span style="color:#E1E4E8"> value </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> arr[index]</span></span>
+<span class="line"><span style="color:#E1E4E8">            index </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> index </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#E1E4E8">            value</span></span>
+<span class="line"><span style="color:#E1E4E8">        },</span></span>
+<span class="line"><span style="color:#B392F0">        reset</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#F97583"> do</span><span style="color:#E1E4E8"> { index </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="builder-pattern">Builder Pattern</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> createQueryBuilder</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut filters </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut sortBy </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> ""</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut limit </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 100</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    {</span></span>
+<span class="line"><span style="color:#B392F0">        where</span><span style="color:#E1E4E8">: (</span><span style="color:#FFAB70">field</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">op</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">value</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#F97583"> do</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">            self.filters </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">self.filters, {field, op, value}]</span></span>
+<span class="line"><span style="color:#E1E4E8">            self  </span><span style="color:#6A737D">// Return self for chaining</span></span>
+<span class="line"><span style="color:#E1E4E8">        },</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">        sort</span><span style="color:#E1E4E8">: (</span><span style="color:#FFAB70">field</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#F97583"> do</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">            self.sortBy </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> field</span></span>
+<span class="line"><span style="color:#E1E4E8">            self</span></span>
+<span class="line"><span style="color:#E1E4E8">        },</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">        take</span><span style="color:#E1E4E8">: (</span><span style="color:#FFAB70">n</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#F97583"> do</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">            self.limit </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> n</span></span>
+<span class="line"><span style="color:#E1E4E8">            self</span></span>
+<span class="line"><span style="color:#E1E4E8">        },</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">        build</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">            filters</span><span style="color:#E1E4E8">: self.filters,</span></span>
+<span class="line"><span style="color:#B392F0">            sort</span><span style="color:#E1E4E8">: self.sortBy,</span></span>
+<span class="line"><span style="color:#B392F0">            limit</span><span style="color:#E1E4E8">: self.limit</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Usage with chaining</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> query </span><span style="color:#F97583">=</span><span style="color:#B392F0"> createQueryBuilder</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">    .</span><span style="color:#B392F0">where</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"age"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">">"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">18</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    .</span><span style="color:#B392F0">where</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"active"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"="</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    .</span><span style="color:#B392F0">sort</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"name"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    .</span><span style="color:#B392F0">take</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">50</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    .</span><span style="color:#B392F0">build</span><span style="color:#E1E4E8">()</span></span></code></pre>
+<h2 id="performance-considerations">Performance Considerations</h2>
+<h3 id="when-mutation-helps">When Mutation Helps</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Immutable: Creates many intermediate arrays</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#B392F0"> reduce</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">    (</span><span style="color:#FFAB70">acc</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">x</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">acc, x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [],</span></span>
+<span class="line"><span style="color:#E1E4E8">    largeArray</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Mutable: More efficient for large datasets</span></span>
+<span class="line"><span style="color:#E1E4E8">mut result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []</span></span>
+<span class="line"><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">result, x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">}, largeArray)</span></span></code></pre>
+<h3 id="when-immutability-is-better">When Immutability is Better</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Immutable: Clear and composable</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> processed </span><span style="color:#F97583">=</span><span style="color:#B392F0"> pipe</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#FFAB70">    x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">y</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> y </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, x),</span></span>
+<span class="line"><span style="color:#FFAB70">    x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">y</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> y </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">, x),</span></span>
+<span class="line"><span style="color:#FFAB70">    x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> reduce</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">a</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">b</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> b, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, x)</span></span>
+<span class="line"><span style="color:#E1E4E8">)(data)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Mutable: More complex, harder to reason about</span></span>
+<span class="line"><span style="color:#E1E4E8">mut filtered </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []</span></span>
+<span class="line"><span style="color:#E1E4E8">mut doubled </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []</span></span>
+<span class="line"><span style="color:#E1E4E8">mut sum </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#6A737D">// ... imperative logic</span></span></code></pre>
+<h2 id="limitations">Limitations</h2>
+<h3 id="index-assignment-not-supported">Index Assignment Not Supported</h3>
+<p>Direct index assignment is not yet implemented:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">mut arr </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#6A737D">// arr[0] = 10  // ERROR: Index assignment not supported</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Workaround: Reconstruct array</span></span>
+<span class="line"><span style="color:#E1E4E8">arr </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">...</span><span style="color:#E1E4E8">arr[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">:]]  </span><span style="color:#6A737D">// [10, 2, 3]</span></span></code></pre>
+<h3 id="nested-field-assignment">Nested Field Assignment</h3>
+<p>Nested field assignment works correctly when all intermediate fields are mutable:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> app </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut config: {</span></span>
+<span class="line"><span style="color:#E1E4E8">        mut debug: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        version: </span><span style="color:#9ECBFF">"1.0"</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Works: app.config.debug is mutable</span></span>
+<span class="line"><span style="color:#E1E4E8">app.config.debug </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> false</span><span style="color:#6A737D">  // OK</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ❌ Error: app.config itself must be mutable to reassign</span></span>
+<span class="line"><span style="color:#6A737D">// app.config = newConfig  // ERROR unless config is mut</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ To reassign the whole config object, declare it as mut</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> app2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut config: {debug: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">app2.config </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {debug: </span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">, newField: </span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">}  </span><span style="color:#6A737D">// OK</span></span></code></pre>
+<h2 id="comparison-mutable-vs-immutable">Comparison: Mutable vs Immutable</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Aspect</th><th>Immutable</th><th>Mutable</th></tr></thead><tbody><tr><td><strong>Safety</strong></td><td>No accidental changes</td><td>Can introduce bugs</td></tr><tr><td><strong>Predictability</strong></td><td>Always returns same value</td><td>Value changes over time</td></tr><tr><td><strong>Concurrency</strong></td><td>Thread-safe</td><td>Requires synchronization</td></tr><tr><td><strong>Performance</strong></td><td>Can create copies</td><td>Updates in place</td></tr><tr><td><strong>Composability</strong></td><td>Easy to chain</td><td>Side effects complicate</td></tr><tr><td><strong>Debugging</strong></td><td>Easier to trace</td><td>State changes harder to track</td></tr></tbody></table>
+<h2 id="when-to-use-each">When to Use Each</h2>
+<h3 id="use-immutable-default">Use Immutable (Default)</h3>
+<ul>
+<li>Pure functions and algorithms</li>
+<li>Data transformations</li>
+<li>Functional pipelines</li>
+<li>Mathematical computations</li>
+<li>When reasoning about code is critical</li>
+</ul>
+<h3 id="use-mutable">Use Mutable</h3>
+<ul>
+<li>Counters and accumulators</li>
+<li>Stateful objects (games, UIs)</li>
+<li>Performance-critical loops</li>
+<li>Natural OOP patterns</li>
+<li>When mutation is clearer</li>
+</ul>
+<h2 id="summary">Summary</h2>
+<ul>
+<li><strong>Declaration</strong>: <code>mut x = value</code> for mutable variables</li>
+<li><strong>Record fields</strong>: <code>{mut field: value}</code> for mutable fields</li>
+<li><strong>Assignment</strong>: <code>x = newValue</code> to reassign</li>
+<li><strong>Self-reference</strong>: Methods can mutate via <code>self.field = value</code></li>
+<li><strong>Validation</strong>: Only valid lvalues, type-safe, immutability enforced</li>
+<li><strong>Best practice</strong>: Prefer immutability, use mutation intentionally</li>
+</ul>
+<p>Mutability in Achronyme is designed to be <strong>explicit</strong>, <strong>controlled</strong>, and <strong>type-safe</strong>, giving you power when needed while maintaining the benefits of functional programming by default.</p>  </article> <div class="mt-12 border-t border-slate-800 pt-6"> <nav class="flex items-center justify-between"> <div></div> <div></div> </nav> </div> </div> <!-- Right sidebar (table of contents) --> <div class="hidden xl:flex xl:flex-shrink-0"> <div class="w-64 py-8 pl-8 border-l border-slate-800"> <div class="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto"> <div class="space-y-4"><h4 class="font-display text-sm font-semibold text-white">
+On this page
+</h4><nav><ul class="space-y-2.5 text-sm"><li class><a href="#why-mutability" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Why Mutability?</a></li><li class><a href="#mutable-variables" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Mutable Variables</a></li><li class="ml-4"><a href="#declaration" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Declaration</a></li><li class="ml-4"><a href="#reassignment" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Reassignment</a></li><li class><a href="#mutable-record-fields" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Mutable Record Fields</a></li><li class="ml-4"><a href="#syntax" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Syntax</a></li><li class="ml-4"><a href="#field-assignment" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Field Assignment</a></li><li class="ml-4"><a href="#complete-example" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Complete Example</a></li><li class><a href="#methods-with-self-reference" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Methods with Self-Reference</a></li><li class="ml-4"><a href="#basic-counter" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Basic Counter</a></li><li class="ml-4"><a href="#accumulator" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Accumulator</a></li><li class="ml-4"><a href="#bank-account-example" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Bank Account Example</a></li><li class="ml-4"><a href="#nested-configuration-example" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Nested Configuration Example</a></li><li class><a href="#closures-and-mutable-captures" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Closures and Mutable Captures</a></li><li class="ml-4"><a href="#factory-pattern" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Factory Pattern</a></li><li class><a href="#do-blocks-and-assignment" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Do Blocks and Assignment</a></li><li class="ml-4"><a href="#in-lambda-bodies" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">In Lambda Bodies</a></li><li class="ml-4"><a href="#multiple-assignments" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Multiple Assignments</a></li><li class><a href="#validation-and-restrictions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Validation and Restrictions</a></li><li class="ml-4"><a href="#lvalue-validation" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Lvalue Validation</a></li><li class="ml-4"><a href="#immutability-enforcement" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Immutability Enforcement</a></li><li class="ml-4"><a href="#dynamic-typing" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Dynamic Typing</a></li><li class><a href="#patterns-and-best-practices" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Patterns and Best Practices</a></li><li class="ml-4"><a href="#1-prefer-immutability" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">1. Prefer Immutability</a></li><li class="ml-4"><a href="#2-encapsulate-mutable-state" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">2. Encapsulate Mutable State</a></li><li class="ml-4"><a href="#3-clear-intent-with-naming" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">3. Clear Intent with Naming</a></li><li class="ml-4"><a href="#4-minimize-scope" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">4. Minimize Scope</a></li><li class="ml-4"><a href="#5-document-side-effects" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">5. Document Side Effects</a></li><li class><a href="#common-patterns" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Common Patterns</a></li><li class="ml-4"><a href="#state-machine" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">State Machine</a></li><li class="ml-4"><a href="#iterator" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Iterator</a></li><li class="ml-4"><a href="#builder-pattern" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Builder Pattern</a></li><li class><a href="#performance-considerations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Performance Considerations</a></li><li class="ml-4"><a href="#when-mutation-helps" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">When Mutation Helps</a></li><li class="ml-4"><a href="#when-immutability-is-better" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">When Immutability is Better</a></li><li class><a href="#limitations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Limitations</a></li><li class="ml-4"><a href="#index-assignment-not-supported" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Index Assignment Not Supported</a></li><li class="ml-4"><a href="#nested-field-assignment" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Nested Field Assignment</a></li><li class><a href="#comparison-mutable-vs-immutable" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Comparison: Mutable vs Immutable</a></li><li class><a href="#when-to-use-each" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">When to Use Each</a></li><li class="ml-4"><a href="#use-immutable-default" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Use Immutable (Default)</a></li><li class="ml-4"><a href="#use-mutable" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Use Mutable</a></li><li class><a href="#summary" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Summary</a></li></ul></nav></div> </div> </div> </div> </div> </div> </div>  </body></html>

@@ -1,0 +1,1321 @@
+<!DOCTYPE html><html lang="en" class="h-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Complex number literals, arithmetic operations, polar form, mathematical functions, and ComplexTensor support for signal processing"><meta name="generator" content="Astro v5.15.8"><link rel="canonical" href="http://localhost:4321/docs/mathematical-computing/complex-numbers/"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Complex Numbers | Achronyme</title><!-- Preload fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="/_astro/_slug_.CyadsZWk.css">
+<style>[data-astro-cid-k5z7lb4y][x-cloak]{display:none!important}
+</style><script type="module" src="/_astro/page.BE54bNVT.js"></script></head> <body class="h-full bg-slate-950" x-data>  <div class="min-h-full"> <header class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur supports-[backdrop-filter]:bg-slate-950/80"> <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex h-16 items-center justify-between"> <!-- Logo --> <div class="flex items-center"> <a href="/" class="flex items-center space-x-3"> <picture> <source srcset="/logo.avif" type="image/avif"> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';"> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden"> <span class="text-white font-bold text-sm">A</span> </div> <span class="font-display text-xl font-semibold text-white">
+Achronyme
+</span> </a> </div> <!-- Center navigation --> <nav class="hidden md:flex items-center justify-center flex-1 space-x-6"> <a href="/docs" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">
+Documentation
+</a> <a href="https://github.com/achronyme/achronyme-core" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-slate-400 hover:text-white transition-colors inline-flex items-center"> <svg class="mr-1.5 h-4 w-4" fill="currentColor" viewBox="0 0 24 24"> <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path> </svg>
+GitHub
+</a> </nav> <!-- Right side - Changelog link + Mobile menu button --> <div class="flex items-center space-x-4"> <a href="/changelog" class="hidden md:block text-sm font-medium text-slate-400 hover:text-white transition-colors">
+Changelog
+</a> <button type="button" class="md:hidden rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.toggle()"> <span class="sr-only">Open menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path> </svg> </button> </div> </div> </div> </header> <div class="fixed inset-0 z-40 lg:hidden" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-cloak data-astro-cid-k5z7lb4y> <!-- Backdrop --> <div class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm" @click="$store.nav.close()" data-astro-cid-k5z7lb4y></div> <!-- Sidebar --> <div class="fixed inset-y-0 left-0 w-full max-w-xs bg-slate-900 shadow-xl" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full" data-astro-cid-k5z7lb4y> <div class="flex h-16 items-center justify-between px-6 border-b border-slate-800" data-astro-cid-k5z7lb4y> <a href="/" class="flex items-center space-x-2" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <picture data-astro-cid-k5z7lb4y> <source srcset="/logo.avif" type="image/avif" data-astro-cid-k5z7lb4y> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';" data-astro-cid-k5z7lb4y> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden" data-astro-cid-k5z7lb4y> <span class="text-white font-bold text-sm" data-astro-cid-k5z7lb4y>A</span> </div> <span class="font-display text-xl font-semibold text-white" data-astro-cid-k5z7lb4y>
+Achronyme
+</span> </a> <button type="button" class="rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <span class="sr-only" data-astro-cid-k5z7lb4y>Close menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-astro-cid-k5z7lb4y> <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" data-astro-cid-k5z7lb4y></path> </svg> </button> </div> <nav class="overflow-y-auto p-6 space-y-8" data-astro-cid-k5z7lb4y> <div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Getting Started </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/introduction" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Introduction </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/installation" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Installation </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/syntax-basics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Syntax Basics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Core Language </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/data-types" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Data Types </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/operators" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Operators </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/variables" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Variables </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/control-flow" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Control Flow </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Data Structures </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/arrays-tensors" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Arrays &amp; Tensors </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/indexing-slicing" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Indexing &amp; Slicing </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/records" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Records </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/strings" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Strings </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Functional Programming </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/higher-order-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Higher-Order Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/do-blocks" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Do Blocks </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/recursion" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Recursion </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Mathematical Computing </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/mathematical-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mathematical Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/linear-algebra" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Linear Algebra </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/complex-numbers" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Complex Numbers </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/numerical-analysis" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Numerical Analysis </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/statistics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Statistics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Specialized Modules </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/dsp" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> DSP </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/graph-theory" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Graph Theory </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/optimization" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Optimization </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Advanced Topics </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/best-practices" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Best Practices </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/examples" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Examples </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/performance" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Performance </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/mutability" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mutability </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/io-persistence" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div>  <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex"> <!-- Left sidebar (navigation) --> <div class="hidden lg:flex lg:flex-shrink-0"> <div class="w-64 py-8 pr-8 border-r border-slate-800"> <div class="sticky top-20"> <nav class="space-y-8"> <div> <h3 class="font-display text-sm font-semibold text-white"> Getting Started </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/getting-started/introduction" class="block text-sm transition-colors text-slate-400 hover:text-white"> Introduction </a> </li><li> <a href="/docs/getting-started/installation" class="block text-sm transition-colors text-slate-400 hover:text-white"> Installation </a> </li><li> <a href="/docs/getting-started/syntax-basics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Syntax Basics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Core Language </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/core-language/data-types" class="block text-sm transition-colors text-slate-400 hover:text-white"> Data Types </a> </li><li> <a href="/docs/core-language/operators" class="block text-sm transition-colors text-slate-400 hover:text-white"> Operators </a> </li><li> <a href="/docs/core-language/variables" class="block text-sm transition-colors text-slate-400 hover:text-white"> Variables </a> </li><li> <a href="/docs/core-language/functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Functions </a> </li><li> <a href="/docs/core-language/control-flow" class="block text-sm transition-colors text-slate-400 hover:text-white"> Control Flow </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Data Structures </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/data-structures/arrays-tensors" class="block text-sm transition-colors text-slate-400 hover:text-white"> Arrays &amp; Tensors </a> </li><li> <a href="/docs/data-structures/indexing-slicing" class="block text-sm transition-colors text-slate-400 hover:text-white"> Indexing &amp; Slicing </a> </li><li> <a href="/docs/data-structures/records" class="block text-sm transition-colors text-slate-400 hover:text-white"> Records </a> </li><li> <a href="/docs/data-structures/strings" class="block text-sm transition-colors text-slate-400 hover:text-white"> Strings </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Functional Programming </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/functional-programming/higher-order-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Higher-Order Functions </a> </li><li> <a href="/docs/functional-programming/do-blocks" class="block text-sm transition-colors text-slate-400 hover:text-white"> Do Blocks </a> </li><li> <a href="/docs/functional-programming/recursion" class="block text-sm transition-colors text-slate-400 hover:text-white"> Recursion </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Mathematical Computing </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/mathematical-computing/mathematical-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mathematical Functions </a> </li><li> <a href="/docs/mathematical-computing/linear-algebra" class="block text-sm transition-colors text-slate-400 hover:text-white"> Linear Algebra </a> </li><li> <a href="/docs/mathematical-computing/complex-numbers" class="block text-sm transition-colors text-slate-400 hover:text-white"> Complex Numbers </a> </li><li> <a href="/docs/mathematical-computing/numerical-analysis" class="block text-sm transition-colors text-slate-400 hover:text-white"> Numerical Analysis </a> </li><li> <a href="/docs/mathematical-computing/statistics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Statistics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Specialized Modules </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/specialized-modules/dsp" class="block text-sm transition-colors text-slate-400 hover:text-white"> DSP </a> </li><li> <a href="/docs/specialized-modules/graph-theory" class="block text-sm transition-colors text-slate-400 hover:text-white"> Graph Theory </a> </li><li> <a href="/docs/specialized-modules/optimization" class="block text-sm transition-colors text-slate-400 hover:text-white"> Optimization </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Advanced Topics </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/advanced-topics/best-practices" class="block text-sm transition-colors text-slate-400 hover:text-white"> Best Practices </a> </li><li> <a href="/docs/advanced-topics/examples" class="block text-sm transition-colors text-slate-400 hover:text-white"> Examples </a> </li><li> <a href="/docs/advanced-topics/performance" class="block text-sm transition-colors text-slate-400 hover:text-white"> Performance </a> </li><li> <a href="/docs/advanced-topics/mutability" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mutability </a> </li><li> <a href="/docs/advanced-topics/io-persistence" class="block text-sm transition-colors text-slate-400 hover:text-white"> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div> </div> <!-- Main content --> <div class="min-w-0 flex-1 py-8 lg:pl-8"> <article class="prose prose-invert max-w-none"> <h1 class="font-display text-4xl font-bold tracking-tight text-white"> Complex Numbers </h1> <p class="lead text-xl text-slate-400"> Complex number literals, arithmetic operations, polar form, mathematical functions, and ComplexTensor support for signal processing </p>  <p>Achronyme provides comprehensive support for complex numbers, including natural syntax, arithmetic operations, mathematical functions, and integration with tensors and signal processing.</p>
+<h2 id="overview">Overview</h2>
+<p>Complex numbers in Achronyme:</p>
+<ul>
+<li>Natural syntax: <code>i</code>, <code>2+3i</code>, <code>1-4i</code></li>
+<li>Full arithmetic: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>^</code></li>
+<li>Built-in functions: <code>real</code>, <code>imag</code>, <code>conj</code>, <code>arg</code>, <code>abs</code></li>
+<li>ComplexTensor support for N-dimensional arrays</li>
+<li>Integration with FFT and DSP operations</li>
+</ul>
+<h2 id="complex-number-literals">Complex Number Literals</h2>
+<h3 id="imaginary-unit">Imaginary Unit</h3>
+<p>The imaginary unit <code>i</code> represents √(-1):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">i                  </span><span style="color:#6A737D">// 0+1i</span></span>
+<span class="line"><span style="color:#E1E4E8">i</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#6A737D">                // -1</span></span>
+<span class="line"><span style="color:#E1E4E8">i</span><span style="color:#F97583">^</span><span style="color:#79B8FF">3</span><span style="color:#6A737D">                // -i (or 0-1i)</span></span>
+<span class="line"><span style="color:#E1E4E8">i</span><span style="color:#F97583">^</span><span style="color:#79B8FF">4</span><span style="color:#6A737D">                // 1</span></span></code></pre>
+<h3 id="pure-imaginary-numbers">Pure Imaginary Numbers</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">3i                 </span><span style="color:#6A737D">// 0+3i</span></span>
+<span class="line"><span style="color:#F97583">-</span><span style="color:#E1E4E8">2i                </span><span style="color:#6A737D">// 0-2i</span></span>
+<span class="line"><span style="color:#E1E4E8">1.5i               </span><span style="color:#6A737D">// 0+1.5i</span></span></code></pre>
+<h3 id="complex-numbers">Complex Numbers</h3>
+<p>Complex numbers are created using arithmetic:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// a + bi form</span></span>
+<span class="line"><span style="color:#79B8FF">2</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 3i             </span><span style="color:#6A737D">// 2+3i</span></span>
+<span class="line"><span style="color:#79B8FF">1</span><span style="color:#F97583"> -</span><span style="color:#E1E4E8"> 4i             </span><span style="color:#6A737D">// 1-4i</span></span>
+<span class="line"><span style="color:#79B8FF">3</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 4i             </span><span style="color:#6A737D">// 3+4i</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Expression evaluation</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> z </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1</span><span style="color:#F97583"> +</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">i    </span><span style="color:#6A737D">// 1+2i</span></span></code></pre>
+<h3 id="explicit-construction">Explicit Construction</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Using complex() function</span></span>
+<span class="line"><span style="color:#B392F0">complex</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">)      </span><span style="color:#6A737D">// 3+4i</span></span>
+<span class="line"><span style="color:#B392F0">complex</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)      </span><span style="color:#6A737D">// i</span></span>
+<span class="line"><span style="color:#B392F0">complex</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)      </span><span style="color:#6A737D">// 5+0i</span></span></code></pre>
+<h2 id="arithmetic-operations">Arithmetic Operations</h2>
+<h3 id="addition">Addition</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 4i) </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 2i)     </span><span style="color:#6A737D">// 4+6i</span></span>
+<span class="line"><span style="color:#79B8FF">2</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 3i                  </span><span style="color:#6A737D">// 2+3i (number + complex)</span></span>
+<span class="line"><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> i) </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 5</span><span style="color:#6A737D">             // 6+i (complex + number)</span></span></code></pre>
+<p><strong>Formula</strong>: <code>(a+bi) + (c+di) = (a+c) + (b+d)i</code></p>
+<h3 id="subtraction">Subtraction</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 4i) </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 2i)     </span><span style="color:#6A737D">// 2+2i</span></span>
+<span class="line"><span style="color:#79B8FF">5</span><span style="color:#F97583"> -</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> i)             </span><span style="color:#6A737D">// 4-i</span></span>
+<span class="line"><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 3i) </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 1</span><span style="color:#6A737D">            // 1+3i</span></span></code></pre>
+<p><strong>Formula</strong>: <code>(a+bi) - (c+di) = (a-c) + (b-d)i</code></p>
+<h3 id="multiplication">Multiplication</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 4i) </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 2i)     </span><span style="color:#6A737D">// -5+10i</span></span>
+<span class="line"><span style="color:#E1E4E8">i </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> i                   </span><span style="color:#6A737D">// -1</span></span>
+<span class="line"><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> i) </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> -</span><span style="color:#E1E4E8"> i)       </span><span style="color:#6A737D">// 2 (real result)</span></span>
+<span class="line"><span style="color:#79B8FF">2</span><span style="color:#F97583"> *</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">3</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 4i)            </span><span style="color:#6A737D">// 6+8i</span></span></code></pre>
+<p><strong>Formula</strong>: <code>(a+bi)(c+di) = (ac-bd) + (ad+bc)i</code></p>
+<p><strong>Special cases</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">i </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> i                   </span><span style="color:#6A737D">// -1</span></span>
+<span class="line"><span style="color:#E1E4E8">i </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> i)             </span><span style="color:#6A737D">// -1+i</span></span>
+<span class="line"><span style="color:#E1E4E8">(a </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> bi) </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> (a </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> bi)     </span><span style="color:#6A737D">// a² + b² (magnitude squared)</span></span></code></pre>
+<h3 id="division">Division</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> i) </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> -</span><span style="color:#E1E4E8"> i)       </span><span style="color:#6A737D">// i</span></span>
+<span class="line"><span style="color:#79B8FF">10</span><span style="color:#F97583"> /</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">3</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 4i)           </span><span style="color:#6A737D">// 1.2-1.6i</span></span>
+<span class="line"><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">4</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 2i) </span><span style="color:#F97583">/</span><span style="color:#79B8FF"> 2</span><span style="color:#6A737D">            // 2+i</span></span></code></pre>
+<p><strong>Formula</strong>: <code>(a+bi)/(c+di) = [(ac+bd) + (bc-ad)i] / (c²+d²)</code></p>
+<p><strong>Implementation</strong>: Multiply numerator and denominator by conjugate of denominator.</p>
+<h3 id="power---real-exponent">Power - Real Exponent</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> i)</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#6A737D">               // 2i</span></span>
+<span class="line"><span style="color:#E1E4E8">i</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#6A737D">                     // -1</span></span>
+<span class="line"><span style="color:#E1E4E8">i</span><span style="color:#F97583">^</span><span style="color:#79B8FF">4</span><span style="color:#6A737D">                     // 1</span></span>
+<span class="line"><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 4i)</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#6A737D">              // -7+24i</span></span></code></pre>
+<p><strong>Formula</strong>: Uses polar form:</p>
+<ul>
+<li><code>z^n = r^n * (cos(nθ) + i*sin(nθ))</code></li>
+<li>where <code>z = r(cos(θ) + i*sin(θ))</code></li>
+</ul>
+<h3 id="power---complex-exponent">Power - Complex Exponent</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">i</span><span style="color:#F97583">^</span><span style="color:#E1E4E8">i                     </span><span style="color:#6A737D">// e^(-π/2) ≈ 0.2079</span></span>
+<span class="line"><span style="color:#79B8FF">2</span><span style="color:#F97583">^</span><span style="color:#E1E4E8">i                     </span><span style="color:#6A737D">// cos(ln2) + i*sin(ln2)</span></span>
+<span class="line"><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> i)</span><span style="color:#F97583">^</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> i)         </span><span style="color:#6A737D">// Complex result</span></span></code></pre>
+<p><strong>Formula</strong>: <code>a^b = e^(b*ln(a))</code></p>
+<p><strong>Note</strong>: Uses principal branch of logarithm.</p>
+<h3 id="negation">Negation</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">-</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 4i)               </span><span style="color:#6A737D">// -3-4i</span></span>
+<span class="line"><span style="color:#F97583">-</span><span style="color:#E1E4E8">i                      </span><span style="color:#6A737D">// -i (or 0-1i)</span></span></code></pre>
+<h2 id="complex-number-functions">Complex Number Functions</h2>
+<h3 id="real---extract-real-part">real - Extract Real Part</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">real</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 4i)            </span><span style="color:#6A737D">// 3</span></span>
+<span class="line"><span style="color:#B392F0">real</span><span style="color:#E1E4E8">(i)                 </span><span style="color:#6A737D">// 0</span></span>
+<span class="line"><span style="color:#B392F0">real</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)                 </span><span style="color:#6A737D">// 5</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Works on vectors</span></span>
+<span class="line"><span style="color:#B392F0">real</span><span style="color:#E1E4E8">([</span><span style="color:#79B8FF">1</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">i, </span><span style="color:#79B8FF">2</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">2i, </span><span style="color:#79B8FF">3</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">3i])</span></span>
+<span class="line"><span style="color:#6A737D">// [1, 2, 3]</span></span></code></pre>
+<h3 id="imag---extract-imaginary-part">imag - Extract Imaginary Part</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">imag</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 4i)            </span><span style="color:#6A737D">// 4</span></span>
+<span class="line"><span style="color:#B392F0">imag</span><span style="color:#E1E4E8">(i)                 </span><span style="color:#6A737D">// 1</span></span>
+<span class="line"><span style="color:#B392F0">imag</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)                 </span><span style="color:#6A737D">// 0</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Works on vectors</span></span>
+<span class="line"><span style="color:#B392F0">imag</span><span style="color:#E1E4E8">([</span><span style="color:#79B8FF">1</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">i, </span><span style="color:#79B8FF">2</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">2i, </span><span style="color:#79B8FF">3</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">3i])</span></span>
+<span class="line"><span style="color:#6A737D">// [1, 2, 3]</span></span></code></pre>
+<h3 id="abs---magnitude-absolute-value">abs - Magnitude (Absolute Value)</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">abs</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 4i)             </span><span style="color:#6A737D">// 5.0</span></span>
+<span class="line"><span style="color:#B392F0">abs</span><span style="color:#E1E4E8">(i)                  </span><span style="color:#6A737D">// 1.0</span></span>
+<span class="line"><span style="color:#B392F0">abs</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)                  </span><span style="color:#6A737D">// 5.0</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Pythagorean theorem</span></span>
+<span class="line"><span style="color:#B392F0">abs</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 4i) </span><span style="color:#F97583">==</span><span style="color:#B392F0"> sqrt</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#F97583"> +</span><span style="color:#79B8FF"> 4</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// true</span></span></code></pre>
+<p><strong>Formula</strong>: <code>|a+bi| = √(a²+b²)</code></p>
+<p><strong>Works on vectors</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">abs</span><span style="color:#E1E4E8">([</span><span style="color:#79B8FF">3</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">4i, </span><span style="color:#79B8FF">5</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">12i])      </span><span style="color:#6A737D">// [5, 13]</span></span></code></pre>
+<h3 id="arg---argument-phase-angle">arg - Argument (Phase Angle)</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">arg</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> i)              </span><span style="color:#6A737D">// π/4 ≈ 0.785</span></span>
+<span class="line"><span style="color:#B392F0">arg</span><span style="color:#E1E4E8">(i)                  </span><span style="color:#6A737D">// π/2 ≈ 1.571</span></span>
+<span class="line"><span style="color:#B392F0">arg</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)                 </span><span style="color:#6A737D">// π ≈ 3.142</span></span>
+<span class="line"><span style="color:#B392F0">arg</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)                  </span><span style="color:#6A737D">// 0</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Using atan2</span></span>
+<span class="line"><span style="color:#B392F0">arg</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 4i)             </span><span style="color:#6A737D">// atan2(4, 3) ≈ 0.927</span></span></code></pre>
+<p><strong>Formula</strong>: <code>arg(a+bi) = atan2(b, a)</code></p>
+<p><strong>Range</strong>: (-π, π]</p>
+<p><strong>Quadrant handling</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">arg</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> i)              </span><span style="color:#6A737D">// π/4 (Quadrant I)</span></span>
+<span class="line"><span style="color:#B392F0">arg</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> i)             </span><span style="color:#6A737D">// 3π/4 (Quadrant II)</span></span>
+<span class="line"><span style="color:#B392F0">arg</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> -</span><span style="color:#E1E4E8"> i)             </span><span style="color:#6A737D">// -3π/4 (Quadrant III)</span></span>
+<span class="line"><span style="color:#B392F0">arg</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> -</span><span style="color:#E1E4E8"> i)              </span><span style="color:#6A737D">// -π/4 (Quadrant IV)</span></span></code></pre>
+<h3 id="conj---complex-conjugate">conj - Complex Conjugate</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">conj</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 4i)            </span><span style="color:#6A737D">// 3-4i</span></span>
+<span class="line"><span style="color:#B392F0">conj</span><span style="color:#E1E4E8">(i)                 </span><span style="color:#6A737D">// -i</span></span>
+<span class="line"><span style="color:#B392F0">conj</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)                 </span><span style="color:#6A737D">// 5</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Works on vectors</span></span>
+<span class="line"><span style="color:#B392F0">conj</span><span style="color:#E1E4E8">([</span><span style="color:#79B8FF">1</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">i, </span><span style="color:#79B8FF">2</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">2i])       </span><span style="color:#6A737D">// [1-i, 2-2i]</span></span></code></pre>
+<p><strong>Formula</strong>: <code>conj(a+bi) = a-bi</code></p>
+<p><strong>Properties</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// z * conj(z) = |z|²</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> z </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 3</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 4i</span></span>
+<span class="line"><span style="color:#E1E4E8">z </span><span style="color:#F97583">*</span><span style="color:#B392F0"> conj</span><span style="color:#E1E4E8">(z)             </span><span style="color:#6A737D">// 25 (= 5²)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Conjugate of sum</span></span>
+<span class="line"><span style="color:#B392F0">conj</span><span style="color:#E1E4E8">(z1 </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> z2) </span><span style="color:#F97583">==</span><span style="color:#B392F0"> conj</span><span style="color:#E1E4E8">(z1) </span><span style="color:#F97583">+</span><span style="color:#B392F0"> conj</span><span style="color:#E1E4E8">(z2)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Conjugate of product</span></span>
+<span class="line"><span style="color:#B392F0">conj</span><span style="color:#E1E4E8">(z1 </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> z2) </span><span style="color:#F97583">==</span><span style="color:#B392F0"> conj</span><span style="color:#E1E4E8">(z1) </span><span style="color:#F97583">*</span><span style="color:#B392F0"> conj</span><span style="color:#E1E4E8">(z2)</span></span></code></pre>
+<h2 id="polar-form-and-conversions">Polar Form and Conversions</h2>
+<h3 id="polar-to-rectangular">Polar to Rectangular</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// z = r(cos(θ) + i*sin(θ))</span></span>
+<span class="line"><span style="color:#6A737D">// Euler's formula: z = r*e^(iθ)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> polar_to_rect</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">r</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">theta</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span></span>
+<span class="line"><span style="color:#E1E4E8">    r </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> (</span><span style="color:#B392F0">cos</span><span style="color:#E1E4E8">(theta) </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">*</span><span style="color:#B392F0"> sin</span><span style="color:#E1E4E8">(theta))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">polar_to_rect</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, pi</span><span style="color:#F97583">/</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D">// 0.707... + 0.707...i ≈ (1+i)/√2</span></span></code></pre>
+<h3 id="rectangular-to-polar">Rectangular to Polar</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> rect_to_polar</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> z</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> ({</span></span>
+<span class="line"><span style="color:#E1E4E8">    r: </span><span style="color:#B392F0">abs</span><span style="color:#E1E4E8">(z),</span></span>
+<span class="line"><span style="color:#E1E4E8">    theta: </span><span style="color:#B392F0">arg</span><span style="color:#E1E4E8">(z)</span></span>
+<span class="line"><span style="color:#E1E4E8">})</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">rect_to_polar</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> i)</span></span>
+<span class="line"><span style="color:#6A737D">// {r: 1.414..., theta: 0.785...}</span></span></code></pre>
+<h2 id="mathematical-identities">Mathematical Identities</h2>
+<h3 id="eulers-identity">Euler’s Identity</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// e^(iπ) + 1 = 0</span></span>
+<span class="line"><span style="color:#6A737D">// Most beautiful equation in mathematics</span></span></code></pre>
+<h3 id="de-moivres-theorem">De Moivre’s Theorem</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// (cos(θ) + i*sin(θ))^n = cos(nθ) + i*sin(nθ)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> z </span><span style="color:#F97583">=</span><span style="color:#B392F0"> cos</span><span style="color:#E1E4E8">(pi</span><span style="color:#F97583">/</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">*</span><span style="color:#B392F0"> sin</span><span style="color:#E1E4E8">(pi</span><span style="color:#F97583">/</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">z</span><span style="color:#F97583">^</span><span style="color:#79B8FF">4</span><span style="color:#6A737D">  // Approximately i (rotation by 4*π/4 = π)</span></span></code></pre>
+<h3 id="powers-of-i">Powers of i</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">i</span><span style="color:#F97583">^</span><span style="color:#79B8FF">0</span><span style="color:#6A737D">                     // 1</span></span>
+<span class="line"><span style="color:#E1E4E8">i</span><span style="color:#F97583">^</span><span style="color:#79B8FF">1</span><span style="color:#6A737D">                     // i</span></span>
+<span class="line"><span style="color:#E1E4E8">i</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#6A737D">                     // -1</span></span>
+<span class="line"><span style="color:#E1E4E8">i</span><span style="color:#F97583">^</span><span style="color:#79B8FF">3</span><span style="color:#6A737D">                     // -i</span></span>
+<span class="line"><span style="color:#E1E4E8">i</span><span style="color:#F97583">^</span><span style="color:#79B8FF">4</span><span style="color:#6A737D">                     // 1</span></span>
+<span class="line"><span style="color:#6A737D">// Pattern repeats every 4</span></span></code></pre>
+<h3 id="roots-of-unity">Roots of Unity</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// nth roots of unity: solutions to z^n = 1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 3rd roots of unity</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> omega </span><span style="color:#F97583">=</span><span style="color:#F97583"> -</span><span style="color:#79B8FF">0.5</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 0.866025403784i  </span><span style="color:#6A737D">// e^(2πi/3)</span></span>
+<span class="line"><span style="color:#E1E4E8">omega</span><span style="color:#F97583">^</span><span style="color:#79B8FF">0</span><span style="color:#6A737D">                 // 1</span></span>
+<span class="line"><span style="color:#E1E4E8">omega</span><span style="color:#F97583">^</span><span style="color:#79B8FF">1</span><span style="color:#6A737D">                 // -0.5 + 0.866i</span></span>
+<span class="line"><span style="color:#E1E4E8">omega</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#6A737D">                 // -0.5 - 0.866i</span></span>
+<span class="line"><span style="color:#E1E4E8">omega</span><span style="color:#F97583">^</span><span style="color:#79B8FF">3</span><span style="color:#6A737D">                 // 1 (back to start)</span></span></code></pre>
+<h2 id="complex-vectors-and-tensors">Complex Vectors and Tensors</h2>
+<h3 id="complextensor">ComplexTensor</h3>
+<p>Arrays containing complex numbers are automatically stored as ComplexTensor:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Vector of complex numbers</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> z </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [i, </span><span style="color:#79B8FF">2</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">3i, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#6A737D">// ComplexTensor: [0+1i, 2+3i, 4+0i]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Matrix of complex numbers</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> M</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">1</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">i, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">i]</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#6A737D">// ComplexTensor (2D)</span></span></code></pre>
+<h3 id="vector-arithmetic">Vector Arithmetic</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> v1 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">2i, </span><span style="color:#79B8FF">3</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">4i]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> v2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">5</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">6i, </span><span style="color:#79B8FF">7</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">8i]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Element-wise operations</span></span>
+<span class="line"><span style="color:#E1E4E8">v1 </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> v2                 </span><span style="color:#6A737D">// [6+8i, 10+12i]</span></span>
+<span class="line"><span style="color:#E1E4E8">v1 </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> v2                 </span><span style="color:#6A737D">// [-4-4i, -4-4i]</span></span>
+<span class="line"><span style="color:#E1E4E8">v1 </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> v2                 </span><span style="color:#6A737D">// [-7+16i, -11+52i]</span></span></code></pre>
+<h3 id="scalar-broadcasting">Scalar Broadcasting</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> v </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">i, </span><span style="color:#79B8FF">2</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">2i, </span><span style="color:#79B8FF">3</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">3i]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Scalar multiplication</span></span>
+<span class="line"><span style="color:#E1E4E8">v </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#6A737D">                   // [2+2i, 4+4i, 6+6i]</span></span>
+<span class="line"><span style="color:#E1E4E8">v </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> i                   </span><span style="color:#6A737D">// [-1+i, -2+2i, -3+3i]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Scalar addition</span></span>
+<span class="line"><span style="color:#E1E4E8">v </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">1</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">i)               </span><span style="color:#6A737D">// [2+2i, 3+3i, 4+4i]</span></span></code></pre>
+<h3 id="vector-functions">Vector Functions</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> v </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">3</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">4i, </span><span style="color:#79B8FF">5</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">12i, </span><span style="color:#79B8FF">0</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">1i]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Extract parts</span></span>
+<span class="line"><span style="color:#B392F0">real</span><span style="color:#E1E4E8">(v)                 </span><span style="color:#6A737D">// [3, 5, 0]</span></span>
+<span class="line"><span style="color:#B392F0">imag</span><span style="color:#E1E4E8">(v)                 </span><span style="color:#6A737D">// [4, 12, 1]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Magnitudes</span></span>
+<span class="line"><span style="color:#B392F0">abs</span><span style="color:#E1E4E8">(v)                  </span><span style="color:#6A737D">// [5, 13, 1]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Conjugates</span></span>
+<span class="line"><span style="color:#B392F0">conj</span><span style="color:#E1E4E8">(v)                 </span><span style="color:#6A737D">// [3-4i, 5-12i, 0-1i]</span></span></code></pre>
+<h2 id="integration-with-signal-processing">Integration with Signal Processing</h2>
+<h3 id="fft-returns-complex">FFT Returns Complex</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> spectrum </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft</span><span style="color:#E1E4E8">(signal)</span></span>
+<span class="line"><span style="color:#6A737D">// Returns ComplexTensor</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Extract information</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> magnitudes </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_mag</span><span style="color:#E1E4E8">(signal)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> phases </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_phase</span><span style="color:#E1E4E8">(signal)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> real_parts </span><span style="color:#F97583">=</span><span style="color:#B392F0"> real</span><span style="color:#E1E4E8">(spectrum)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> imag_parts </span><span style="color:#F97583">=</span><span style="color:#B392F0"> imag</span><span style="color:#E1E4E8">(spectrum)</span></span></code></pre>
+<h3 id="complex-frequency-analysis">Complex Frequency Analysis</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Generate complex sinusoid</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> t </span><span style="color:#F97583">=</span><span style="color:#B392F0"> linspace</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> freq </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 10</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> complex_signal </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#FFAB70">    x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> cos</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">pi</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">freq</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">x) </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> i</span><span style="color:#F97583">*</span><span style="color:#B392F0">sin</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">pi</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">freq</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">x),</span></span>
+<span class="line"><span style="color:#E1E4E8">    t</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Analyze</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> spectrum </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft</span><span style="color:#E1E4E8">(complex_signal)</span></span></code></pre>
+<h3 id="filtering-with-conjugate">Filtering with Conjugate</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Conjugate symmetry for real signals</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> spectrum </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft</span><span style="color:#E1E4E8">(real_signal)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> filtered </span><span style="color:#F97583">=</span><span style="color:#B392F0"> conj</span><span style="color:#E1E4E8">(spectrum)  </span><span style="color:#6A737D">// Apply conjugate</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#B392F0"> ifft</span><span style="color:#E1E4E8">(filtered)</span></span></code></pre>
+<h2 id="type-promotion">Type Promotion</h2>
+<p>Numbers are automatically promoted to complex when needed:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Number + Complex → Complex</span></span>
+<span class="line"><span style="color:#79B8FF">2</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 3i                  </span><span style="color:#6A737D">// 2+3i</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Complex * Number → Complex</span></span>
+<span class="line"><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">i) </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 5</span><span style="color:#6A737D">               // 5+5i</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Mixed operations</span></span>
+<span class="line"><span style="color:#E1E4E8">[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> i           </span><span style="color:#6A737D">// [1+1i, 2+1i, 3+1i]</span></span></code></pre>
+<h2 id="higher-order-functions">Higher-Order Functions</h2>
+<h3 id="map-with-complex-functions">Map with Complex Functions</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> vec </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">2</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">i, </span><span style="color:#79B8FF">3</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">i, </span><span style="color:#79B8FF">4</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">i]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Square each element</span></span>
+<span class="line"><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">z</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> z</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, vec)</span></span>
+<span class="line"><span style="color:#6A737D">// [-3+4i, 8+6i, 15+8i]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Rotate by 90° (multiply by i)</span></span>
+<span class="line"><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">z</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> z </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> i, vec)</span></span>
+<span class="line"><span style="color:#6A737D">// [-1+2i, -1+3i, -1+4i]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Compute magnitudes</span></span>
+<span class="line"><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(abs, vec)</span></span>
+<span class="line"><span style="color:#6A737D">// [2.236..., 3.162..., 4.123...]</span></span></code></pre>
+<h3 id="filter-complex-values">Filter Complex Values</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> vec </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">i, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">i, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">i]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Keep only complex (imaginary part ≠ 0)</span></span>
+<span class="line"><span style="color:#B392F0">filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">z</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> imag</span><span style="color:#E1E4E8">(z) </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, vec)</span></span>
+<span class="line"><span style="color:#6A737D">// [1+i, 3+i, 5+i]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Keep only real</span></span>
+<span class="line"><span style="color:#B392F0">filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">z</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> imag</span><span style="color:#E1E4E8">(z) </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, vec)</span></span>
+<span class="line"><span style="color:#6A737D">// [2, 4]</span></span></code></pre>
+<h3 id="reduce-complex-values">Reduce Complex Values</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> vec </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">i, </span><span style="color:#79B8FF">2</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">2i, </span><span style="color:#79B8FF">3</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">3i]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Sum</span></span>
+<span class="line"><span style="color:#B392F0">reduce</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">acc</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">z</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> acc </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> z, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, vec)</span></span>
+<span class="line"><span style="color:#6A737D">// 6+6i</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Product</span></span>
+<span class="line"><span style="color:#B392F0">reduce</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">acc</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">z</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> acc </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> z, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, vec)</span></span>
+<span class="line"><span style="color:#6A737D">// -16+16i</span></span></code></pre>
+<h2 id="practical-examples">Practical Examples</h2>
+<h3 id="impedance-calculations">Impedance Calculations</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Electrical impedance: Z = R + jωL - j/(ωC)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> impedance</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">R</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">L</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">C</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">omega</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span></span>
+<span class="line"><span style="color:#79B8FF">    R</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> i</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">omega</span><span style="color:#F97583">*</span><span style="color:#79B8FF">L</span><span style="color:#F97583"> -</span><span style="color:#E1E4E8"> i</span><span style="color:#F97583">/</span><span style="color:#E1E4E8">(omega</span><span style="color:#F97583">*</span><span style="color:#79B8FF">C</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> Z</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> impedance</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">50</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.001</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.00001</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1000</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#B392F0">abs</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">Z</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// Magnitude</span></span>
+<span class="line"><span style="color:#B392F0">arg</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">Z</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// Phase</span></span></code></pre>
+<h3 id="quantum-state">Quantum State</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Quantum state: |ψ⟩ = α|0⟩ + β|1⟩</span></span>
+<span class="line"><span style="color:#6A737D">// where |α|² + |β|² = 1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> state </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">0.6</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">0.8i, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">]  </span><span style="color:#6A737D">// Normalized</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> probability_0 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> abs</span><span style="color:#E1E4E8">(state[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">])</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#6A737D">  // 1.0</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> probability_1 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> abs</span><span style="color:#E1E4E8">(state[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">])</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#6A737D">  // 0.0</span></span></code></pre>
+<h3 id="complex-polynomial">Complex Polynomial</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Evaluate polynomial with complex coefficients</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> eval_poly</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">coeffs</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">z</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span></span>
+<span class="line"><span style="color:#B392F0">    reduce</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">        (</span><span style="color:#FFAB70">acc</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">c</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">i</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> acc </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> c </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> z</span><span style="color:#F97583">^</span><span style="color:#E1E4E8">i,</span></span>
+<span class="line"><span style="color:#79B8FF">        0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        coeffs</span></span>
+<span class="line"><span style="color:#E1E4E8">    )</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// p(z) = 1 + 2z + (1+i)z²</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> p </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">i]</span></span>
+<span class="line"><span style="color:#B392F0">eval_poly</span><span style="color:#E1E4E8">(p, i)  </span><span style="color:#6A737D">// Evaluate at z = i</span></span></code></pre>
+<h3 id="mandelbrot-set">Mandelbrot Set</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Test if point c is in Mandelbrot set</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> mandelbrot</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">c</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">max_iter</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">    (</span><span style="color:#FFAB70">n</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">z</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span></span>
+<span class="line"><span style="color:#B392F0">        if</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">>=</span><span style="color:#E1E4E8"> max_iter, </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">           if</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">abs</span><span style="color:#E1E4E8">(z) </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">              rec</span><span style="color:#E1E4E8">(n</span><span style="color:#F97583">+</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, z</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> c)))</span></span>
+<span class="line"><span style="color:#E1E4E8">)(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Note: Limited by recursion depth (~50)</span></span>
+<span class="line"><span style="color:#B392F0">mandelbrot</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">)      </span><span style="color:#6A737D">// true (origin is in set)</span></span>
+<span class="line"><span style="color:#B392F0">mandelbrot</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">)      </span><span style="color:#6A737D">// false (diverges)</span></span></code></pre>
+<h3 id="complex-rotation">Complex Rotation</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Rotate point by angle θ</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> rotate</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">z</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">theta</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span></span>
+<span class="line"><span style="color:#E1E4E8">    z </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> (</span><span style="color:#B392F0">cos</span><span style="color:#E1E4E8">(theta) </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> i</span><span style="color:#F97583">*</span><span style="color:#B392F0">sin</span><span style="color:#E1E4E8">(theta))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Or using exponential form</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> rotate_exp</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">z</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">theta</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span></span>
+<span class="line"><span style="color:#E1E4E8">    z </span><span style="color:#F97583">*</span><span style="color:#B392F0"> exp</span><span style="color:#E1E4E8">(i</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">theta)  </span><span style="color:#6A737D">// Would need exp() function</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Rotate by 90 degrees</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> p </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> i</span></span>
+<span class="line"><span style="color:#B392F0">rotate</span><span style="color:#E1E4E8">(p, pi</span><span style="color:#F97583">/</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// Approximately -1+i</span></span></code></pre>
+<h2 id="common-patterns">Common Patterns</h2>
+<h3 id="magnitude-and-phase">Magnitude and Phase</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Convert complex vector to magnitude and phase</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> to_polar</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> vec</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> ({</span></span>
+<span class="line"><span style="color:#E1E4E8">    magnitude: </span><span style="color:#B392F0">abs</span><span style="color:#E1E4E8">(vec),</span></span>
+<span class="line"><span style="color:#E1E4E8">    phase: </span><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(arg, vec)</span></span>
+<span class="line"><span style="color:#E1E4E8">})</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> z_vec </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">i, </span><span style="color:#79B8FF">3</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">4i]</span></span>
+<span class="line"><span style="color:#B392F0">to_polar</span><span style="color:#E1E4E8">(z_vec)</span></span>
+<span class="line"><span style="color:#6A737D">// {magnitude: [1.414, 5], phase: [0.785, 0.927]}</span></span></code></pre>
+<h3 id="complex-mean">Complex Mean</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Average of complex numbers</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> complex_mean</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> vec</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    reduce</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">acc</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">z</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> acc </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> z, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, vec) </span><span style="color:#F97583">/</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(vec)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">complex_mean</span><span style="color:#E1E4E8">([</span><span style="color:#79B8FF">1</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">i, </span><span style="color:#79B8FF">2</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">2i, </span><span style="color:#79B8FF">3</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">3i])</span></span>
+<span class="line"><span style="color:#6A737D">// 2+2i</span></span></code></pre>
+<h3 id="distance-in-complex-plane">Distance in Complex Plane</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Distance between two complex numbers</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> distance</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">z1</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">z2</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> abs</span><span style="color:#E1E4E8">(z1 </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> z2)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">distance</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">4i, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)       </span><span style="color:#6A737D">// 5.0 (distance from origin)</span></span>
+<span class="line"><span style="color:#B392F0">distance</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">i, </span><span style="color:#79B8FF">1</span><span style="color:#F97583">-</span><span style="color:#E1E4E8">i)      </span><span style="color:#6A737D">// 2.0 (vertical distance)</span></span></code></pre>
+<h2 id="error-handling">Error Handling</h2>
+<h3 id="division-by-zero">Division by Zero</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Division by zero with complex numbers</span></span>
+<span class="line"><span style="color:#79B8FF">1</span><span style="color:#F97583"> /</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">0</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">0i)              </span><span style="color:#6A737D">// Error or Infinity</span></span></code></pre>
+<h3 id="branch-cuts">Branch Cuts</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Logarithm and power have branch cuts</span></span>
+<span class="line"><span style="color:#6A737D">// Results depend on principal branch</span></span>
+<span class="line"><span style="color:#B392F0">ln</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)                  </span><span style="color:#6A737D">// πi (principal value)</span></span>
+<span class="line"><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">^</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0.5</span><span style="color:#E1E4E8">)              </span><span style="color:#6A737D">// i (principal square root)</span></span></code></pre>
+<h2 id="performance-tips">Performance Tips</h2>
+<h3 id="use-real-operations-when-possible">Use Real Operations When Possible</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ✅ Faster: keep as real</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> real_vec </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#B392F0">abs</span><span style="color:#E1E4E8">(real_vec)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ⚠️ Slower: unnecessary complex promotion</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> complex_vec </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">0i, </span><span style="color:#79B8FF">2</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">0i, </span><span style="color:#79B8FF">3</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">0i]</span></span>
+<span class="line"><span style="color:#B392F0">abs</span><span style="color:#E1E4E8">(complex_vec)</span></span></code></pre>
+<h3 id="vectorize-complex-operations">Vectorize Complex Operations</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ✅ Efficient: vectorized</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">z</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> z</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, complex_vector)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ❌ Less efficient: element-by-element</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []</span></span>
+<span class="line"><span style="color:#6A737D">// ... manual iteration</span></span></code></pre>
+<h2 id="summary">Summary</h2>
+<p><strong>Literals</strong>: <code>i</code>, <code>3i</code>, <code>2+3i</code></p>
+<p><strong>Arithmetic</strong>: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>^</code> (including complex exponents)</p>
+<p><strong>Functions</strong>: <code>real</code>, <code>imag</code>, <code>abs</code>, <code>arg</code>, <code>conj</code>, <code>complex</code></p>
+<p><strong>ComplexTensor</strong>: N-dimensional complex arrays</p>
+<p><strong>Integration</strong>: FFT, DSP, linear algebra</p>
+<p><strong>Key features</strong>:</p>
+<ul>
+<li>Natural mathematical syntax</li>
+<li>Automatic type promotion</li>
+<li>Element-wise operations</li>
+<li>Full arithmetic support</li>
+<li>Mathematical functions</li>
+</ul>
+<p><strong>Best practices</strong>:</p>
+<ul>
+<li>Use real numbers when imaginary part is zero</li>
+<li>Vectorize operations for performance</li>
+<li>Understand branch cuts for logarithm and power</li>
+<li>Use polar form for multiplication/division</li>
+</ul>
+<hr>
+<p><strong>Next</strong>: <a href="numerical-analysis.md">Numerical Analysis</a></p>  </article> <div class="mt-12 border-t border-slate-800 pt-6"> <nav class="flex items-center justify-between"> <div></div> <div></div> </nav> </div> </div> <!-- Right sidebar (table of contents) --> <div class="hidden xl:flex xl:flex-shrink-0"> <div class="w-64 py-8 pl-8 border-l border-slate-800"> <div class="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto"> <div class="space-y-4"><h4 class="font-display text-sm font-semibold text-white">
+On this page
+</h4><nav><ul class="space-y-2.5 text-sm"><li class><a href="#overview" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Overview</a></li><li class><a href="#complex-number-literals" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Complex Number Literals</a></li><li class="ml-4"><a href="#imaginary-unit" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Imaginary Unit</a></li><li class="ml-4"><a href="#pure-imaginary-numbers" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Pure Imaginary Numbers</a></li><li class="ml-4"><a href="#complex-numbers" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Complex Numbers</a></li><li class="ml-4"><a href="#explicit-construction" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Explicit Construction</a></li><li class><a href="#arithmetic-operations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Arithmetic Operations</a></li><li class="ml-4"><a href="#addition" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Addition</a></li><li class="ml-4"><a href="#subtraction" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Subtraction</a></li><li class="ml-4"><a href="#multiplication" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Multiplication</a></li><li class="ml-4"><a href="#division" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Division</a></li><li class="ml-4"><a href="#power---real-exponent" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Power - Real Exponent</a></li><li class="ml-4"><a href="#power---complex-exponent" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Power - Complex Exponent</a></li><li class="ml-4"><a href="#negation" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Negation</a></li><li class><a href="#complex-number-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Complex Number Functions</a></li><li class="ml-4"><a href="#real---extract-real-part" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">real - Extract Real Part</a></li><li class="ml-4"><a href="#imag---extract-imaginary-part" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">imag - Extract Imaginary Part</a></li><li class="ml-4"><a href="#abs---magnitude-absolute-value" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">abs - Magnitude (Absolute Value)</a></li><li class="ml-4"><a href="#arg---argument-phase-angle" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">arg - Argument (Phase Angle)</a></li><li class="ml-4"><a href="#conj---complex-conjugate" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">conj - Complex Conjugate</a></li><li class><a href="#polar-form-and-conversions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Polar Form and Conversions</a></li><li class="ml-4"><a href="#polar-to-rectangular" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Polar to Rectangular</a></li><li class="ml-4"><a href="#rectangular-to-polar" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Rectangular to Polar</a></li><li class><a href="#mathematical-identities" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Mathematical Identities</a></li><li class="ml-4"><a href="#eulers-identity" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Euler’s Identity</a></li><li class="ml-4"><a href="#de-moivres-theorem" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">De Moivre’s Theorem</a></li><li class="ml-4"><a href="#powers-of-i" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Powers of i</a></li><li class="ml-4"><a href="#roots-of-unity" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Roots of Unity</a></li><li class><a href="#complex-vectors-and-tensors" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Complex Vectors and Tensors</a></li><li class="ml-4"><a href="#complextensor" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">ComplexTensor</a></li><li class="ml-4"><a href="#vector-arithmetic" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Vector Arithmetic</a></li><li class="ml-4"><a href="#scalar-broadcasting" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Scalar Broadcasting</a></li><li class="ml-4"><a href="#vector-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Vector Functions</a></li><li class><a href="#integration-with-signal-processing" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Integration with Signal Processing</a></li><li class="ml-4"><a href="#fft-returns-complex" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">FFT Returns Complex</a></li><li class="ml-4"><a href="#complex-frequency-analysis" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Complex Frequency Analysis</a></li><li class="ml-4"><a href="#filtering-with-conjugate" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Filtering with Conjugate</a></li><li class><a href="#type-promotion" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Type Promotion</a></li><li class><a href="#higher-order-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Higher-Order Functions</a></li><li class="ml-4"><a href="#map-with-complex-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Map with Complex Functions</a></li><li class="ml-4"><a href="#filter-complex-values" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Filter Complex Values</a></li><li class="ml-4"><a href="#reduce-complex-values" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Reduce Complex Values</a></li><li class><a href="#practical-examples" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Practical Examples</a></li><li class="ml-4"><a href="#impedance-calculations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Impedance Calculations</a></li><li class="ml-4"><a href="#quantum-state" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Quantum State</a></li><li class="ml-4"><a href="#complex-polynomial" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Complex Polynomial</a></li><li class="ml-4"><a href="#mandelbrot-set" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Mandelbrot Set</a></li><li class="ml-4"><a href="#complex-rotation" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Complex Rotation</a></li><li class><a href="#common-patterns" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Common Patterns</a></li><li class="ml-4"><a href="#magnitude-and-phase" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Magnitude and Phase</a></li><li class="ml-4"><a href="#complex-mean" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Complex Mean</a></li><li class="ml-4"><a href="#distance-in-complex-plane" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Distance in Complex Plane</a></li><li class><a href="#error-handling" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Error Handling</a></li><li class="ml-4"><a href="#division-by-zero" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Division by Zero</a></li><li class="ml-4"><a href="#branch-cuts" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Branch Cuts</a></li><li class><a href="#performance-tips" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Performance Tips</a></li><li class="ml-4"><a href="#use-real-operations-when-possible" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Use Real Operations When Possible</a></li><li class="ml-4"><a href="#vectorize-complex-operations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Vectorize Complex Operations</a></li><li class><a href="#summary" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Summary</a></li></ul></nav></div> </div> </div> </div> </div> </div> </div>  </body></html>

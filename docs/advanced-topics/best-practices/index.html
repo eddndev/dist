@@ -1,0 +1,1508 @@
+<!DOCTYPE html><html lang="en" class="h-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Code style conventions, naming guidelines, function design patterns, performance optimization, and error handling strategies"><meta name="generator" content="Astro v5.15.8"><link rel="canonical" href="http://localhost:4321/docs/advanced-topics/best-practices/"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Best Practices | Achronyme</title><!-- Preload fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="/_astro/_slug_.CyadsZWk.css">
+<style>[data-astro-cid-k5z7lb4y][x-cloak]{display:none!important}
+</style><script type="module" src="/_astro/page.BE54bNVT.js"></script></head> <body class="h-full bg-slate-950" x-data>  <div class="min-h-full"> <header class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur supports-[backdrop-filter]:bg-slate-950/80"> <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex h-16 items-center justify-between"> <!-- Logo --> <div class="flex items-center"> <a href="/" class="flex items-center space-x-3"> <picture> <source srcset="/logo.avif" type="image/avif"> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';"> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden"> <span class="text-white font-bold text-sm">A</span> </div> <span class="font-display text-xl font-semibold text-white">
+Achronyme
+</span> </a> </div> <!-- Center navigation --> <nav class="hidden md:flex items-center justify-center flex-1 space-x-6"> <a href="/docs" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">
+Documentation
+</a> <a href="https://github.com/achronyme/achronyme-core" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-slate-400 hover:text-white transition-colors inline-flex items-center"> <svg class="mr-1.5 h-4 w-4" fill="currentColor" viewBox="0 0 24 24"> <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path> </svg>
+GitHub
+</a> </nav> <!-- Right side - Changelog link + Mobile menu button --> <div class="flex items-center space-x-4"> <a href="/changelog" class="hidden md:block text-sm font-medium text-slate-400 hover:text-white transition-colors">
+Changelog
+</a> <button type="button" class="md:hidden rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.toggle()"> <span class="sr-only">Open menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path> </svg> </button> </div> </div> </div> </header> <div class="fixed inset-0 z-40 lg:hidden" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-cloak data-astro-cid-k5z7lb4y> <!-- Backdrop --> <div class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm" @click="$store.nav.close()" data-astro-cid-k5z7lb4y></div> <!-- Sidebar --> <div class="fixed inset-y-0 left-0 w-full max-w-xs bg-slate-900 shadow-xl" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full" data-astro-cid-k5z7lb4y> <div class="flex h-16 items-center justify-between px-6 border-b border-slate-800" data-astro-cid-k5z7lb4y> <a href="/" class="flex items-center space-x-2" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <picture data-astro-cid-k5z7lb4y> <source srcset="/logo.avif" type="image/avif" data-astro-cid-k5z7lb4y> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';" data-astro-cid-k5z7lb4y> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden" data-astro-cid-k5z7lb4y> <span class="text-white font-bold text-sm" data-astro-cid-k5z7lb4y>A</span> </div> <span class="font-display text-xl font-semibold text-white" data-astro-cid-k5z7lb4y>
+Achronyme
+</span> </a> <button type="button" class="rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <span class="sr-only" data-astro-cid-k5z7lb4y>Close menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-astro-cid-k5z7lb4y> <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" data-astro-cid-k5z7lb4y></path> </svg> </button> </div> <nav class="overflow-y-auto p-6 space-y-8" data-astro-cid-k5z7lb4y> <div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Getting Started </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/introduction" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Introduction </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/installation" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Installation </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/syntax-basics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Syntax Basics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Core Language </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/data-types" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Data Types </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/operators" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Operators </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/variables" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Variables </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/control-flow" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Control Flow </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Data Structures </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/arrays-tensors" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Arrays &amp; Tensors </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/indexing-slicing" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Indexing &amp; Slicing </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/records" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Records </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/strings" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Strings </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Functional Programming </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/higher-order-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Higher-Order Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/do-blocks" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Do Blocks </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/recursion" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Recursion </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Mathematical Computing </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/mathematical-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mathematical Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/linear-algebra" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Linear Algebra </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/complex-numbers" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Complex Numbers </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/numerical-analysis" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Numerical Analysis </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/statistics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Statistics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Specialized Modules </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/dsp" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> DSP </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/graph-theory" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Graph Theory </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/optimization" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Optimization </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Advanced Topics </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/best-practices" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Best Practices </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/examples" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Examples </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/performance" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Performance </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/mutability" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mutability </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/io-persistence" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div>  <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex"> <!-- Left sidebar (navigation) --> <div class="hidden lg:flex lg:flex-shrink-0"> <div class="w-64 py-8 pr-8 border-r border-slate-800"> <div class="sticky top-20"> <nav class="space-y-8"> <div> <h3 class="font-display text-sm font-semibold text-white"> Getting Started </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/getting-started/introduction" class="block text-sm transition-colors text-slate-400 hover:text-white"> Introduction </a> </li><li> <a href="/docs/getting-started/installation" class="block text-sm transition-colors text-slate-400 hover:text-white"> Installation </a> </li><li> <a href="/docs/getting-started/syntax-basics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Syntax Basics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Core Language </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/core-language/data-types" class="block text-sm transition-colors text-slate-400 hover:text-white"> Data Types </a> </li><li> <a href="/docs/core-language/operators" class="block text-sm transition-colors text-slate-400 hover:text-white"> Operators </a> </li><li> <a href="/docs/core-language/variables" class="block text-sm transition-colors text-slate-400 hover:text-white"> Variables </a> </li><li> <a href="/docs/core-language/functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Functions </a> </li><li> <a href="/docs/core-language/control-flow" class="block text-sm transition-colors text-slate-400 hover:text-white"> Control Flow </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Data Structures </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/data-structures/arrays-tensors" class="block text-sm transition-colors text-slate-400 hover:text-white"> Arrays &amp; Tensors </a> </li><li> <a href="/docs/data-structures/indexing-slicing" class="block text-sm transition-colors text-slate-400 hover:text-white"> Indexing &amp; Slicing </a> </li><li> <a href="/docs/data-structures/records" class="block text-sm transition-colors text-slate-400 hover:text-white"> Records </a> </li><li> <a href="/docs/data-structures/strings" class="block text-sm transition-colors text-slate-400 hover:text-white"> Strings </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Functional Programming </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/functional-programming/higher-order-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Higher-Order Functions </a> </li><li> <a href="/docs/functional-programming/do-blocks" class="block text-sm transition-colors text-slate-400 hover:text-white"> Do Blocks </a> </li><li> <a href="/docs/functional-programming/recursion" class="block text-sm transition-colors text-slate-400 hover:text-white"> Recursion </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Mathematical Computing </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/mathematical-computing/mathematical-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mathematical Functions </a> </li><li> <a href="/docs/mathematical-computing/linear-algebra" class="block text-sm transition-colors text-slate-400 hover:text-white"> Linear Algebra </a> </li><li> <a href="/docs/mathematical-computing/complex-numbers" class="block text-sm transition-colors text-slate-400 hover:text-white"> Complex Numbers </a> </li><li> <a href="/docs/mathematical-computing/numerical-analysis" class="block text-sm transition-colors text-slate-400 hover:text-white"> Numerical Analysis </a> </li><li> <a href="/docs/mathematical-computing/statistics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Statistics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Specialized Modules </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/specialized-modules/dsp" class="block text-sm transition-colors text-slate-400 hover:text-white"> DSP </a> </li><li> <a href="/docs/specialized-modules/graph-theory" class="block text-sm transition-colors text-slate-400 hover:text-white"> Graph Theory </a> </li><li> <a href="/docs/specialized-modules/optimization" class="block text-sm transition-colors text-slate-400 hover:text-white"> Optimization </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Advanced Topics </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/advanced-topics/best-practices" class="block text-sm transition-colors text-slate-400 hover:text-white"> Best Practices </a> </li><li> <a href="/docs/advanced-topics/examples" class="block text-sm transition-colors text-slate-400 hover:text-white"> Examples </a> </li><li> <a href="/docs/advanced-topics/performance" class="block text-sm transition-colors text-slate-400 hover:text-white"> Performance </a> </li><li> <a href="/docs/advanced-topics/mutability" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mutability </a> </li><li> <a href="/docs/advanced-topics/io-persistence" class="block text-sm transition-colors text-slate-400 hover:text-white"> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div> </div> <!-- Main content --> <div class="min-w-0 flex-1 py-8 lg:pl-8"> <article class="prose prose-invert max-w-none"> <h1 class="font-display text-4xl font-bold tracking-tight text-white"> Best Practices </h1> <p class="lead text-xl text-slate-400"> Code style conventions, naming guidelines, function design patterns, performance optimization, and error handling strategies </p>  <p>This guide provides conventions, patterns, and recommendations for writing clean, maintainable, and performant Achronyme code.</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#code-style">Code Style</a></li>
+<li><a href="#naming-conventions">Naming Conventions</a></li>
+<li><a href="#function-design">Function Design</a></li>
+<li><a href="#working-with-data">Working with Data</a></li>
+<li><a href="#performance-guidelines">Performance Guidelines</a></li>
+<li><a href="#error-handling">Error Handling</a></li>
+<li><a href="#code-organization">Code Organization</a></li>
+<li><a href="#common-patterns">Common Patterns</a></li>
+<li><a href="#anti-patterns-to-avoid">Anti-Patterns to Avoid</a></li>
+</ol>
+<h2 id="code-style">Code Style</h2>
+<h3 id="indentation-and-formatting">Indentation and Formatting</h3>
+<p>Use <strong>consistent indentation</strong> (2 or 4 spaces):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ✅ Good: Consistent indentation</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> factorial</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> n</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">&#x3C;=</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, n </span><span style="color:#F97583">*</span><span style="color:#B392F0"> rec</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> complex</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let step1 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"><span style="color:#E1E4E8">    let step2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> step1 </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 10</span></span>
+<span class="line"><span style="color:#E1E4E8">    step2</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Multi-line for readability</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#B392F0"> pipe</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">    data,</span></span>
+<span class="line"><span style="color:#FFAB70">    x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">n</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, x),</span></span>
+<span class="line"><span style="color:#FFAB70">    x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">n</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">, x),</span></span>
+<span class="line"><span style="color:#FFAB70">    x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> reduce</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">acc</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">n</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> acc </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> n, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, x)</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span></code></pre>
+<h3 id="line-length">Line Length</h3>
+<p>Keep lines under <strong>80-100 characters</strong> when possible:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Too long</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#B392F0"> reallyLongFunctionName</span><span style="color:#E1E4E8">(parameter1, parameter2, parameter3, parameter4, parameter5)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Better: Break into multiple lines</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#B392F0"> reallyLongFunctionName</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">    parameter1,</span></span>
+<span class="line"><span style="color:#E1E4E8">    parameter2,</span></span>
+<span class="line"><span style="color:#E1E4E8">    parameter3,</span></span>
+<span class="line"><span style="color:#E1E4E8">    parameter4,</span></span>
+<span class="line"><span style="color:#E1E4E8">    parameter5</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span></code></pre>
+<h3 id="whitespace">Whitespace</h3>
+<p>Use whitespace for readability:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Cramped</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> f</span><span style="color:#F97583">=</span><span style="color:#FFAB70">x</span><span style="color:#F97583">=></span><span style="color:#E1E4E8">x</span><span style="color:#F97583">*</span><span style="color:#79B8FF">2</span><span style="color:#F97583">+</span><span style="color:#79B8FF">5</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Readable</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> f</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583"> +</span><span style="color:#79B8FF"> 5</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Group related operations</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> analyze</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let cleaned </span><span style="color:#F97583">=</span><span style="color:#B392F0"> filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, data)</span></span>
+<span class="line"><span style="color:#E1E4E8">    let normalized </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">/</span><span style="color:#79B8FF"> 100</span><span style="color:#E1E4E8">, cleaned)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    let mean_val </span><span style="color:#F97583">=</span><span style="color:#B392F0"> sum</span><span style="color:#E1E4E8">(normalized) </span><span style="color:#F97583">/</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(normalized)</span></span>
+<span class="line"><span style="color:#E1E4E8">    let variance </span><span style="color:#F97583">=</span><span style="color:#B392F0"> sum</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> (x </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> mean_val)</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, normalized)) </span><span style="color:#F97583">/</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(normalized)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    {</span><span style="color:#B392F0">mean</span><span style="color:#E1E4E8">: mean_val, </span><span style="color:#B392F0">variance</span><span style="color:#E1E4E8">: variance}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="comments">Comments</h3>
+<p>Write comments that explain <strong>why</strong>, not <strong>what</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Bad: Obvious comment</span></span>
+<span class="line"><span style="color:#6A737D">// Multiply x by 2</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> double</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Explains reasoning</span></span>
+<span class="line"><span style="color:#6A737D">// Use trapezoid rule for better accuracy with non-smooth functions</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> area </span><span style="color:#F97583">=</span><span style="color:#B392F0"> trapz</span><span style="color:#E1E4E8">(f, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Documents limitations</span></span>
+<span class="line"><span style="color:#6A737D">// Factorial (limited to n &#x3C; 40 due to recursion depth)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> factorial</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> n</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">&#x3C;=</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, n </span><span style="color:#F97583">*</span><span style="color:#B392F0"> rec</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Explains complex logic</span></span>
+<span class="line"><span style="color:#6A737D">// Normalize to [0, 1] range to prevent numerical instability</span></span>
+<span class="line"><span style="color:#6A737D">// in downstream calculations</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> normalized </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#FFAB70">    x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> (x </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> min_val) </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> (max_val </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> min_val),</span></span>
+<span class="line"><span style="color:#E1E4E8">    data</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span></code></pre>
+<h2 id="naming-conventions">Naming Conventions</h2>
+<h3 id="variables">Variables</h3>
+<p>Use <strong>descriptive, snake_case names</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Bad: Unclear abbreviations</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> d </span><span style="color:#F97583">=</span><span style="color:#B392F0"> getData</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">=</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(d)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> m </span><span style="color:#F97583">=</span><span style="color:#B392F0"> sum</span><span style="color:#E1E4E8">(d) </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> n</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Clear, descriptive</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> data </span><span style="color:#F97583">=</span><span style="color:#B392F0"> getData</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> count </span><span style="color:#F97583">=</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(data)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> mean_value </span><span style="color:#F97583">=</span><span style="color:#B392F0"> sum</span><span style="color:#E1E4E8">(data) </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> count</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Mathematical conventions are OK</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 5</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> y </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 10</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> theta </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 3.14159</span><span style="color:#F97583"> /</span><span style="color:#79B8FF"> 4</span></span></code></pre>
+<h3 id="functions">Functions</h3>
+<p>Use <strong>descriptive, verb-based names</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Bad: Unclear purpose</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> proc</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583"> +</span><span style="color:#79B8FF"> 5</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Clear intent</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> calculateScore</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583"> +</span><span style="color:#79B8FF"> 5</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> normalizeData</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">/</span><span style="color:#B392F0"> max</span><span style="color:#E1E4E8">(data), data)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> isValid</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> value</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> value </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#F97583"> &#x26;&#x26;</span><span style="color:#E1E4E8"> value </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 100</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Boolean functions use 'is', 'has', 'can'</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> isEven</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> n</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">%</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583"> ==</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> hasValue</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> arr</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(arr) </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> canProcess</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> state</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> state.ready </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> true</span></span></code></pre>
+<h3 id="records">Records</h3>
+<p>Use <strong>PascalCase for constructors</strong>, <strong>camelCase for fields</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ✅ Good: Constructor in PascalCase</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> Point </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    new</span><span style="color:#E1E4E8">: (</span><span style="color:#FFAB70">x</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">y</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">        x</span><span style="color:#E1E4E8">: x,</span></span>
+<span class="line"><span style="color:#B392F0">        y</span><span style="color:#E1E4E8">: y,</span></span>
+<span class="line"><span style="color:#B392F0">        distance</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#B392F0"> sqrt</span><span style="color:#E1E4E8">(self.x</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> self.y</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Instance fields in camelCase or snake_case</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> user </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    firstName: </span><span style="color:#9ECBFF">"Alice"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    lastName: </span><span style="color:#9ECBFF">"Smith"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    email_address: </span><span style="color:#9ECBFF">"alice@example.com"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    isActive: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="constants">Constants</h3>
+<p>Use <strong>UPPER_SNAKE_CASE</strong> for constants:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> PI</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 3.14159265359</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> SPEED_OF_LIGHT</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 299792458</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> MAX_ITERATIONS</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 1000</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> DEFAULT_TOLERANCE</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 1e-6</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> circleArea</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> radius</span><span style="color:#F97583"> =></span><span style="color:#79B8FF"> PI</span><span style="color:#F97583"> *</span><span style="color:#E1E4E8"> radius</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span></span></code></pre>
+<h2 id="function-design">Function Design</h2>
+<h3 id="keep-functions-small-and-focused">Keep Functions Small and Focused</h3>
+<p>Each function should do <strong>one thing well</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Bad: Does too much</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> processAndAnalyze</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let cleaned </span><span style="color:#F97583">=</span><span style="color:#B392F0"> filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, data)</span></span>
+<span class="line"><span style="color:#E1E4E8">    let normalized </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">/</span><span style="color:#79B8FF"> 100</span><span style="color:#E1E4E8">, cleaned)</span></span>
+<span class="line"><span style="color:#E1E4E8">    let mean </span><span style="color:#F97583">=</span><span style="color:#B392F0"> sum</span><span style="color:#E1E4E8">(normalized) </span><span style="color:#F97583">/</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(normalized)</span></span>
+<span class="line"><span style="color:#E1E4E8">    let std </span><span style="color:#F97583">=</span><span style="color:#B392F0"> sqrt</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">sum</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> (x </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> mean)</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, normalized)) </span><span style="color:#F97583">/</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(normalized))</span></span>
+<span class="line"><span style="color:#E1E4E8">    let report </span><span style="color:#F97583">=</span><span style="color:#B392F0"> concat</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Mean: "</span><span style="color:#E1E4E8">, mean)</span></span>
+<span class="line"><span style="color:#E1E4E8">    {</span><span style="color:#B392F0">data</span><span style="color:#E1E4E8">: normalized, </span><span style="color:#B392F0">mean</span><span style="color:#E1E4E8">: mean, </span><span style="color:#B392F0">std</span><span style="color:#E1E4E8">: std, </span><span style="color:#B392F0">report</span><span style="color:#E1E4E8">: report}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Separate concerns</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> cleanData</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, data)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> normalizeData</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">/</span><span style="color:#B392F0"> max</span><span style="color:#E1E4E8">(data), data)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> calculateStats</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let mean </span><span style="color:#F97583">=</span><span style="color:#B392F0"> sum</span><span style="color:#E1E4E8">(data) </span><span style="color:#F97583">/</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(data)</span></span>
+<span class="line"><span style="color:#E1E4E8">    let variance </span><span style="color:#F97583">=</span><span style="color:#B392F0"> sum</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> (x </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> mean)</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, data)) </span><span style="color:#F97583">/</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(data)</span></span>
+<span class="line"><span style="color:#E1E4E8">    {</span><span style="color:#B392F0">mean</span><span style="color:#E1E4E8">: mean, </span><span style="color:#B392F0">std</span><span style="color:#E1E4E8">: </span><span style="color:#B392F0">sqrt</span><span style="color:#E1E4E8">(variance)}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> formatReport</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> stats</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    concat</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Mean: "</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">concat</span><span style="color:#E1E4E8">(stats.mean, </span><span style="color:#B392F0">concat</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">", Std: "</span><span style="color:#E1E4E8">, stats.std)))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Compose them</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> analyze</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let cleaned </span><span style="color:#F97583">=</span><span style="color:#B392F0"> cleanData</span><span style="color:#E1E4E8">(data)</span></span>
+<span class="line"><span style="color:#E1E4E8">    let normalized </span><span style="color:#F97583">=</span><span style="color:#B392F0"> normalizeData</span><span style="color:#E1E4E8">(cleaned)</span></span>
+<span class="line"><span style="color:#E1E4E8">    let stats </span><span style="color:#F97583">=</span><span style="color:#B392F0"> calculateStats</span><span style="color:#E1E4E8">(normalized)</span></span>
+<span class="line"><span style="color:#E1E4E8">    {</span><span style="color:#B392F0">data</span><span style="color:#E1E4E8">: normalized, </span><span style="color:#B392F0">stats</span><span style="color:#E1E4E8">: stats, </span><span style="color:#B392F0">report</span><span style="color:#E1E4E8">: </span><span style="color:#B392F0">formatReport</span><span style="color:#E1E4E8">(stats)}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="prefer-expression-bodies">Prefer Expression Bodies</h3>
+<p>Use simple expressions when possible:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ✅ Good: Simple expression</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> square</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> double</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> isPositive</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Use do blocks for multi-step</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> complex</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let doubled </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"><span style="color:#E1E4E8">    let squared </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> doubled</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#E1E4E8">    squared + </span><span style="color:#79B8FF">10</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="avoid-deep-nesting">Avoid Deep Nesting</h3>
+<p>Flatten nested conditions:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Bad: Deep nesting</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> categorize</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(x </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">        "negative"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">        if</span><span style="color:#E1E4E8">(x </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">            "zero"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">            if</span><span style="color:#E1E4E8">(x </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 10</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">                "small"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">                if</span><span style="color:#E1E4E8">(x </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 100</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">                    "medium"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">                    "large"</span><span style="color:#E1E4E8">))))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Use piecewise</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> categorize</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> piecewise</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">    [x </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"negative"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [x </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"zero"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [x </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 10</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"small"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [x </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 100</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"medium"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#9ECBFF">    "large"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Early returns with if chains</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> categorize</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(x </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"negative"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(x </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"zero"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(x </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 10</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"small"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(x </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 100</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"medium"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"large"</span><span style="color:#E1E4E8">))))</span></span></code></pre>
+<h3 id="use-descriptive-parameters">Use Descriptive Parameters</h3>
+<p>Make parameter purpose clear:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Bad: Unclear parameters</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> calc</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">a</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">b</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">c</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> b </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> c</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Clear parameters</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> calculatePrice</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">quantity</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">unitPrice</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">shipping</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span></span>
+<span class="line"><span style="color:#E1E4E8">    quantity </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> unitPrice </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> shipping</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Use records for many parameters</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> createUser</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> params</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    name</span><span style="color:#E1E4E8">: params.name,</span></span>
+<span class="line"><span style="color:#B392F0">    email</span><span style="color:#E1E4E8">: params.email,</span></span>
+<span class="line"><span style="color:#B392F0">    age</span><span style="color:#E1E4E8">: params.age,</span></span>
+<span class="line"><span style="color:#B392F0">    role</span><span style="color:#E1E4E8">: params.role</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> user </span><span style="color:#F97583">=</span><span style="color:#B392F0"> createUser</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    name: </span><span style="color:#9ECBFF">"Alice"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    email: </span><span style="color:#9ECBFF">"alice@example.com"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    age: </span><span style="color:#79B8FF">30</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    role: </span><span style="color:#9ECBFF">"admin"</span></span>
+<span class="line"><span style="color:#E1E4E8">})</span></span></code></pre>
+<h2 id="working-with-data">Working with Data</h2>
+<h3 id="prefer-immutability">Prefer Immutability</h3>
+<p>Don’t try to mutate; create new values:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ✅ Good: Create new arrays</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> numbers </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> doubled </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">, numbers)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> extended </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">numbers, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Create new records</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> user </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {name: </span><span style="color:#9ECBFF">"Alice"</span><span style="color:#E1E4E8">, age: </span><span style="color:#79B8FF">30</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> updated </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">user, age: </span><span style="color:#79B8FF">31</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> withRole </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">user, role: </span><span style="color:#9ECBFF">"admin"</span><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="use-shadowing-for-updates">Use Shadowing for “Updates”</h3>
+<p>Shadowing creates new bindings:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ✅ Good: Shadow to "update"</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 10</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 5</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"><span style="color:#6A737D">// x is now 30</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Shadow in do blocks</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let data </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">    let data </span><span style="color:#F97583">=</span><span style="color:#B392F0"> filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">, data)</span></span>
+<span class="line"><span style="color:#E1E4E8">    let data </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">, data)</span></span>
+<span class="line"><span style="color:#E1E4E8">    data</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="leverage-higher-order-functions">Leverage Higher-Order Functions</h3>
+<p>Use <code>map</code>, <code>filter</code>, <code>reduce</code> instead of recursion:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Avoid: Manual recursion</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> doubleAll</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> arr</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">length</span><span style="color:#E1E4E8">(arr) </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, [], [arr[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">...</span><span style="color:#B392F0">rec</span><span style="color:#E1E4E8">(arr[</span><span style="color:#79B8FF">1.</span><span style="color:#E1E4E8">.])])</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Use map</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> doubleAll</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> arr</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">, arr)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ❌ Avoid: Manual accumulation</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> sumAll</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> arr</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">length</span><span style="color:#E1E4E8">(arr) </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, arr[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">+</span><span style="color:#B392F0"> rec</span><span style="color:#E1E4E8">(arr[</span><span style="color:#79B8FF">1.</span><span style="color:#E1E4E8">.]))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Use reduce or built-in</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> sumAll</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> arr</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> reduce</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">acc</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">x</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> acc </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> x, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, arr)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> sumAll</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> arr</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> sum</span><span style="color:#E1E4E8">(arr)  </span><span style="color:#6A737D">// Even better</span></span></code></pre>
+<h3 id="use-pipe-for-transformations">Use Pipe for Transformations</h3>
+<p>Chain operations with <code>pipe</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Nested function calls (hard to read)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#B392F0"> reduce</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">    (</span><span style="color:#FFAB70">acc</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">x</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> acc </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> x,</span></span>
+<span class="line"><span style="color:#79B8FF">    0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">    map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, data))</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Use pipe (reads left-to-right)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#B392F0"> pipe</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">    data,</span></span>
+<span class="line"><span style="color:#FFAB70">    x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">n</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, x),</span></span>
+<span class="line"><span style="color:#FFAB70">    x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">n</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> n</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, x),</span></span>
+<span class="line"><span style="color:#FFAB70">    x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> reduce</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">acc</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">n</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> acc </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> n, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, x)</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span></code></pre>
+<h3 id="destructure-with-indexing">Destructure with Indexing</h3>
+<p>Access record fields clearly:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ✅ Good: Direct field access</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> user </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {name: </span><span style="color:#9ECBFF">"Alice"</span><span style="color:#E1E4E8">, age: </span><span style="color:#79B8FF">30</span><span style="color:#E1E4E8">, email: </span><span style="color:#9ECBFF">"alice@example.com"</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> name </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> user.name</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> age </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> user.age</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Process record fields</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> displayUser</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> user</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    concat</span><span style="color:#E1E4E8">(user.name, </span><span style="color:#B392F0">concat</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">" ("</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">concat</span><span style="color:#E1E4E8">(user.age, </span><span style="color:#9ECBFF">")"</span><span style="color:#E1E4E8">)))</span></span></code></pre>
+<h2 id="performance-guidelines">Performance Guidelines</h2>
+<h3 id="avoid-deep-recursion">Avoid Deep Recursion</h3>
+<p><strong>Limit recursion to ~40 calls</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Bad: Deep recursion</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> range</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> n</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">    (</span><span style="color:#FFAB70">left</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">current</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">vector</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span></span>
+<span class="line"><span style="color:#B392F0">        if</span><span style="color:#E1E4E8">(left </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, vector, </span><span style="color:#B392F0">rec</span><span style="color:#E1E4E8">(left </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">, current </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">, [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">vector, current]))</span></span>
+<span class="line"><span style="color:#E1E4E8">)(n, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, [])</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">range</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// Stack overflow!</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Use built-ins</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> range</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> n</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> linspace</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, n </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">, n)</span></span>
+<span class="line"><span style="color:#B392F0">range</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1000</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// Works!</span></span></code></pre>
+<h3 id="use-built-in-functions">Use Built-in Functions</h3>
+<p>Built-in functions are optimized:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Slower: Manual implementation</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> mySum</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> arr</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> reduce</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">acc</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">x</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> acc </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> x, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, arr)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Faster: Built-in</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> total </span><span style="color:#F97583">=</span><span style="color:#B392F0"> sum</span><span style="color:#E1E4E8">(arr)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Built-ins to prefer:</span></span>
+<span class="line"><span style="color:#6A737D">// - sum, mean, std, min, max</span></span>
+<span class="line"><span style="color:#6A737D">// - map, filter, reduce</span></span>
+<span class="line"><span style="color:#6A737D">// - linspace, zeros, ones</span></span>
+<span class="line"><span style="color:#6A737D">// - fft, conv, dot, transpose</span></span></code></pre>
+<h3 id="minimize-array-copying">Minimize Array Copying</h3>
+<p>Avoid unnecessary array spreading:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Bad: Creates many intermediate arrays</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let arr </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">    let arr </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">arr, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">    let arr </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">arr, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">    let arr </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">arr, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">    arr</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Build once</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">], </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Even better: Use literals</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">]</span></span></code></pre>
+<h3 id="cache-expensive-computations">Cache Expensive Computations</h3>
+<p>Store results in variables:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Bad: Recomputes max three times</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> normalize</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let normalized </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">/</span><span style="color:#B392F0"> max</span><span style="color:#E1E4E8">(data), data)</span></span>
+<span class="line"><span style="color:#E1E4E8">    let scaled </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#B392F0"> max</span><span style="color:#E1E4E8">(data), normalized)</span></span>
+<span class="line"><span style="color:#E1E4E8">    {</span><span style="color:#B392F0">normalized</span><span style="color:#E1E4E8">: normalized, </span><span style="color:#B392F0">max</span><span style="color:#E1E4E8">: </span><span style="color:#B392F0">max</span><span style="color:#E1E4E8">(data)}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Compute once</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> normalize</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let max_value </span><span style="color:#F97583">=</span><span style="color:#B392F0"> max</span><span style="color:#E1E4E8">(data)</span></span>
+<span class="line"><span style="color:#E1E4E8">    let normalized </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> max_value, data)</span></span>
+<span class="line"><span style="color:#E1E4E8">    let scaled </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> max_value, normalized)</span></span>
+<span class="line"><span style="color:#E1E4E8">    {</span><span style="color:#B392F0">normalized</span><span style="color:#E1E4E8">: normalized, </span><span style="color:#B392F0">max</span><span style="color:#E1E4E8">: max_value}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="be-aware-of-exponential-complexity">Be Aware of Exponential Complexity</h3>
+<p>Avoid exponentially branching recursion:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Bad: Exponential time complexity</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> fib</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> n</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">&#x3C;=</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">, n, </span><span style="color:#B392F0">rec</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">+</span><span style="color:#B392F0"> rec</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">fib</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">30</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// Very slow!</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Better: Document limitation</span></span>
+<span class="line"><span style="color:#6A737D">// Fibonacci (use only for n &#x3C; 20)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> fib</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> n</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">&#x3C;=</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">, n, </span><span style="color:#B392F0">rec</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">+</span><span style="color:#B392F0"> rec</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">))</span></span></code></pre>
+<h2 id="error-handling">Error Handling</h2>
+<h3 id="validate-input">Validate Input</h3>
+<p>Check preconditions early:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ✅ Good: Validate input</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> safeDivide</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">a</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">b</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(b </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Division by zero"</span><span style="color:#E1E4E8">), a </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> b)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> safeSqrt</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(x </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Cannot take square root of negative"</span><span style="color:#E1E4E8">), </span><span style="color:#B392F0">sqrt</span><span style="color:#E1E4E8">(x))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Range validation</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> factorial</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> n</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Factorial undefined for negative numbers"</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 40</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Factorial limited to n &#x3C;= 40 (recursion depth)"</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">&#x3C;=</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, n </span><span style="color:#F97583">*</span><span style="color:#B392F0"> rec</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">))))</span></span></code></pre>
+<h3 id="provide-meaningful-error-messages">Provide Meaningful Error Messages</h3>
+<p>Help users understand what went wrong:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Bad: Vague error</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> process</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(x </span><span style="color:#F97583">&#x3C;=</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Invalid"</span><span style="color:#E1E4E8">), </span><span style="color:#B392F0">process_internal</span><span style="color:#E1E4E8">(x))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Specific error</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> process</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(x </span><span style="color:#F97583">&#x3C;=</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">        error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Input must be positive, got: "</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> x),</span></span>
+<span class="line"><span style="color:#B392F0">        process_internal</span><span style="color:#E1E4E8">(x))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Explain constraints</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> factorial</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> n</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 40</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">        error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Factorial limited to n &#x3C;= 40 due to recursion depth limit"</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#B392F0">        if</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">&#x3C;=</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, n </span><span style="color:#F97583">*</span><span style="color:#B392F0"> rec</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">)))</span></span></code></pre>
+<h3 id="use-piecewise-for-multiple-conditions">Use Piecewise for Multiple Conditions</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ✅ Good: Clear validation</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> validateAge</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> age</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> piecewise</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">    [age </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Age cannot be negative"</span><span style="color:#E1E4E8">)],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [age </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 150</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Age unrealistic (> 150)"</span><span style="color:#E1E4E8">)],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [age </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 18</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"minor"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#9ECBFF">    "adult"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span></code></pre>
+<h3 id="document-edge-cases">Document Edge Cases</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ✅ Good: Document behavior</span></span>
+<span class="line"><span style="color:#6A737D">// Returns 0 for empty array (mathematical convention)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> mean</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> arr</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">length</span><span style="color:#E1E4E8">(arr) </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">sum</span><span style="color:#E1E4E8">(arr) </span><span style="color:#F97583">/</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(arr))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Handle null/undefined</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> safeAccess</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> record</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(record </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> null</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">        error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Record is null"</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#E1E4E8">        record.field)</span></span></code></pre>
+<h2 id="code-organization">Code Organization</h2>
+<h3 id="group-related-functions">Group Related Functions</h3>
+<p>Organize code by functionality:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ✅ Good: Group related operations</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// === Vector operations ===</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> vectorAdd</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">v1</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">v2</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">x</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">i</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> v2[i], v1)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> vectorScale</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">v</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">scalar</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> scalar, v)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> vectorDot</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">v1</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">v2</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> sum</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">map</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">x</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">i</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> v2[i], v1))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// === Statistical functions ===</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> mean</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> sum</span><span style="color:#E1E4E8">(data) </span><span style="color:#F97583">/</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(data)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> variance</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let m </span><span style="color:#F97583">=</span><span style="color:#B392F0"> mean</span><span style="color:#E1E4E8">(data)</span></span>
+<span class="line"><span style="color:#B392F0">    sum</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> (x </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> m)</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">data</span><span style="color:#E1E4E8">)) / </span><span style="color:#B392F0">length</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">data</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> stdDev</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> sqrt</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">variance</span><span style="color:#E1E4E8">(data))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// === Data cleaning ===</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> removeOutliers</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let m </span><span style="color:#F97583">=</span><span style="color:#B392F0"> mean</span><span style="color:#E1E4E8">(data)</span></span>
+<span class="line"><span style="color:#E1E4E8">    let s </span><span style="color:#F97583">=</span><span style="color:#B392F0"> stdDev</span><span style="color:#E1E4E8">(data)</span></span>
+<span class="line"><span style="color:#B392F0">    filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> abs</span><span style="color:#E1E4E8">(x </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> m) </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583"> *</span><span style="color:#E1E4E8"> s, </span><span style="color:#FFAB70">data</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="use-records-for-namespacing">Use Records for Namespacing</h3>
+<p>Group related functionality:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ✅ Good: Namespace with records</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> Math </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    square</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">    cube</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">^</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">    pow</span><span style="color:#E1E4E8">: (</span><span style="color:#FFAB70">x</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">n</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">^</span><span style="color:#E1E4E8">n,</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    isEven</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">n</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">%</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583"> ==</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">    isOdd</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">n</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">%</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583"> ==</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> Stats </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    mean</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">data</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> sum</span><span style="color:#E1E4E8">(data) </span><span style="color:#F97583">/</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(data),</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    median</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">data</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">        let sorted </span><span style="color:#F97583">=</span><span style="color:#B392F0"> sort</span><span style="color:#E1E4E8">(data)</span></span>
+<span class="line"><span style="color:#E1E4E8">        let n </span><span style="color:#F97583">=</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(sorted)</span></span>
+<span class="line"><span style="color:#E1E4E8">        let mid </span><span style="color:#F97583">=</span><span style="color:#B392F0"> floor</span><span style="color:#E1E4E8">(n </span><span style="color:#F97583">/</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#B392F0">        if</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">n</span><span style="color:#E1E4E8"> % 2 == 0,</span></span>
+<span class="line"><span style="color:#E1E4E8">            (</span><span style="color:#FFAB70">sorted</span><span style="color:#E1E4E8">[</span><span style="color:#FFAB70">mid</span><span style="color:#E1E4E8"> - </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">] + </span><span style="color:#FFAB70">sorted</span><span style="color:#E1E4E8">[</span><span style="color:#FFAB70">mid</span><span style="color:#E1E4E8">]) / 2,</span></span>
+<span class="line"><span style="color:#E1E4E8">            sorted[mid])</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    std: </span><span style="color:#FFAB70">data</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> sqrt</span><span style="color:#E1E4E8">(Stats.</span><span style="color:#B392F0">variance</span><span style="color:#E1E4E8">(data)),</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    variance</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">data</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">        let m </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Stats.</span><span style="color:#B392F0">mean</span><span style="color:#E1E4E8">(data)</span></span>
+<span class="line"><span style="color:#B392F0">        sum</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> (x </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> m)</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">data</span><span style="color:#E1E4E8">)) / </span><span style="color:#B392F0">length</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">data</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Usage</span></span>
+<span class="line"><span style="color:#E1E4E8">let avg </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Stats.</span><span style="color:#B392F0">mean</span><span style="color:#E1E4E8">([</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#E1E4E8">let s </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Stats.</span><span style="color:#B392F0">std</span><span style="color:#E1E4E8">([</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">])</span></span></code></pre>
+<h3 id="build-reusable-components">Build Reusable Components</h3>
+<p>Create composable utilities:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ✅ Good: Reusable components</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> compose</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">f</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">g</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> f</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">g</span><span style="color:#E1E4E8">(x))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> partial</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">f</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">...</span><span style="color:#FFAB70">args</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> (</span><span style="color:#F97583">...</span><span style="color:#FFAB70">rest</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> f</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">args, </span><span style="color:#F97583">...</span><span style="color:#E1E4E8">rest)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> curry</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> f</span><span style="color:#F97583"> =></span><span style="color:#FFAB70"> a</span><span style="color:#F97583"> =></span><span style="color:#FFAB70"> b</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> f</span><span style="color:#E1E4E8">(a, b)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Usage</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> double</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> addOne</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> doubleAndAddOne </span><span style="color:#F97583">=</span><span style="color:#B392F0"> compose</span><span style="color:#E1E4E8">(addOne, double)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">doubleAndAddOne</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// 11</span></span></code></pre>
+<h2 id="common-patterns">Common Patterns</h2>
+<h3 id="factory-pattern">Factory Pattern</h3>
+<p>Create object constructors:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ✅ Good: Factory pattern</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> Point </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    new</span><span style="color:#E1E4E8">: (</span><span style="color:#FFAB70">x</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">y</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">        x</span><span style="color:#E1E4E8">: x,</span></span>
+<span class="line"><span style="color:#B392F0">        y</span><span style="color:#E1E4E8">: y,</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">        distance</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#B392F0"> sqrt</span><span style="color:#E1E4E8">(self.x</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> self.y</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">        add</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">other</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> Point.</span><span style="color:#B392F0">new</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">            self.x </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> other.x,</span></span>
+<span class="line"><span style="color:#E1E4E8">            self.y </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> other.y</span></span>
+<span class="line"><span style="color:#E1E4E8">        ),</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">        scale</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">factor</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> Point.</span><span style="color:#B392F0">new</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">            self.x </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> factor,</span></span>
+<span class="line"><span style="color:#E1E4E8">            self.y </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> factor</span></span>
+<span class="line"><span style="color:#E1E4E8">        )</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Usage</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> p1 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Point.</span><span style="color:#B392F0">new</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> p2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Point.</span><span style="color:#B392F0">new</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> p3 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> p1.</span><span style="color:#B392F0">add</span><span style="color:#E1E4E8">(p2)</span></span></code></pre>
+<h3 id="builder-pattern">Builder Pattern</h3>
+<p>Construct objects step-by-step:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ✅ Good: Builder pattern</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> QueryBuilder </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    empty: {</span></span>
+<span class="line"><span style="color:#E1E4E8">        table: </span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        columns: [],</span></span>
+<span class="line"><span style="color:#E1E4E8">        where: [],</span></span>
+<span class="line"><span style="color:#E1E4E8">        limit: </span><span style="color:#79B8FF">null</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">        from</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">t</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> {</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">self, </span><span style="color:#B392F0">table</span><span style="color:#E1E4E8">: t},</span></span>
+<span class="line"><span style="color:#B392F0">        select</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">cols</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> {</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">self, </span><span style="color:#B392F0">columns</span><span style="color:#E1E4E8">: cols},</span></span>
+<span class="line"><span style="color:#B392F0">        where</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">cond</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> {</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">self, </span><span style="color:#B392F0">where</span><span style="color:#E1E4E8">: [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">self.where, cond]},</span></span>
+<span class="line"><span style="color:#B392F0">        limit</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">n</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> {</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">self, </span><span style="color:#B392F0">limit</span><span style="color:#E1E4E8">: n}</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Usage</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> query </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> QueryBuilder.empty</span></span>
+<span class="line"><span style="color:#E1E4E8">    .</span><span style="color:#B392F0">from</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"users"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    .</span><span style="color:#B392F0">select</span><span style="color:#E1E4E8">([</span><span style="color:#9ECBFF">"name"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"email"</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#E1E4E8">    .</span><span style="color:#B392F0">where</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"age > 18"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    .</span><span style="color:#B392F0">limit</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<h3 id="pipeline-pattern">Pipeline Pattern</h3>
+<p>Transform data through stages:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ✅ Good: Pipeline pattern</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> processPipeline</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> pipe</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">    data,</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // Stage 1: Clean</span></span>
+<span class="line"><span style="color:#FFAB70">    x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">n</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> null</span><span style="color:#E1E4E8">, x),</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // Stage 2: Transform</span></span>
+<span class="line"><span style="color:#FFAB70">    x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">n</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">, x),</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // Stage 3: Aggregate</span></span>
+<span class="line"><span style="color:#FFAB70">    x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> reduce</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">acc</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">n</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> acc </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> n, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, x)</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span></code></pre>
+<h3 id="strategy-pattern">Strategy Pattern</h3>
+<p>Select algorithm dynamically:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ✅ Good: Strategy pattern</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> Sorter </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    quick</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">arr</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> quicksort</span><span style="color:#E1E4E8">(arr),</span></span>
+<span class="line"><span style="color:#B392F0">    bubble</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">arr</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> bubblesort</span><span style="color:#E1E4E8">(arr),</span></span>
+<span class="line"><span style="color:#B392F0">    merge</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">arr</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> mergesort</span><span style="color:#E1E4E8">(arr)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> sort</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">arr</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">strategy</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> strategy</span><span style="color:#E1E4E8">(arr)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Usage</span></span>
+<span class="line"><span style="color:#B392F0">sort</span><span style="color:#E1E4E8">(data, Sorter.quick)</span></span></code></pre>
+<h3 id="guard-pattern">Guard Pattern</h3>
+<p>Validate before processing:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ✅ Good: Guard pattern</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> processUser</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> user</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(user </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> null</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">        error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"User is null"</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(user.age </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">        error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Invalid age"</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(user.name </span><span style="color:#F97583">==</span><span style="color:#9ECBFF"> ""</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">        error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Name is empty"</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#6A737D">        // Process valid user</span></span>
+<span class="line"><span style="color:#E1E4E8">        {</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">user, processed: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">})))</span></span></code></pre>
+<h2 id="anti-patterns-to-avoid">Anti-Patterns to Avoid</h2>
+<h3 id="dont-use-magic-numbers">Don’t Use Magic Numbers</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Bad: Magic numbers</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> score </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> points </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 0.85</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> bonus </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 1.5</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Named constants</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> POINTS_MULTIPLIER</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 0.85</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> BONUS_MULTIPLIER</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 1.5</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> score </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> points </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> POINTS_MULTIPLIER</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> bonus </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> BONUS_MULTIPLIER</span></span></code></pre>
+<h3 id="dont-repeat-yourself-dry">Don’t Repeat Yourself (DRY)</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Bad: Repetition</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> processA</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">, data))</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> processB</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 3</span><span style="color:#E1E4E8">, data))</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> processC</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 4</span><span style="color:#E1E4E8">, data))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Extract common pattern</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> processWithMultiplier</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">data</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">multiplier</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span></span>
+<span class="line"><span style="color:#B392F0">    filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> multiplier, data))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> processA</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> processWithMultiplier</span><span style="color:#E1E4E8">(data, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> processB</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> processWithMultiplier</span><span style="color:#E1E4E8">(data, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> processC</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> processWithMultiplier</span><span style="color:#E1E4E8">(data, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<h3 id="dont-over-abstract">Don’t Over-Abstract</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Bad: Over-engineered</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> AbstractFactory </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    create</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">type</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> FactoryRegistry[type].</span><span style="color:#B392F0">instantiate</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Keep it simple</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> createUser</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">name</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">age</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span><span style="color:#B392F0">name</span><span style="color:#E1E4E8">: name, </span><span style="color:#B392F0">age</span><span style="color:#E1E4E8">: age}</span></span></code></pre>
+<h3 id="dont-use-cryptic-names">Don’t Use Cryptic Names</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Bad: Unclear abbreviations</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> proc</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> d</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> d.</span><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x.val </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">flt</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Clear names</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> processData</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x.value </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">, data))</span></span></code></pre>
+<h3 id="dont-ignore-edge-cases">Don’t Ignore Edge Cases</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Bad: Doesn't handle empty array</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> average</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> arr</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> sum</span><span style="color:#E1E4E8">(arr) </span><span style="color:#F97583">/</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(arr)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">average</span><span style="color:#E1E4E8">([])  </span><span style="color:#6A737D">// Division by zero!</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Handle edge cases</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> average</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> arr</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">length</span><span style="color:#E1E4E8">(arr) </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        0</span><span style="color:#E1E4E8">,  </span><span style="color:#6A737D">// or error("Cannot average empty array")</span></span>
+<span class="line"><span style="color:#B392F0">        sum</span><span style="color:#E1E4E8">(arr) </span><span style="color:#F97583">/</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(arr))</span></span></code></pre>
+<h3 id="dont-write-monolithic-functions">Don’t Write Monolithic Functions</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Bad: Does everything</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> analyzeAndReport</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // 100 lines of code...</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Good: Break into pieces</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> cleanData</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#F97583"> ...</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> analyzeData</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#F97583"> ...</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> formatReport</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> analysis</span><span style="color:#F97583"> =></span><span style="color:#F97583"> ...</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> analyzeAndReport</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let cleaned </span><span style="color:#F97583">=</span><span style="color:#B392F0"> cleanData</span><span style="color:#E1E4E8">(data)</span></span>
+<span class="line"><span style="color:#E1E4E8">    let analysis </span><span style="color:#F97583">=</span><span style="color:#B392F0"> analyzeData</span><span style="color:#E1E4E8">(cleaned)</span></span>
+<span class="line"><span style="color:#B392F0">    formatReport</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">analysis</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="summary">Summary</h2>
+<p><strong>Code Style</strong>:</p>
+<ul>
+<li>Consistent indentation and formatting</li>
+<li>Meaningful whitespace</li>
+<li>Comments explain “why”, not “what”</li>
+</ul>
+<p><strong>Naming</strong>:</p>
+<ul>
+<li>snake_case for variables and functions</li>
+<li>PascalCase for constructors</li>
+<li>UPPER_SNAKE_CASE for constants</li>
+<li>Descriptive, clear names</li>
+</ul>
+<p><strong>Functions</strong>:</p>
+<ul>
+<li>Small and focused (one responsibility)</li>
+<li>Prefer expressions over complex bodies</li>
+<li>Use do blocks for multi-step logic</li>
+<li>Descriptive parameters</li>
+</ul>
+<p><strong>Data</strong>:</p>
+<ul>
+<li>Embrace immutability</li>
+<li>Use higher-order functions</li>
+<li>Leverage pipe for transformations</li>
+<li>Shadow for “updates”</li>
+</ul>
+<p><strong>Performance</strong>:</p>
+<ul>
+<li>Avoid deep recursion (> 40 calls)</li>
+<li>Use built-in functions</li>
+<li>Cache expensive computations</li>
+<li>Be aware of complexity</li>
+</ul>
+<p><strong>Organization</strong>:</p>
+<ul>
+<li>Group related functions</li>
+<li>Use records for namespacing</li>
+<li>Build reusable components</li>
+<li>Document edge cases</li>
+</ul>
+<p><strong>Patterns</strong>:</p>
+<ul>
+<li>Factory for constructors</li>
+<li>Builder for complex objects</li>
+<li>Pipeline for transformations</li>
+<li>Strategy for algorithms</li>
+<li>Guard for validation</li>
+</ul>
+<p><strong>Avoid</strong>:</p>
+<ul>
+<li>Magic numbers</li>
+<li>Repetition (DRY)</li>
+<li>Over-abstraction</li>
+<li>Cryptic names</li>
+<li>Ignoring edge cases</li>
+<li>Monolithic functions</li>
+</ul>
+<hr>
+<p><strong>See Also</strong>:</p>
+<ul>
+<li><a href="../core-language/functions.md">Functions and Lambdas</a> - Function basics</li>
+<li><a href="../functional-programming/do-blocks.md">Do Blocks</a> - Multi-statement blocks</li>
+<li><a href="../functional-programming/recursion.md">Recursion Patterns</a> - Recursive best practices</li>
+<li><a href="performance.md">Performance</a> - Performance constraints</li>
+<li><a href="examples.md">Examples</a> - Practical code examples</li>
+</ul>  </article> <div class="mt-12 border-t border-slate-800 pt-6"> <nav class="flex items-center justify-between"> <div></div> <div></div> </nav> </div> </div> <!-- Right sidebar (table of contents) --> <div class="hidden xl:flex xl:flex-shrink-0"> <div class="w-64 py-8 pl-8 border-l border-slate-800"> <div class="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto"> <div class="space-y-4"><h4 class="font-display text-sm font-semibold text-white">
+On this page
+</h4><nav><ul class="space-y-2.5 text-sm"><li class><a href="#table-of-contents" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Table of Contents</a></li><li class><a href="#code-style" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Code Style</a></li><li class="ml-4"><a href="#indentation-and-formatting" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Indentation and Formatting</a></li><li class="ml-4"><a href="#line-length" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Line Length</a></li><li class="ml-4"><a href="#whitespace" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Whitespace</a></li><li class="ml-4"><a href="#comments" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Comments</a></li><li class><a href="#naming-conventions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Naming Conventions</a></li><li class="ml-4"><a href="#variables" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Variables</a></li><li class="ml-4"><a href="#functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Functions</a></li><li class="ml-4"><a href="#records" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Records</a></li><li class="ml-4"><a href="#constants" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Constants</a></li><li class><a href="#function-design" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Function Design</a></li><li class="ml-4"><a href="#keep-functions-small-and-focused" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Keep Functions Small and Focused</a></li><li class="ml-4"><a href="#prefer-expression-bodies" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Prefer Expression Bodies</a></li><li class="ml-4"><a href="#avoid-deep-nesting" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Avoid Deep Nesting</a></li><li class="ml-4"><a href="#use-descriptive-parameters" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Use Descriptive Parameters</a></li><li class><a href="#working-with-data" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Working with Data</a></li><li class="ml-4"><a href="#prefer-immutability" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Prefer Immutability</a></li><li class="ml-4"><a href="#use-shadowing-for-updates" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Use Shadowing for “Updates”</a></li><li class="ml-4"><a href="#leverage-higher-order-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Leverage Higher-Order Functions</a></li><li class="ml-4"><a href="#use-pipe-for-transformations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Use Pipe for Transformations</a></li><li class="ml-4"><a href="#destructure-with-indexing" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Destructure with Indexing</a></li><li class><a href="#performance-guidelines" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Performance Guidelines</a></li><li class="ml-4"><a href="#avoid-deep-recursion" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Avoid Deep Recursion</a></li><li class="ml-4"><a href="#use-built-in-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Use Built-in Functions</a></li><li class="ml-4"><a href="#minimize-array-copying" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Minimize Array Copying</a></li><li class="ml-4"><a href="#cache-expensive-computations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Cache Expensive Computations</a></li><li class="ml-4"><a href="#be-aware-of-exponential-complexity" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Be Aware of Exponential Complexity</a></li><li class><a href="#error-handling" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Error Handling</a></li><li class="ml-4"><a href="#validate-input" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Validate Input</a></li><li class="ml-4"><a href="#provide-meaningful-error-messages" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Provide Meaningful Error Messages</a></li><li class="ml-4"><a href="#use-piecewise-for-multiple-conditions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Use Piecewise for Multiple Conditions</a></li><li class="ml-4"><a href="#document-edge-cases" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Document Edge Cases</a></li><li class><a href="#code-organization" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Code Organization</a></li><li class="ml-4"><a href="#group-related-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Group Related Functions</a></li><li class="ml-4"><a href="#use-records-for-namespacing" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Use Records for Namespacing</a></li><li class="ml-4"><a href="#build-reusable-components" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Build Reusable Components</a></li><li class><a href="#common-patterns" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Common Patterns</a></li><li class="ml-4"><a href="#factory-pattern" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Factory Pattern</a></li><li class="ml-4"><a href="#builder-pattern" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Builder Pattern</a></li><li class="ml-4"><a href="#pipeline-pattern" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Pipeline Pattern</a></li><li class="ml-4"><a href="#strategy-pattern" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Strategy Pattern</a></li><li class="ml-4"><a href="#guard-pattern" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Guard Pattern</a></li><li class><a href="#anti-patterns-to-avoid" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Anti-Patterns to Avoid</a></li><li class="ml-4"><a href="#dont-use-magic-numbers" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Don’t Use Magic Numbers</a></li><li class="ml-4"><a href="#dont-repeat-yourself-dry" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Don’t Repeat Yourself (DRY)</a></li><li class="ml-4"><a href="#dont-over-abstract" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Don’t Over-Abstract</a></li><li class="ml-4"><a href="#dont-use-cryptic-names" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Don’t Use Cryptic Names</a></li><li class="ml-4"><a href="#dont-ignore-edge-cases" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Don’t Ignore Edge Cases</a></li><li class="ml-4"><a href="#dont-write-monolithic-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Don’t Write Monolithic Functions</a></li><li class><a href="#summary" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Summary</a></li></ul></nav></div> </div> </div> </div> </div> </div> </div>  </body></html>

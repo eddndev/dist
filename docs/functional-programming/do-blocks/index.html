@@ -1,0 +1,1388 @@
+<!DOCTYPE html><html lang="en" class="h-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Multi-statement expressions, local scope, intermediate computations, and complex lambda bodies with do block syntax"><meta name="generator" content="Astro v5.15.8"><link rel="canonical" href="http://localhost:4321/docs/functional-programming/do-blocks/"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Do Blocks | Achronyme</title><!-- Preload fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="/_astro/_slug_.CyadsZWk.css">
+<style>[data-astro-cid-k5z7lb4y][x-cloak]{display:none!important}
+</style><script type="module" src="/_astro/page.BE54bNVT.js"></script></head> <body class="h-full bg-slate-950" x-data>  <div class="min-h-full"> <header class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur supports-[backdrop-filter]:bg-slate-950/80"> <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex h-16 items-center justify-between"> <!-- Logo --> <div class="flex items-center"> <a href="/" class="flex items-center space-x-3"> <picture> <source srcset="/logo.avif" type="image/avif"> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';"> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden"> <span class="text-white font-bold text-sm">A</span> </div> <span class="font-display text-xl font-semibold text-white">
+Achronyme
+</span> </a> </div> <!-- Center navigation --> <nav class="hidden md:flex items-center justify-center flex-1 space-x-6"> <a href="/docs" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">
+Documentation
+</a> <a href="https://github.com/achronyme/achronyme-core" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-slate-400 hover:text-white transition-colors inline-flex items-center"> <svg class="mr-1.5 h-4 w-4" fill="currentColor" viewBox="0 0 24 24"> <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path> </svg>
+GitHub
+</a> </nav> <!-- Right side - Changelog link + Mobile menu button --> <div class="flex items-center space-x-4"> <a href="/changelog" class="hidden md:block text-sm font-medium text-slate-400 hover:text-white transition-colors">
+Changelog
+</a> <button type="button" class="md:hidden rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.toggle()"> <span class="sr-only">Open menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path> </svg> </button> </div> </div> </div> </header> <div class="fixed inset-0 z-40 lg:hidden" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-cloak data-astro-cid-k5z7lb4y> <!-- Backdrop --> <div class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm" @click="$store.nav.close()" data-astro-cid-k5z7lb4y></div> <!-- Sidebar --> <div class="fixed inset-y-0 left-0 w-full max-w-xs bg-slate-900 shadow-xl" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full" data-astro-cid-k5z7lb4y> <div class="flex h-16 items-center justify-between px-6 border-b border-slate-800" data-astro-cid-k5z7lb4y> <a href="/" class="flex items-center space-x-2" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <picture data-astro-cid-k5z7lb4y> <source srcset="/logo.avif" type="image/avif" data-astro-cid-k5z7lb4y> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';" data-astro-cid-k5z7lb4y> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden" data-astro-cid-k5z7lb4y> <span class="text-white font-bold text-sm" data-astro-cid-k5z7lb4y>A</span> </div> <span class="font-display text-xl font-semibold text-white" data-astro-cid-k5z7lb4y>
+Achronyme
+</span> </a> <button type="button" class="rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <span class="sr-only" data-astro-cid-k5z7lb4y>Close menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-astro-cid-k5z7lb4y> <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" data-astro-cid-k5z7lb4y></path> </svg> </button> </div> <nav class="overflow-y-auto p-6 space-y-8" data-astro-cid-k5z7lb4y> <div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Getting Started </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/introduction" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Introduction </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/installation" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Installation </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/syntax-basics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Syntax Basics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Core Language </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/data-types" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Data Types </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/operators" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Operators </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/variables" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Variables </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/control-flow" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Control Flow </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Data Structures </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/arrays-tensors" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Arrays &amp; Tensors </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/indexing-slicing" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Indexing &amp; Slicing </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/records" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Records </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/strings" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Strings </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Functional Programming </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/higher-order-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Higher-Order Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/do-blocks" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Do Blocks </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/recursion" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Recursion </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Mathematical Computing </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/mathematical-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mathematical Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/linear-algebra" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Linear Algebra </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/complex-numbers" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Complex Numbers </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/numerical-analysis" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Numerical Analysis </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/statistics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Statistics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Specialized Modules </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/dsp" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> DSP </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/graph-theory" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Graph Theory </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/optimization" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Optimization </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Advanced Topics </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/best-practices" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Best Practices </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/examples" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Examples </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/performance" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Performance </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/mutability" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mutability </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/io-persistence" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div>  <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex"> <!-- Left sidebar (navigation) --> <div class="hidden lg:flex lg:flex-shrink-0"> <div class="w-64 py-8 pr-8 border-r border-slate-800"> <div class="sticky top-20"> <nav class="space-y-8"> <div> <h3 class="font-display text-sm font-semibold text-white"> Getting Started </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/getting-started/introduction" class="block text-sm transition-colors text-slate-400 hover:text-white"> Introduction </a> </li><li> <a href="/docs/getting-started/installation" class="block text-sm transition-colors text-slate-400 hover:text-white"> Installation </a> </li><li> <a href="/docs/getting-started/syntax-basics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Syntax Basics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Core Language </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/core-language/data-types" class="block text-sm transition-colors text-slate-400 hover:text-white"> Data Types </a> </li><li> <a href="/docs/core-language/operators" class="block text-sm transition-colors text-slate-400 hover:text-white"> Operators </a> </li><li> <a href="/docs/core-language/variables" class="block text-sm transition-colors text-slate-400 hover:text-white"> Variables </a> </li><li> <a href="/docs/core-language/functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Functions </a> </li><li> <a href="/docs/core-language/control-flow" class="block text-sm transition-colors text-slate-400 hover:text-white"> Control Flow </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Data Structures </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/data-structures/arrays-tensors" class="block text-sm transition-colors text-slate-400 hover:text-white"> Arrays &amp; Tensors </a> </li><li> <a href="/docs/data-structures/indexing-slicing" class="block text-sm transition-colors text-slate-400 hover:text-white"> Indexing &amp; Slicing </a> </li><li> <a href="/docs/data-structures/records" class="block text-sm transition-colors text-slate-400 hover:text-white"> Records </a> </li><li> <a href="/docs/data-structures/strings" class="block text-sm transition-colors text-slate-400 hover:text-white"> Strings </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Functional Programming </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/functional-programming/higher-order-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Higher-Order Functions </a> </li><li> <a href="/docs/functional-programming/do-blocks" class="block text-sm transition-colors text-slate-400 hover:text-white"> Do Blocks </a> </li><li> <a href="/docs/functional-programming/recursion" class="block text-sm transition-colors text-slate-400 hover:text-white"> Recursion </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Mathematical Computing </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/mathematical-computing/mathematical-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mathematical Functions </a> </li><li> <a href="/docs/mathematical-computing/linear-algebra" class="block text-sm transition-colors text-slate-400 hover:text-white"> Linear Algebra </a> </li><li> <a href="/docs/mathematical-computing/complex-numbers" class="block text-sm transition-colors text-slate-400 hover:text-white"> Complex Numbers </a> </li><li> <a href="/docs/mathematical-computing/numerical-analysis" class="block text-sm transition-colors text-slate-400 hover:text-white"> Numerical Analysis </a> </li><li> <a href="/docs/mathematical-computing/statistics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Statistics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Specialized Modules </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/specialized-modules/dsp" class="block text-sm transition-colors text-slate-400 hover:text-white"> DSP </a> </li><li> <a href="/docs/specialized-modules/graph-theory" class="block text-sm transition-colors text-slate-400 hover:text-white"> Graph Theory </a> </li><li> <a href="/docs/specialized-modules/optimization" class="block text-sm transition-colors text-slate-400 hover:text-white"> Optimization </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Advanced Topics </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/advanced-topics/best-practices" class="block text-sm transition-colors text-slate-400 hover:text-white"> Best Practices </a> </li><li> <a href="/docs/advanced-topics/examples" class="block text-sm transition-colors text-slate-400 hover:text-white"> Examples </a> </li><li> <a href="/docs/advanced-topics/performance" class="block text-sm transition-colors text-slate-400 hover:text-white"> Performance </a> </li><li> <a href="/docs/advanced-topics/mutability" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mutability </a> </li><li> <a href="/docs/advanced-topics/io-persistence" class="block text-sm transition-colors text-slate-400 hover:text-white"> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div> </div> <!-- Main content --> <div class="min-w-0 flex-1 py-8 lg:pl-8"> <article class="prose prose-invert max-w-none"> <h1 class="font-display text-4xl font-bold tracking-tight text-white"> Do Blocks </h1> <p class="lead text-xl text-slate-400"> Multi-statement expressions, local scope, intermediate computations, and complex lambda bodies with do block syntax </p>  <p>Do blocks provide a way to group multiple statements together, creating a local scope for intermediate computations and variable declarations. They are essential for writing complex, multi-step algorithms in Achronyme.</p>
+<h2 id="overview">Overview</h2>
+<p><strong>Syntax</strong>: <code>do { statements }</code></p>
+<p><strong>IMPORTANT - Statement Separators</strong>: All statements inside do blocks <strong>must be separated by semicolons</strong> (<code>;</code>). The last expression can optionally omit the semicolon.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Correct: statements separated by semicolons</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 5</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let y </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 10</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    x + y</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Incorrect: missing semicolons</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 5</span></span>
+<span class="line"><span style="color:#E1E4E8">    let y </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 10</span></span>
+<span class="line"><span style="color:#E1E4E8">    x + y</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><strong>Note</strong>: Newline-only separation is not currently supported in do blocks. This is a known limitation in the CLI/parser.</p>
+<p><strong>Purpose</strong>:</p>
+<ul>
+<li>Group multiple statements into a single expression</li>
+<li>Create local scope for intermediate variables</li>
+<li>Enable multi-step computations with readable names</li>
+<li>Support complex lambda bodies</li>
+</ul>
+<p><strong>Key Features</strong>:</p>
+<ul>
+<li>Creates new local scope</li>
+<li>Variables declared with <code>let</code> are local to the block</li>
+<li>Last statement’s value is returned</li>
+<li>Can be used anywhere an expression is expected</li>
+</ul>
+<h2 id="basic-syntax">Basic Syntax</h2>
+<h3 id="simple-do-block">Simple Do Block</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 5</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let y </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 10</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    x + y</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#6A737D">// result = 15</span></span></code></pre>
+<p><strong>Characteristics</strong>:</p>
+<ul>
+<li>Each statement must be separated by <code>;</code></li>
+<li>Variables <code>x</code> and <code>y</code> are local</li>
+<li>Last expression (<code>x + y</code>) is returned (no semicolon needed)</li>
+<li>Variables not accessible outside block</li>
+</ul>
+<p><strong>Important</strong>: Statements inside do blocks must be separated by semicolons (<code>;</code>). The last expression can optionally omit the semicolon.</p>
+<h3 id="single-statement">Single Statement</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> value </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#79B8FF">    42</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#6A737D">// value = 42</span></span></code></pre>
+<h3 id="multi-step-computation">Multi-Step Computation</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> compute</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let doubled </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let squared </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> doubled </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> doubled;</span></span>
+<span class="line"><span style="color:#E1E4E8">    squared + </span><span style="color:#79B8FF">10</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">compute</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// (5*2)^2 + 10 = 110</span></span></code></pre>
+<h2 id="scope-and-variables">Scope and Variables</h2>
+<h3 id="local-scope">Local Scope</h3>
+<p>Do blocks create a new local scope:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> outer </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 10</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let inner </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 20</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    outer + inner</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#6A737D">// result = 30</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// inner is NOT accessible here</span></span>
+<span class="line"><span style="color:#6A737D">// outer is still 10</span></span></code></pre>
+<p><strong>Scoping Rules</strong>:</p>
+<ul>
+<li>Variables from outer scope are accessible</li>
+<li>Variables declared inside are local</li>
+<li>Local variables are destroyed when block exits</li>
+<li>No pollution of outer scope</li>
+</ul>
+<h3 id="variable-shadowing">Variable Shadowing</h3>
+<p>Local variables can shadow outer ones:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 10</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> f</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 20</span><span style="color:#E1E4E8">;  </span><span style="color:#6A737D">// Shadows outer x</span></span>
+<span class="line"><span style="color:#E1E4E8">    x * </span><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">f</span><span style="color:#E1E4E8">()  </span><span style="color:#6A737D">// 40 (uses inner x)</span></span>
+<span class="line"><span style="color:#E1E4E8">x    </span><span style="color:#6A737D">// Still 10 (outer x unchanged)</span></span></code></pre>
+<p><strong>Shadowing Behavior</strong>:</p>
+<ul>
+<li>Inner declaration hides outer variable</li>
+<li>Outer variable remains unchanged</li>
+<li>Shadowing is temporary (scope-local)</li>
+<li>Supports immutability principle</li>
+</ul>
+<h3 id="closure-capture">Closure Capture</h3>
+<p>Do blocks can capture variables from outer scope:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> makeMultiplier</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> factor</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let </span><span style="color:#B392F0">multiply</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> factor;  </span><span style="color:#6A737D">// Captures factor</span></span>
+<span class="line"><span style="color:#E1E4E8">    multiply</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> double </span><span style="color:#F97583">=</span><span style="color:#B392F0"> makeMultiplier</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> triple </span><span style="color:#F97583">=</span><span style="color:#B392F0"> makeMultiplier</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">double</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// 10</span></span>
+<span class="line"><span style="color:#B392F0">triple</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// 15</span></span></code></pre>
+<h2 id="use-cases">Use Cases</h2>
+<h3 id="multi-step-computations">Multi-Step Computations</h3>
+<p>Break complex calculations into readable steps:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> analyzeData</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let cleaned </span><span style="color:#F97583">=</span><span style="color:#B392F0"> filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, data);</span></span>
+<span class="line"><span style="color:#E1E4E8">    let normalized </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">/</span><span style="color:#79B8FF"> 100</span><span style="color:#E1E4E8">, cleaned);</span></span>
+<span class="line"><span style="color:#E1E4E8">    let mean_val </span><span style="color:#F97583">=</span><span style="color:#B392F0"> sum</span><span style="color:#E1E4E8">(normalized) </span><span style="color:#F97583">/</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(normalized);</span></span>
+<span class="line"><span style="color:#E1E4E8">    let variance </span><span style="color:#F97583">=</span><span style="color:#B392F0"> sum</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> (x </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> mean_val)</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, normalized)) </span><span style="color:#F97583">/</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(normalized);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    {</span></span>
+<span class="line"><span style="color:#B392F0">        mean</span><span style="color:#E1E4E8">: mean_val,</span></span>
+<span class="line"><span style="color:#B392F0">        variance</span><span style="color:#E1E4E8">: variance,</span></span>
+<span class="line"><span style="color:#B392F0">        std</span><span style="color:#E1E4E8">: </span><span style="color:#B392F0">sqrt</span><span style="color:#E1E4E8">(variance),</span></span>
+<span class="line"><span style="color:#B392F0">        count</span><span style="color:#E1E4E8">: </span><span style="color:#B392F0">length</span><span style="color:#E1E4E8">(cleaned)</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="pipeline-processing">Pipeline Processing</h3>
+<p>Transform data through series of operations:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> processSignal</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> signal</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let windowed </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">*</span><span style="color:#B392F0"> hanning</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">length</span><span style="color:#E1E4E8">(signal));</span></span>
+<span class="line"><span style="color:#E1E4E8">    let spectrum </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft</span><span style="color:#E1E4E8">(windowed);</span></span>
+<span class="line"><span style="color:#E1E4E8">    let magnitudes </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_mag</span><span style="color:#E1E4E8">(spectrum);</span></span>
+<span class="line"><span style="color:#E1E4E8">    let normalized </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">/</span><span style="color:#B392F0"> max</span><span style="color:#E1E4E8">(magnitudes), magnitudes);</span></span>
+<span class="line"><span style="color:#E1E4E8">    normalized</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="complex-record-construction">Complex Record Construction</h3>
+<p>Build records with computed fields:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> createUser</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">name</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">birthYear</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let currentYear </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 2024</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let age </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> currentYear </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> birthYear;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let isAdult </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> age </span><span style="color:#F97583">>=</span><span style="color:#79B8FF"> 18</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    {</span></span>
+<span class="line"><span style="color:#B392F0">        name</span><span style="color:#E1E4E8">: name,</span></span>
+<span class="line"><span style="color:#B392F0">        age</span><span style="color:#E1E4E8">: age,</span></span>
+<span class="line"><span style="color:#B392F0">        adult</span><span style="color:#E1E4E8">: isAdult,</span></span>
+<span class="line"><span style="color:#B392F0">        category</span><span style="color:#E1E4E8">: </span><span style="color:#F97583">if</span><span style="color:#E1E4E8">(age </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 13</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"child"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">                   if</span><span style="color:#E1E4E8">(age </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 18</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"teen"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"adult"</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="recursive-functions">Recursive Functions</h3>
+<p>Enable recursion with <code>rec</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> factorial</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> n</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">n</span><span style="color:#E1E4E8"> &#x3C;</span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">, 1, </span><span style="color:#FFAB70">n</span><span style="color:#E1E4E8"> * </span><span style="color:#FFAB70">rec</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">n</span><span style="color:#E1E4E8"> - 1))</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> fibonacci</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> n</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">n</span><span style="color:#E1E4E8"> &#x3C;</span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">n</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">rec</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">n</span><span style="color:#E1E4E8"> - 1) + </span><span style="color:#B392F0">rec</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">n</span><span style="color:#E1E4E8"> - 2))</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><strong>Note</strong>: Recursion limited to ~50 calls (see <a href="../advanced-topics/performance.md">Performance</a>)</p>
+<h3 id="helper-functions">Helper Functions</h3>
+<p>Define local helpers inside do blocks:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> quicksort</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> arr</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">length</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">arr</span><span style="color:#E1E4E8">) &#x3C;</span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">        arr</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">        do</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">            let</span><span style="color:#FFAB70"> pivot</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> arr[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">];</span></span>
+<span class="line"><span style="color:#B392F0">            let</span><span style="color:#FFAB70"> rest</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> arr[</span><span style="color:#79B8FF">1.</span><span style="color:#E1E4E8">.];</span></span>
+<span class="line"><span style="color:#B392F0">            let</span><span style="color:#FFAB70"> less</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">&#x3C;</span><span style="color:#E1E4E8"> pivot, rest);</span></span>
+<span class="line"><span style="color:#B392F0">            let</span><span style="color:#FFAB70"> greater</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">>=</span><span style="color:#E1E4E8"> pivot, rest);</span></span>
+<span class="line"><span style="color:#E1E4E8">            [</span><span style="color:#F97583">...</span><span style="color:#B392F0">rec</span><span style="color:#E1E4E8">(less), pivot, </span><span style="color:#F97583">...</span><span style="color:#B392F0">rec</span><span style="color:#E1E4E8">(greater)]</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">    )</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="data-validation">Data Validation</h3>
+<p>Validate and transform data with checks:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> validateAge</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> input</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let parsed </span><span style="color:#F97583">=</span><span style="color:#B392F0"> if</span><span style="color:#E1E4E8">(input </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, input);</span></span>
+<span class="line"><span style="color:#E1E4E8">    let capped </span><span style="color:#F97583">=</span><span style="color:#B392F0"> if</span><span style="color:#E1E4E8">(parsed </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 150</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">150</span><span style="color:#E1E4E8">, parsed);</span></span>
+<span class="line"><span style="color:#E1E4E8">    let valid </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> capped </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    {</span></span>
+<span class="line"><span style="color:#B392F0">        value</span><span style="color:#E1E4E8">: capped,</span></span>
+<span class="line"><span style="color:#B392F0">        valid</span><span style="color:#E1E4E8">: valid,</span></span>
+<span class="line"><span style="color:#B392F0">        category</span><span style="color:#E1E4E8">: </span><span style="color:#F97583">if</span><span style="color:#E1E4E8">(capped </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 18</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"minor"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"adult"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="nested-do-blocks">Nested Do Blocks</h3>
+<p>Stack multiple scopes for complex logic:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> process</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let step1 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">        let filtered </span><span style="color:#F97583">=</span><span style="color:#B392F0"> filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, data);</span></span>
+<span class="line"><span style="color:#E1E4E8">        let scaled </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">, filtered);</span></span>
+<span class="line"><span style="color:#E1E4E8">        scaled</span></span>
+<span class="line"><span style="color:#E1E4E8">    };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    let step2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">        let mean </span><span style="color:#F97583">=</span><span style="color:#B392F0"> sum</span><span style="color:#E1E4E8">(step1) </span><span style="color:#F97583">/</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(step1);</span></span>
+<span class="line"><span style="color:#E1E4E8">        let centered </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> mean, step1);</span></span>
+<span class="line"><span style="color:#E1E4E8">        centered</span></span>
+<span class="line"><span style="color:#E1E4E8">    };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    {</span></span>
+<span class="line"><span style="color:#B392F0">        original</span><span style="color:#E1E4E8">: data,</span></span>
+<span class="line"><span style="color:#B392F0">        step1</span><span style="color:#E1E4E8">: step1,</span></span>
+<span class="line"><span style="color:#B392F0">        step2</span><span style="color:#E1E4E8">: step2</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="lambda-bodies">Lambda Bodies</h2>
+<p>Do blocks are particularly useful in lambda functions:</p>
+<h3 id="without-do-block-single-expression">Without Do Block (Single Expression)</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> simple</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span></span></code></pre>
+<h3 id="with-do-block-multi-step">With Do Block (Multi-Step)</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> complex</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let doubled </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let squared </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> doubled </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> doubled;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let adjusted </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> squared </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 10</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    adjusted</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="function-parameters">Function Parameters</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> operation</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">x</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">y</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let sum </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> y;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let product </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> y;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let average </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> sum </span><span style="color:#F97583">/</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    {</span></span>
+<span class="line"><span style="color:#B392F0">        sum</span><span style="color:#E1E4E8">: sum,</span></span>
+<span class="line"><span style="color:#B392F0">        product</span><span style="color:#E1E4E8">: product,</span></span>
+<span class="line"><span style="color:#B392F0">        average</span><span style="color:#E1E4E8">: average</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">operation</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D">// {sum: 15, product: 50, average: 7.5}</span></span></code></pre>
+<h2 id="return-values">Return Values</h2>
+<h3 id="implicit-return">Implicit Return</h3>
+<p>Last statement’s value is returned automatically:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> compute</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let a </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let b </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 5</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    b  </span><span style="color:#6A737D">// This value is returned</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="any-type-can-be-returned">Any Type Can Be Returned</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Return number</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> num </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> do { </span><span style="color:#79B8FF">42</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Return string</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> str </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> do { </span><span style="color:#9ECBFF">"hello"</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Return vector</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> vec </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let a </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">];</span></span>
+<span class="line"><span style="color:#E1E4E8">    let b </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">];</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">a, </span><span style="color:#F97583">...</span><span style="color:#E1E4E8">b]</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Return record</span></span>
+<span class="line"><span style="color:#E1E4E8">let rec = do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    {x: </span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">, y: </span><span style="color:#79B8FF">20</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Return function</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> fn </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#FFAB70">    x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="comparison-with-iife">Comparison with IIFE</h2>
+<h3 id="iife-pattern">IIFE Pattern</h3>
+<p>Immediately Invoked Function Expression:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Simple IIFE</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">)(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// IIFE with multiple params</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> sum </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> ((</span><span style="color:#FFAB70">x</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">y</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> y)(</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">7</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// IIFE for scope isolation</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> value </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> (() </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    let</span><span style="color:#E1E4E8"> temp </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 42</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    temp </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"><span style="color:#E1E4E8">})()</span></span></code></pre>
+<h3 id="do-block-pattern">Do Block Pattern</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Simple do block</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 5</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    x * </span><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Do block with parameters (needs lambda)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> sum </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> ((</span><span style="color:#FFAB70">x</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">y</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    x + y</span></span>
+<span class="line"><span style="color:#E1E4E8">})(</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">7</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Do block for scope isolation</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> value </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let temp </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 42</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    temp * </span><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="comparison">Comparison</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Aspect</th><th>IIFE</th><th>Do Block</th></tr></thead><tbody><tr><td><strong>Syntax</strong></td><td><code>(() => expr)()</code></td><td><code>do { statements }</code></td></tr><tr><td><strong>Clarity</strong></td><td>Less obvious intent</td><td>Explicit scoping</td></tr><tr><td><strong>Parameters</strong></td><td>Easy: <code>(x => ...)(val)</code></td><td>Requires lambda wrapper</td></tr><tr><td><strong>Multi-line</strong></td><td>Requires function body</td><td>Natural syntax</td></tr><tr><td><strong>Use case</strong></td><td>Inline computations</td><td>Multi-step logic</td></tr></tbody></table>
+<p><strong>Recommendation</strong>:</p>
+<ul>
+<li>Use IIFE for simple inline computations with parameters</li>
+<li>Use do blocks for multi-step computations and readability</li>
+<li>Use do blocks in lambda bodies for complex functions</li>
+</ul>
+<h2 id="practical-examples">Practical Examples</h2>
+<h3 id="statistical-analysis">Statistical Analysis</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> analyze</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let n </span><span style="color:#F97583">=</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(data);</span></span>
+<span class="line"><span style="color:#E1E4E8">    let mean_val </span><span style="color:#F97583">=</span><span style="color:#B392F0"> sum</span><span style="color:#E1E4E8">(data) </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> n;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let deviations </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> mean_val, data);</span></span>
+<span class="line"><span style="color:#E1E4E8">    let squared_devs </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, deviations);</span></span>
+<span class="line"><span style="color:#E1E4E8">    let variance </span><span style="color:#F97583">=</span><span style="color:#B392F0"> sum</span><span style="color:#E1E4E8">(squared_devs) </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> (n </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">    let std_dev </span><span style="color:#F97583">=</span><span style="color:#B392F0"> sqrt</span><span style="color:#E1E4E8">(variance);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    {</span></span>
+<span class="line"><span style="color:#B392F0">        count</span><span style="color:#E1E4E8">: n,</span></span>
+<span class="line"><span style="color:#B392F0">        mean</span><span style="color:#E1E4E8">: mean_val,</span></span>
+<span class="line"><span style="color:#B392F0">        variance</span><span style="color:#E1E4E8">: variance,</span></span>
+<span class="line"><span style="color:#B392F0">        std</span><span style="color:#E1E4E8">: std_dev,</span></span>
+<span class="line"><span style="color:#B392F0">        min</span><span style="color:#E1E4E8">: </span><span style="color:#B392F0">min</span><span style="color:#E1E4E8">(data),</span></span>
+<span class="line"><span style="color:#B392F0">        max</span><span style="color:#E1E4E8">: </span><span style="color:#B392F0">max</span><span style="color:#E1E4E8">(data)</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="signal-processing-pipeline">Signal Processing Pipeline</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> processAudio</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> signal</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let sample_rate </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 44100</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let duration </span><span style="color:#F97583">=</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(signal) </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> sample_rate;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // Apply window</span></span>
+<span class="line"><span style="color:#E1E4E8">    let window </span><span style="color:#F97583">=</span><span style="color:#B392F0"> hanning</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">length</span><span style="color:#E1E4E8">(signal));</span></span>
+<span class="line"><span style="color:#E1E4E8">    let windowed </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> window;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // FFT analysis</span></span>
+<span class="line"><span style="color:#E1E4E8">    let spectrum </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft</span><span style="color:#E1E4E8">(windowed);</span></span>
+<span class="line"><span style="color:#E1E4E8">    let magnitudes </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_mag</span><span style="color:#E1E4E8">(windowed);</span></span>
+<span class="line"><span style="color:#E1E4E8">    let phases </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_phase</span><span style="color:#E1E4E8">(windowed);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // Find dominant frequency</span></span>
+<span class="line"><span style="color:#E1E4E8">    let max_magnitude </span><span style="color:#F97583">=</span><span style="color:#B392F0"> max</span><span style="color:#E1E4E8">(magnitudes);</span></span>
+<span class="line"><span style="color:#E1E4E8">    let peak_bin </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">;  </span><span style="color:#6A737D">// Would need argmax</span></span>
+<span class="line"><span style="color:#E1E4E8">    let dominant_freq </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> peak_bin </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> sample_rate </span><span style="color:#F97583">/</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(signal);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    {</span></span>
+<span class="line"><span style="color:#B392F0">        duration</span><span style="color:#E1E4E8">: duration,</span></span>
+<span class="line"><span style="color:#B392F0">        sample_rate</span><span style="color:#E1E4E8">: sample_rate,</span></span>
+<span class="line"><span style="color:#B392F0">        peak_frequency</span><span style="color:#E1E4E8">: dominant_freq,</span></span>
+<span class="line"><span style="color:#B392F0">        spectrum</span><span style="color:#E1E4E8">: spectrum,</span></span>
+<span class="line"><span style="color:#B392F0">        magnitudes</span><span style="color:#E1E4E8">: magnitudes</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="data-transformation">Data Transformation</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> transformDataset</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // Clean data</span></span>
+<span class="line"><span style="color:#E1E4E8">    let cleaned </span><span style="color:#F97583">=</span><span style="color:#B392F0"> filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> null</span><span style="color:#E1E4E8">, data);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // Remove outliers (simple method)</span></span>
+<span class="line"><span style="color:#E1E4E8">    let mean </span><span style="color:#F97583">=</span><span style="color:#B392F0"> sum</span><span style="color:#E1E4E8">(cleaned) </span><span style="color:#F97583">/</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(cleaned);</span></span>
+<span class="line"><span style="color:#E1E4E8">    let std </span><span style="color:#F97583">=</span><span style="color:#B392F0"> std</span><span style="color:#E1E4E8">(cleaned);</span></span>
+<span class="line"><span style="color:#E1E4E8">    let lower </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> mean </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583"> *</span><span style="color:#E1E4E8"> std;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let upper </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> mean </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583"> *</span><span style="color:#E1E4E8"> std;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let filtered </span><span style="color:#F97583">=</span><span style="color:#B392F0"> filter</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">>=</span><span style="color:#E1E4E8"> lower </span><span style="color:#F97583">&#x26;&#x26;</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">&#x3C;=</span><span style="color:#E1E4E8"> upper, cleaned);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // Normalize to [0, 1]</span></span>
+<span class="line"><span style="color:#E1E4E8">    let min_val </span><span style="color:#F97583">=</span><span style="color:#B392F0"> min</span><span style="color:#E1E4E8">(filtered);</span></span>
+<span class="line"><span style="color:#E1E4E8">    let max_val </span><span style="color:#F97583">=</span><span style="color:#B392F0"> max</span><span style="color:#E1E4E8">(filtered);</span></span>
+<span class="line"><span style="color:#E1E4E8">    let range </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> max_val </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> min_val;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let normalized </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> (x </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> min_val) </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> range, filtered);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    {</span></span>
+<span class="line"><span style="color:#B392F0">        original_count</span><span style="color:#E1E4E8">: </span><span style="color:#B392F0">length</span><span style="color:#E1E4E8">(data),</span></span>
+<span class="line"><span style="color:#B392F0">        cleaned_count</span><span style="color:#E1E4E8">: </span><span style="color:#B392F0">length</span><span style="color:#E1E4E8">(cleaned),</span></span>
+<span class="line"><span style="color:#B392F0">        filtered_count</span><span style="color:#E1E4E8">: </span><span style="color:#B392F0">length</span><span style="color:#E1E4E8">(filtered),</span></span>
+<span class="line"><span style="color:#B392F0">        data</span><span style="color:#E1E4E8">: normalized,</span></span>
+<span class="line"><span style="color:#B392F0">        stats</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#B392F0">            mean</span><span style="color:#E1E4E8">: mean,</span></span>
+<span class="line"><span style="color:#B392F0">            std</span><span style="color:#E1E4E8">: std,</span></span>
+<span class="line"><span style="color:#B392F0">            min</span><span style="color:#E1E4E8">: min_val,</span></span>
+<span class="line"><span style="color:#B392F0">            max</span><span style="color:#E1E4E8">: max_val</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="advanced-patterns">Advanced Patterns</h2>
+<h3 id="accumulator-pattern">Accumulator Pattern</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> makeCounter</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> start</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let state </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> start;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    {</span></span>
+<span class="line"><span style="color:#B392F0">        increment</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> state </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">        decrement</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> state </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">        reset</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> start,</span></span>
+<span class="line"><span style="color:#B392F0">        get</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> state</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><strong>Note</strong>: This creates closures but state is immutable (read-only).</p>
+<h3 id="builder-pattern">Builder Pattern</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> buildQuery</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> table</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let base </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {table: table};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    {</span></span>
+<span class="line"><span style="color:#B392F0">        select</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">fields</span><span style="color:#F97583"> =></span><span style="color:#F97583"> do</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">            {</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">base, </span><span style="color:#B392F0">fields</span><span style="color:#E1E4E8">: fields}</span></span>
+<span class="line"><span style="color:#E1E4E8">        },</span></span>
+<span class="line"><span style="color:#B392F0">        where</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">condition</span><span style="color:#F97583"> =></span><span style="color:#F97583"> do</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">            {</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">base, </span><span style="color:#B392F0">condition</span><span style="color:#E1E4E8">: condition}</span></span>
+<span class="line"><span style="color:#E1E4E8">        },</span></span>
+<span class="line"><span style="color:#B392F0">        limit</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">n</span><span style="color:#F97583"> =></span><span style="color:#F97583"> do</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">            {</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">base, </span><span style="color:#B392F0">limit</span><span style="color:#E1E4E8">: n}</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Usage (conceptual)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> query </span><span style="color:#F97583">=</span><span style="color:#B392F0"> buildQuery</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"users"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    .</span><span style="color:#B392F0">select</span><span style="color:#E1E4E8">([</span><span style="color:#9ECBFF">"name"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"age"</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#E1E4E8">    .</span><span style="color:#B392F0">where</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"age > 18"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    .</span><span style="color:#B392F0">limit</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<h3 id="composition-with-do-blocks">Composition with Do Blocks</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> compose</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">f</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">g</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let </span><span style="color:#B392F0">composed</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> f</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">g</span><span style="color:#E1E4E8">(x));</span></span>
+<span class="line"><span style="color:#E1E4E8">    composed</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> pipeline</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">value</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">...</span><span style="color:#FFAB70">functions</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let </span><span style="color:#B392F0">apply_all</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">v</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">fns</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span></span>
+<span class="line"><span style="color:#B392F0">        if</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">length</span><span style="color:#E1E4E8">(fns) </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">            v,</span></span>
+<span class="line"><span style="color:#B392F0">            rec</span><span style="color:#E1E4E8">(fns[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">](v), fns[</span><span style="color:#79B8FF">1.</span><span style="color:#E1E4E8">.]));</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    apply_all</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">value</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">functions</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="error-handling">Error Handling</h2>
+<h3 id="validation-in-do-blocks">Validation in Do Blocks</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> safeDivide</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">a</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">b</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">b</span><span style="color:#E1E4E8"> == 0,</span></span>
+<span class="line"><span style="color:#FFAB70">        error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Division by zero"</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#E1E4E8">        a / b)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> validateInput</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> input</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let is_number </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> true</span><span style="color:#E1E4E8">;  </span><span style="color:#6A737D">// Would need type check</span></span>
+<span class="line"><span style="color:#E1E4E8">    let is_positive </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> input </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let is_finite </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> true</span><span style="color:#E1E4E8">;  </span><span style="color:#6A737D">// Would need isFinite check</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(!</span><span style="color:#FFAB70">is_number</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Not a number"</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(!</span><span style="color:#FFAB70">is_positive</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Not positive"</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(!</span><span style="color:#FFAB70">is_finite</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Not finite"</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#E1E4E8">        input)))</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="limitations">Limitations</h2>
+<h3 id="semicolon-requirement">Semicolon Requirement</h3>
+<p>Statements must be separated by semicolons:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Error: missing semicolons</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> bad </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 5</span></span>
+<span class="line"><span style="color:#E1E4E8">    let y </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 10</span></span>
+<span class="line"><span style="color:#E1E4E8">    x + y</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Correct: semicolons between statements</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> good </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 5</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let y </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 10</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    x + y</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><strong>Current Status</strong>: Newline-only separation is not supported in do blocks. This is a parser/CLI limitation that may be addressed in future versions.</p>
+<h3 id="no-early-return">No Early Return</h3>
+<p>Cannot exit block early; no <code>return</code> statement:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// No way to exit early</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> process</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let result </span><span style="color:#F97583">=</span><span style="color:#B392F0"> compute</span><span style="color:#E1E4E8">(x);</span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">result</span><span style="color:#E1E4E8"> &#x3C; 0, </span><span style="color:#6A737D">/* want to return here */</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">true</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#6A737D">    // Must continue evaluation</span></span>
+<span class="line"><span style="color:#B392F0">    doMoreWork</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">result</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Use if() to control flow</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> process</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let result </span><span style="color:#F97583">=</span><span style="color:#B392F0"> compute</span><span style="color:#E1E4E8">(x);</span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">result</span><span style="color:#E1E4E8"> &#x3C; 0,</span></span>
+<span class="line"><span style="color:#FFAB70">        result</span><span style="color:#E1E4E8">,  </span><span style="color:#6A737D">// Early path</span></span>
+<span class="line"><span style="color:#FFAB70">        doMoreWork</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">result</span><span style="color:#E1E4E8">))  </span><span style="color:#6A737D">// Normal path</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="statement-order">Statement Order</h3>
+<p>Variables must be declared before use:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Error: y not defined</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> bad </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let x </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> y </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let y </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 10</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    x</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Correct order</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> good </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let y </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 10</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let x </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> y </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    x</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="non-empty-blocks">Non-Empty Blocks</h3>
+<p>Do blocks must contain at least one statement:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Error: empty do block</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> empty </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> do { }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Minimum: one expression</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> valid </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> do { </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8"> }</span></span></code></pre>
+<h3 id="recursion-depth">Recursion Depth</h3>
+<p>Limited to approximately 50 recursive calls:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Stack overflow at ~50</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> deep</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> n</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">n</span><span style="color:#E1E4E8"> &#x3C;</span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, 0, </span><span style="color:#FFAB70">rec</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">n</span><span style="color:#E1E4E8"> - 1))</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#B392F0">deep</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// Error</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Use iterative approach or built-ins</span></span></code></pre>
+<p>See <a href="../advanced-topics/performance.md">Performance</a> for details.</p>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="use-descriptive-names">Use Descriptive Names</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Clear intent</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> calculateBMI</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">weight_kg</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">height_m</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let height_squared </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> height_m </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> height_m;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let bmi </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> weight_kg </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> height_squared;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let category </span><span style="color:#F97583">=</span><span style="color:#B392F0"> if</span><span style="color:#E1E4E8">(bmi </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 18.5</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"underweight"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">                   if</span><span style="color:#E1E4E8">(bmi </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 25</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"normal"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">                   if</span><span style="color:#E1E4E8">(bmi </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 30</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"overweight"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"obese"</span><span style="color:#E1E4E8">)));</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    {</span><span style="color:#B392F0">bmi</span><span style="color:#E1E4E8">: bmi, </span><span style="color:#B392F0">category</span><span style="color:#E1E4E8">: category}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Unclear</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> calc</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">w</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">h</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let x </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> h </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> h;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let y </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> w </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> x;</span></span>
+<span class="line"><span style="color:#E1E4E8">    {</span><span style="color:#B392F0">r</span><span style="color:#E1E4E8">: y, </span><span style="color:#B392F0">c</span><span style="color:#E1E4E8">: </span><span style="color:#F97583">if</span><span style="color:#E1E4E8">(y </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 18.5</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"u"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"n"</span><span style="color:#E1E4E8">)}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="keep-blocks-focused">Keep Blocks Focused</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Small, focused blocks</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> process</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let cleaned </span><span style="color:#F97583">=</span><span style="color:#B392F0"> cleanData</span><span style="color:#E1E4E8">(data);</span></span>
+<span class="line"><span style="color:#E1E4E8">    let transformed </span><span style="color:#F97583">=</span><span style="color:#B392F0"> transformData</span><span style="color:#E1E4E8">(cleaned);</span></span>
+<span class="line"><span style="color:#E1E4E8">    let analyzed </span><span style="color:#F97583">=</span><span style="color:#B392F0"> analyzeData</span><span style="color:#E1E4E8">(transformed);</span></span>
+<span class="line"><span style="color:#E1E4E8">    analyzed</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Avoid: too much in one block</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> process</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // 50 lines of complex logic...</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="leverage-immutability">Leverage Immutability</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Create new values</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> update</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> record</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let updated </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">record, status: </span><span style="color:#9ECBFF">"active"</span><span style="color:#E1E4E8">};</span></span>
+<span class="line"><span style="color:#E1E4E8">    let timestamped </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">updated, timestamp: </span><span style="color:#B392F0">now</span><span style="color:#E1E4E8">()};</span></span>
+<span class="line"><span style="color:#E1E4E8">    timestamped</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Transformation chain</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> transform</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let step1 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let step2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> step1 </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 5</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let step3 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> step2 </span><span style="color:#F97583">/</span><span style="color:#79B8FF"> 3</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    step3</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="summary">Summary</h2>
+<p><strong>Syntax</strong>: <code>do { statements }</code></p>
+<p><strong>Key features</strong>:</p>
+<ul>
+<li>Local scope creation</li>
+<li>Multi-statement grouping</li>
+<li>Implicit return (last statement)</li>
+<li>Variable shadowing support</li>
+<li>Closure capture</li>
+</ul>
+<p><strong>Use cases</strong>:</p>
+<ul>
+<li>Multi-step computations</li>
+<li>Complex lambda bodies</li>
+<li>Pipeline processing</li>
+<li>Local helper functions</li>
+<li>Readable intermediate steps</li>
+</ul>
+<p><strong>Limitations</strong>:</p>
+<ul>
+<li>No early return</li>
+<li>Variables must be declared before use</li>
+<li>Non-empty blocks required</li>
+<li>Recursion depth ~50 calls</li>
+</ul>
+<p><strong>Best practices</strong>:</p>
+<ul>
+<li>Use descriptive variable names</li>
+<li>Keep blocks focused and small</li>
+<li>Leverage immutability</li>
+<li>Prefer do blocks for readability</li>
+<li>Use IIFE for simple inline computations</li>
+</ul>
+<p><strong>Integration</strong>:</p>
+<ul>
+<li>Works with <code>rec</code> for recursion</li>
+<li>Can be nested</li>
+<li>Supports all value types</li>
+<li>Compatible with closures</li>
+</ul>
+<hr>
+<p><strong>Next</strong>: <a href="recursion.md">Recursion Patterns</a></p>  </article> <div class="mt-12 border-t border-slate-800 pt-6"> <nav class="flex items-center justify-between"> <div></div> <div></div> </nav> </div> </div> <!-- Right sidebar (table of contents) --> <div class="hidden xl:flex xl:flex-shrink-0"> <div class="w-64 py-8 pl-8 border-l border-slate-800"> <div class="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto"> <div class="space-y-4"><h4 class="font-display text-sm font-semibold text-white">
+On this page
+</h4><nav><ul class="space-y-2.5 text-sm"><li class><a href="#overview" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Overview</a></li><li class><a href="#basic-syntax" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Basic Syntax</a></li><li class="ml-4"><a href="#simple-do-block" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Simple Do Block</a></li><li class="ml-4"><a href="#single-statement" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Single Statement</a></li><li class="ml-4"><a href="#multi-step-computation" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Multi-Step Computation</a></li><li class><a href="#scope-and-variables" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Scope and Variables</a></li><li class="ml-4"><a href="#local-scope" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Local Scope</a></li><li class="ml-4"><a href="#variable-shadowing" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Variable Shadowing</a></li><li class="ml-4"><a href="#closure-capture" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Closure Capture</a></li><li class><a href="#use-cases" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Use Cases</a></li><li class="ml-4"><a href="#multi-step-computations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Multi-Step Computations</a></li><li class="ml-4"><a href="#pipeline-processing" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Pipeline Processing</a></li><li class="ml-4"><a href="#complex-record-construction" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Complex Record Construction</a></li><li class="ml-4"><a href="#recursive-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Recursive Functions</a></li><li class="ml-4"><a href="#helper-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Helper Functions</a></li><li class="ml-4"><a href="#data-validation" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Data Validation</a></li><li class="ml-4"><a href="#nested-do-blocks" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Nested Do Blocks</a></li><li class><a href="#lambda-bodies" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Lambda Bodies</a></li><li class="ml-4"><a href="#without-do-block-single-expression" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Without Do Block (Single Expression)</a></li><li class="ml-4"><a href="#with-do-block-multi-step" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">With Do Block (Multi-Step)</a></li><li class="ml-4"><a href="#function-parameters" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Function Parameters</a></li><li class><a href="#return-values" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Return Values</a></li><li class="ml-4"><a href="#implicit-return" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Implicit Return</a></li><li class="ml-4"><a href="#any-type-can-be-returned" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Any Type Can Be Returned</a></li><li class><a href="#comparison-with-iife" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Comparison with IIFE</a></li><li class="ml-4"><a href="#iife-pattern" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">IIFE Pattern</a></li><li class="ml-4"><a href="#do-block-pattern" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Do Block Pattern</a></li><li class="ml-4"><a href="#comparison" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Comparison</a></li><li class><a href="#practical-examples" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Practical Examples</a></li><li class="ml-4"><a href="#statistical-analysis" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Statistical Analysis</a></li><li class="ml-4"><a href="#signal-processing-pipeline" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Signal Processing Pipeline</a></li><li class="ml-4"><a href="#data-transformation" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Data Transformation</a></li><li class><a href="#advanced-patterns" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Advanced Patterns</a></li><li class="ml-4"><a href="#accumulator-pattern" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Accumulator Pattern</a></li><li class="ml-4"><a href="#builder-pattern" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Builder Pattern</a></li><li class="ml-4"><a href="#composition-with-do-blocks" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Composition with Do Blocks</a></li><li class><a href="#error-handling" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Error Handling</a></li><li class="ml-4"><a href="#validation-in-do-blocks" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Validation in Do Blocks</a></li><li class><a href="#limitations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Limitations</a></li><li class="ml-4"><a href="#semicolon-requirement" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Semicolon Requirement</a></li><li class="ml-4"><a href="#no-early-return" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">No Early Return</a></li><li class="ml-4"><a href="#statement-order" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Statement Order</a></li><li class="ml-4"><a href="#non-empty-blocks" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Non-Empty Blocks</a></li><li class="ml-4"><a href="#recursion-depth" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Recursion Depth</a></li><li class><a href="#best-practices" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Best Practices</a></li><li class="ml-4"><a href="#use-descriptive-names" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Use Descriptive Names</a></li><li class="ml-4"><a href="#keep-blocks-focused" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Keep Blocks Focused</a></li><li class="ml-4"><a href="#leverage-immutability" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Leverage Immutability</a></li><li class><a href="#summary" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Summary</a></li></ul></nav></div> </div> </div> </div> </div> </div> </div>  </body></html>

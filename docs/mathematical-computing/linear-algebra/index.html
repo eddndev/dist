@@ -1,0 +1,1279 @@
+<!DOCTYPE html><html lang="en" class="h-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Vector and matrix operations, decompositions (LU, QR, Cholesky, SVD), eigenvalue problems, and linear system solving with the faer backend"><meta name="generator" content="Astro v5.15.8"><link rel="canonical" href="http://localhost:4321/docs/mathematical-computing/linear-algebra/"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Linear Algebra | Achronyme</title><!-- Preload fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="/_astro/_slug_.CyadsZWk.css">
+<style>[data-astro-cid-k5z7lb4y][x-cloak]{display:none!important}
+</style><script type="module" src="/_astro/page.BE54bNVT.js"></script></head> <body class="h-full bg-slate-950" x-data>  <div class="min-h-full"> <header class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur supports-[backdrop-filter]:bg-slate-950/80"> <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex h-16 items-center justify-between"> <!-- Logo --> <div class="flex items-center"> <a href="/" class="flex items-center space-x-3"> <picture> <source srcset="/logo.avif" type="image/avif"> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';"> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden"> <span class="text-white font-bold text-sm">A</span> </div> <span class="font-display text-xl font-semibold text-white">
+Achronyme
+</span> </a> </div> <!-- Center navigation --> <nav class="hidden md:flex items-center justify-center flex-1 space-x-6"> <a href="/docs" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">
+Documentation
+</a> <a href="https://github.com/achronyme/achronyme-core" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-slate-400 hover:text-white transition-colors inline-flex items-center"> <svg class="mr-1.5 h-4 w-4" fill="currentColor" viewBox="0 0 24 24"> <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path> </svg>
+GitHub
+</a> </nav> <!-- Right side - Changelog link + Mobile menu button --> <div class="flex items-center space-x-4"> <a href="/changelog" class="hidden md:block text-sm font-medium text-slate-400 hover:text-white transition-colors">
+Changelog
+</a> <button type="button" class="md:hidden rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.toggle()"> <span class="sr-only">Open menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path> </svg> </button> </div> </div> </div> </header> <div class="fixed inset-0 z-40 lg:hidden" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-cloak data-astro-cid-k5z7lb4y> <!-- Backdrop --> <div class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm" @click="$store.nav.close()" data-astro-cid-k5z7lb4y></div> <!-- Sidebar --> <div class="fixed inset-y-0 left-0 w-full max-w-xs bg-slate-900 shadow-xl" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full" data-astro-cid-k5z7lb4y> <div class="flex h-16 items-center justify-between px-6 border-b border-slate-800" data-astro-cid-k5z7lb4y> <a href="/" class="flex items-center space-x-2" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <picture data-astro-cid-k5z7lb4y> <source srcset="/logo.avif" type="image/avif" data-astro-cid-k5z7lb4y> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';" data-astro-cid-k5z7lb4y> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden" data-astro-cid-k5z7lb4y> <span class="text-white font-bold text-sm" data-astro-cid-k5z7lb4y>A</span> </div> <span class="font-display text-xl font-semibold text-white" data-astro-cid-k5z7lb4y>
+Achronyme
+</span> </a> <button type="button" class="rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <span class="sr-only" data-astro-cid-k5z7lb4y>Close menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-astro-cid-k5z7lb4y> <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" data-astro-cid-k5z7lb4y></path> </svg> </button> </div> <nav class="overflow-y-auto p-6 space-y-8" data-astro-cid-k5z7lb4y> <div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Getting Started </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/introduction" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Introduction </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/installation" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Installation </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/syntax-basics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Syntax Basics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Core Language </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/data-types" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Data Types </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/operators" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Operators </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/variables" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Variables </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/control-flow" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Control Flow </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Data Structures </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/arrays-tensors" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Arrays &amp; Tensors </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/indexing-slicing" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Indexing &amp; Slicing </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/records" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Records </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/strings" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Strings </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Functional Programming </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/higher-order-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Higher-Order Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/do-blocks" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Do Blocks </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/recursion" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Recursion </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Mathematical Computing </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/mathematical-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mathematical Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/linear-algebra" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Linear Algebra </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/complex-numbers" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Complex Numbers </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/numerical-analysis" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Numerical Analysis </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/statistics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Statistics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Specialized Modules </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/dsp" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> DSP </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/graph-theory" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Graph Theory </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/optimization" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Optimization </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Advanced Topics </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/best-practices" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Best Practices </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/examples" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Examples </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/performance" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Performance </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/mutability" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mutability </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/io-persistence" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div>  <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex"> <!-- Left sidebar (navigation) --> <div class="hidden lg:flex lg:flex-shrink-0"> <div class="w-64 py-8 pr-8 border-r border-slate-800"> <div class="sticky top-20"> <nav class="space-y-8"> <div> <h3 class="font-display text-sm font-semibold text-white"> Getting Started </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/getting-started/introduction" class="block text-sm transition-colors text-slate-400 hover:text-white"> Introduction </a> </li><li> <a href="/docs/getting-started/installation" class="block text-sm transition-colors text-slate-400 hover:text-white"> Installation </a> </li><li> <a href="/docs/getting-started/syntax-basics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Syntax Basics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Core Language </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/core-language/data-types" class="block text-sm transition-colors text-slate-400 hover:text-white"> Data Types </a> </li><li> <a href="/docs/core-language/operators" class="block text-sm transition-colors text-slate-400 hover:text-white"> Operators </a> </li><li> <a href="/docs/core-language/variables" class="block text-sm transition-colors text-slate-400 hover:text-white"> Variables </a> </li><li> <a href="/docs/core-language/functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Functions </a> </li><li> <a href="/docs/core-language/control-flow" class="block text-sm transition-colors text-slate-400 hover:text-white"> Control Flow </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Data Structures </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/data-structures/arrays-tensors" class="block text-sm transition-colors text-slate-400 hover:text-white"> Arrays &amp; Tensors </a> </li><li> <a href="/docs/data-structures/indexing-slicing" class="block text-sm transition-colors text-slate-400 hover:text-white"> Indexing &amp; Slicing </a> </li><li> <a href="/docs/data-structures/records" class="block text-sm transition-colors text-slate-400 hover:text-white"> Records </a> </li><li> <a href="/docs/data-structures/strings" class="block text-sm transition-colors text-slate-400 hover:text-white"> Strings </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Functional Programming </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/functional-programming/higher-order-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Higher-Order Functions </a> </li><li> <a href="/docs/functional-programming/do-blocks" class="block text-sm transition-colors text-slate-400 hover:text-white"> Do Blocks </a> </li><li> <a href="/docs/functional-programming/recursion" class="block text-sm transition-colors text-slate-400 hover:text-white"> Recursion </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Mathematical Computing </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/mathematical-computing/mathematical-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mathematical Functions </a> </li><li> <a href="/docs/mathematical-computing/linear-algebra" class="block text-sm transition-colors text-slate-400 hover:text-white"> Linear Algebra </a> </li><li> <a href="/docs/mathematical-computing/complex-numbers" class="block text-sm transition-colors text-slate-400 hover:text-white"> Complex Numbers </a> </li><li> <a href="/docs/mathematical-computing/numerical-analysis" class="block text-sm transition-colors text-slate-400 hover:text-white"> Numerical Analysis </a> </li><li> <a href="/docs/mathematical-computing/statistics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Statistics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Specialized Modules </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/specialized-modules/dsp" class="block text-sm transition-colors text-slate-400 hover:text-white"> DSP </a> </li><li> <a href="/docs/specialized-modules/graph-theory" class="block text-sm transition-colors text-slate-400 hover:text-white"> Graph Theory </a> </li><li> <a href="/docs/specialized-modules/optimization" class="block text-sm transition-colors text-slate-400 hover:text-white"> Optimization </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Advanced Topics </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/advanced-topics/best-practices" class="block text-sm transition-colors text-slate-400 hover:text-white"> Best Practices </a> </li><li> <a href="/docs/advanced-topics/examples" class="block text-sm transition-colors text-slate-400 hover:text-white"> Examples </a> </li><li> <a href="/docs/advanced-topics/performance" class="block text-sm transition-colors text-slate-400 hover:text-white"> Performance </a> </li><li> <a href="/docs/advanced-topics/mutability" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mutability </a> </li><li> <a href="/docs/advanced-topics/io-persistence" class="block text-sm transition-colors text-slate-400 hover:text-white"> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div> </div> <!-- Main content --> <div class="min-w-0 flex-1 py-8 lg:pl-8"> <article class="prose prose-invert max-w-none"> <h1 class="font-display text-4xl font-bold tracking-tight text-white"> Linear Algebra </h1> <p class="lead text-xl text-slate-400"> Vector and matrix operations, decompositions (LU, QR, Cholesky, SVD), eigenvalue problems, and linear system solving with the faer backend </p>  <p>Achronyme provides comprehensive linear algebra capabilities for vector and matrix operations, matrix decompositions, eigenvalue problems, and linear system solving.</p>
+<h2 id="overview">Overview</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Category</th><th>Operations</th></tr></thead><tbody><tr><td><strong>Vector Operations</strong></td><td>dot, cross, norm, normalize</td></tr><tr><td><strong>Matrix Operations</strong></td><td>transpose, det, trace</td></tr><tr><td><strong>Matrix Decompositions</strong></td><td>LU, QR, Cholesky, SVD</td></tr><tr><td><strong>Eigenvalue Problems</strong></td><td>eigenvalues, eigenvectors, power iteration</td></tr><tr><td><strong>Linear Systems</strong></td><td>inverse, solve</td></tr><tr><td><strong>Utilities</strong></td><td>isSymmetric, isPositiveDefinite</td></tr></tbody></table>
+<p>All operations use the high-performance <strong>faer</strong> library backend, which is 100% Rust and WASM-compatible.</p>
+<h2 id="vector-operations">Vector Operations</h2>
+<h3 id="dot-product">Dot Product</h3>
+<p>Compute the inner product of two vectors:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> v1 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> v2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">dot</span><span style="color:#E1E4E8">(v1, v2)</span></span>
+<span class="line"><span style="color:#6A737D">// 1*4 + 2*5 + 3*6 = 32</span></span></code></pre>
+<p><strong>Formula</strong>: <code>v₁ · v₂ = Σ(v₁ᵢ × v₂ᵢ)</code></p>
+<p><strong>Complex support</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> z1 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">2i, </span><span style="color:#79B8FF">3</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">4i]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> z2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">5</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">6i, </span><span style="color:#79B8FF">7</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">8i]</span></span>
+<span class="line"><span style="color:#B392F0">dot</span><span style="color:#E1E4E8">(z1, z2)  </span><span style="color:#6A737D">// Complex result</span></span></code></pre>
+<h3 id="cross-product">Cross Product</h3>
+<p>Compute the cross product of two 3D vectors:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Unit vectors</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> j </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> k </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">cross</span><span style="color:#E1E4E8">(i, j)  </span><span style="color:#6A737D">// [0, 0, 1] = k</span></span>
+<span class="line"><span style="color:#B392F0">cross</span><span style="color:#E1E4E8">(j, k)  </span><span style="color:#6A737D">// [1, 0, 0] = i</span></span>
+<span class="line"><span style="color:#B392F0">cross</span><span style="color:#E1E4E8">(k, i)  </span><span style="color:#6A737D">// [0, 1, 0] = j</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// General case</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> v1 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> v2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">7</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#B392F0">cross</span><span style="color:#E1E4E8">(v1, v2)</span></span>
+<span class="line"><span style="color:#6A737D">// [3*7-4*6, 4*5-2*7, 2*6-3*5]</span></span>
+<span class="line"><span style="color:#6A737D">// = [-3, 6, -3]</span></span></code></pre>
+<p><strong>Properties</strong>:</p>
+<ul>
+<li>Anti-commutative: <code>cross(a, b) = -cross(b, a)</code></li>
+<li>Result is perpendicular to both inputs</li>
+<li>Magnitude: <code>|a × b| = |a| |b| sin(θ)</code></li>
+</ul>
+<p><strong>Requirements</strong>: Both vectors must be 3-dimensional.</p>
+<h3 id="vector-norm">Vector Norm</h3>
+<p>Compute the Euclidean (L2) norm:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> v </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#B392F0">norm</span><span style="color:#E1E4E8">(v)  </span><span style="color:#6A737D">// 5.0</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> v3d </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#B392F0">norm</span><span style="color:#E1E4E8">(v3d)  </span><span style="color:#6A737D">// 3.0</span></span></code></pre>
+<p><strong>Formula</strong>: <code>‖v‖ = √(v₁² + v₂² + ... + vₙ²)</code></p>
+<p><strong>Complex vectors</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> z </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">3</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">4i, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#B392F0">norm</span><span style="color:#E1E4E8">(z)  </span><span style="color:#6A737D">// 5.0 (magnitude of complex vector)</span></span></code></pre>
+<h3 id="normalize-vector">Normalize Vector</h3>
+<p>Scale a vector to unit length:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> v </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> u </span><span style="color:#F97583">=</span><span style="color:#B392F0"> normalize</span><span style="color:#E1E4E8">(v)</span></span>
+<span class="line"><span style="color:#6A737D">// [0.6, 0.8]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">norm</span><span style="color:#E1E4E8">(u)  </span><span style="color:#6A737D">// 1.0</span></span></code></pre>
+<p><strong>Formula</strong>: <code>û = v / ‖v‖</code></p>
+<p><strong>Error</strong>: Returns error if vector has zero norm.</p>
+<p><strong>Use cases</strong>:</p>
+<ul>
+<li>Direction vectors</li>
+<li>Unit normals</li>
+<li>Normalized inputs for algorithms</li>
+</ul>
+<h2 id="matrix-operations">Matrix Operations</h2>
+<h3 id="transpose">Transpose</h3>
+<p>Swap rows and columns:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> A</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> AT</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> transpose</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">A</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D">// [[1, 4],</span></span>
+<span class="line"><span style="color:#6A737D">//  [2, 5],</span></span>
+<span class="line"><span style="color:#6A737D">//  [3, 6]]</span></span></code></pre>
+<p><strong>Properties</strong>:</p>
+<ul>
+<li><code>(Aᵀ)ᵀ = A</code></li>
+<li><code>(AB)ᵀ = BᵀAᵀ</code></li>
+<li>Symmetric matrix: <code>A = Aᵀ</code></li>
+</ul>
+<h3 id="determinant">Determinant</h3>
+<p>Compute the determinant of a square matrix:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// 2×2 matrix</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> A</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">7</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#B392F0">det</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">A</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// 4*6 - 7*2 = 10</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 3×3 matrix</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> B</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#B392F0">det</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">B</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// -51</span></span></code></pre>
+<p><strong>Properties</strong>:</p>
+<ul>
+<li><code>det(I) = 1</code> (identity matrix)</li>
+<li><code>det(AB) = det(A) × det(B)</code></li>
+<li><code>det(Aᵀ) = det(A)</code></li>
+<li>Non-singular matrix: <code>det(A) ≠ 0</code></li>
+</ul>
+<p><strong>Implementation</strong>: Uses efficient LU decomposition for large matrices, recursive cofactor expansion for small matrices.</p>
+<h3 id="trace">Trace</h3>
+<p>Sum of diagonal elements:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> A</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">7</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">9</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">trace</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">A</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// 1 + 5 + 9 = 15</span></span></code></pre>
+<p><strong>Formula</strong>: <code>tr(A) = Σ aᵢᵢ</code></p>
+<p><strong>Properties</strong>:</p>
+<ul>
+<li><code>tr(A + B) = tr(A) + tr(B)</code></li>
+<li><code>tr(cA) = c × tr(A)</code></li>
+<li><code>tr(AB) = tr(BA)</code></li>
+<li><code>tr(Aᵀ) = tr(A)</code></li>
+</ul>
+<h2 id="matrix-decompositions">Matrix Decompositions</h2>
+<h3 id="lu-decomposition">LU Decomposition</h3>
+<p>Decompose matrix into lower and upper triangular matrices:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> A</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// A = P × L × U (with partial pivoting)</span></span>
+<span class="line"><span style="color:#6A737D">// Where:</span></span>
+<span class="line"><span style="color:#6A737D">// - L is lower triangular with 1s on diagonal</span></span>
+<span class="line"><span style="color:#6A737D">// - U is upper triangular</span></span>
+<span class="line"><span style="color:#6A737D">// - P is permutation matrix</span></span></code></pre>
+<p><strong>Use cases</strong>:</p>
+<ul>
+<li>Solve linear systems</li>
+<li>Compute determinant</li>
+<li>Compute inverse</li>
+</ul>
+<p><strong>Algorithm</strong>: Gaussian elimination with partial pivoting
+<strong>Complexity</strong>: O(n³)</p>
+<h3 id="qr-decomposition">QR Decomposition</h3>
+<p>Decompose matrix into orthogonal and upper triangular matrices:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> A</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">12</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">-</span><span style="color:#79B8FF">51</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">167</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">-</span><span style="color:#79B8FF">68</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#F97583">-</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">24</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">-</span><span style="color:#79B8FF">41</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// A = Q × R</span></span>
+<span class="line"><span style="color:#6A737D">// Where:</span></span>
+<span class="line"><span style="color:#6A737D">// - Q is orthogonal: Qᵀ × Q = I</span></span>
+<span class="line"><span style="color:#6A737D">// - R is upper triangular</span></span></code></pre>
+<p><strong>Properties of Q</strong>:</p>
+<ul>
+<li>Orthogonal columns</li>
+<li>Preserves vector norms</li>
+<li><code>Qᵀ = Q⁻¹</code></li>
+</ul>
+<p><strong>Use cases</strong>:</p>
+<ul>
+<li>Least squares problems</li>
+<li>Eigenvalue algorithms</li>
+<li>Stable orthogonalization</li>
+</ul>
+<p><strong>Algorithm</strong>: Householder reflections (numerically stable)
+<strong>Complexity</strong>: O(mn²) for m×n matrix</p>
+<h3 id="cholesky-decomposition">Cholesky Decomposition</h3>
+<p>Decompose symmetric positive-definite matrix:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> A</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// A = L × Lᵀ</span></span>
+<span class="line"><span style="color:#6A737D">// Where L is lower triangular</span></span></code></pre>
+<p><strong>Requirements</strong>:</p>
+<ul>
+<li>Square matrix</li>
+<li>Symmetric: <code>A = Aᵀ</code></li>
+<li>Positive definite: all eigenvalues > 0</li>
+</ul>
+<p><strong>Use cases</strong>:</p>
+<ul>
+<li>Solve symmetric systems (fastest)</li>
+<li>Monte Carlo simulation</li>
+<li>Covariance matrices</li>
+<li>Optimization</li>
+</ul>
+<p><strong>Complexity</strong>: O(n³/3) - Faster than LU</p>
+<p><strong>Error</strong>: Fails if matrix is not positive definite.</p>
+<h3 id="svd---singular-value-decomposition">SVD - Singular Value Decomposition</h3>
+<p>Decompose matrix into singular vectors and values:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> A</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// A = U × Σ × Vᵀ</span></span>
+<span class="line"><span style="color:#6A737D">// Where:</span></span>
+<span class="line"><span style="color:#6A737D">// - U: left singular vectors (m × min(m,n))</span></span>
+<span class="line"><span style="color:#6A737D">// - Σ: singular values (diagonal, min(m,n) values)</span></span>
+<span class="line"><span style="color:#6A737D">// - Vᵀ: right singular vectors transposed (min(m,n) × n)</span></span></code></pre>
+<p><strong>Properties</strong>:</p>
+<ul>
+<li>Works for any matrix (not just square)</li>
+<li>Singular values ≥ 0</li>
+<li>U and V are orthogonal</li>
+</ul>
+<p><strong>Use cases</strong>:</p>
+<ul>
+<li>Principal Component Analysis (PCA)</li>
+<li>Data compression</li>
+<li>Pseudo-inverse</li>
+<li>Low-rank approximation</li>
+<li>Recommendation systems</li>
+<li>Image compression</li>
+</ul>
+<p><strong>Complexity</strong>: O(min(m,n)² × max(m,n))</p>
+<p><strong>Example - Low-rank approximation</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Keep only top k singular values for compression</span></span>
+<span class="line"><span style="color:#6A737D">// A_approx = U[:, :k] × Σ[:k, :k] × Vᵀ[:k, :]</span></span></code></pre>
+<h2 id="eigenvalue-problems">Eigenvalue Problems</h2>
+<h3 id="eigenvalues">Eigenvalues</h3>
+<p>Find eigenvalues λ such that <code>Av = λv</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> A</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Returns complex eigenvalues (even if real)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> eigenvals </span><span style="color:#F97583">=</span><span style="color:#B392F0"> eigenvalues</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">A</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D">// [5.0, 2.0] (approximately)</span></span></code></pre>
+<p><strong>Properties</strong>:</p>
+<ul>
+<li>Sum of eigenvalues = trace(A)</li>
+<li>Product of eigenvalues = det(A)</li>
+<li>Symmetric matrix has real eigenvalues</li>
+</ul>
+<p><strong>Complexity</strong>: O(n³)</p>
+<h3 id="eigenvectors">Eigenvectors</h3>
+<p>Find eigenvalues and corresponding eigenvectors:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> A</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Returns (eigenvalues, eigenvector_matrix)</span></span>
+<span class="line"><span style="color:#6A737D">// Each column of eigenvector_matrix is an eigenvector</span></span></code></pre>
+<p><strong>Verification</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// For eigenvalue λ and eigenvector v:</span></span>
+<span class="line"><span style="color:#6A737D">// A × v = λ × v</span></span></code></pre>
+<p><strong>Use cases</strong>:</p>
+<ul>
+<li>Principal Component Analysis</li>
+<li>Quantum mechanics</li>
+<li>Stability analysis</li>
+<li>Graph algorithms (PageRank)</li>
+</ul>
+<h3 id="power-iteration">Power Iteration</h3>
+<p>Find dominant eigenvalue (largest magnitude):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> A</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Iterative method</span></span>
+<span class="line"><span style="color:#6A737D">// Returns (dominant_eigenvalue, corresponding_eigenvector)</span></span></code></pre>
+<p><strong>Algorithm</strong>: Repeatedly multiply by matrix and normalize</p>
+<p><strong>Convergence</strong>: Faster when dominant eigenvalue is well-separated</p>
+<p><strong>Use cases</strong>:</p>
+<ul>
+<li>PageRank algorithm</li>
+<li>Find largest eigenvalue only (faster than full decomposition)</li>
+</ul>
+<p><strong>Parameters</strong>:</p>
+<ul>
+<li><code>max_iterations</code>: Maximum iterations (e.g., 1000)</li>
+<li><code>tolerance</code>: Convergence threshold (e.g., 1e-10)</li>
+</ul>
+<h3 id="symmetric-eigendecomposition">Symmetric Eigendecomposition</h3>
+<p>Optimized for symmetric matrices:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> A</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Guaranteed real eigenvalues and orthogonal eigenvectors</span></span></code></pre>
+<p><strong>Properties for symmetric matrices</strong>:</p>
+<ul>
+<li>All eigenvalues are real</li>
+<li>Eigenvectors are orthogonal</li>
+<li>Can be diagonalized: <code>A = Q Λ Qᵀ</code></li>
+</ul>
+<h2 id="linear-system-solving">Linear System Solving</h2>
+<h3 id="matrix-inverse">Matrix Inverse</h3>
+<p>Compute A⁻¹ such that <code>A × A⁻¹ = I</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> A</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">7</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> A_inv </span><span style="color:#F97583">=</span><span style="color:#B392F0"> inverse</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">A</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D">// [[0.6, -0.7],</span></span>
+<span class="line"><span style="color:#6A737D">//  [-0.2, 0.4]]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Verify: A × A_inv ≈ I</span></span></code></pre>
+<p><strong>Requirements</strong>:</p>
+<ul>
+<li>Square matrix</li>
+<li>Non-singular: <code>det(A) ≠ 0</code></li>
+</ul>
+<p><strong>Warning</strong>: Direct inversion is numerically unstable and expensive. Prefer solving systems directly when possible.</p>
+<p><strong>Complexity</strong>: O(n³)</p>
+<h3 id="solve-linear-system">Solve Linear System</h3>
+<p>Solve <code>Ax = b</code> for x:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// System of equations:</span></span>
+<span class="line"><span style="color:#6A737D">// 3x + y = 9</span></span>
+<span class="line"><span style="color:#6A737D">// x + 2y = 8</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> A</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> b </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">9</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#B392F0"> solve</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">A</span><span style="color:#E1E4E8">, b)</span></span>
+<span class="line"><span style="color:#6A737D">// [2, 3]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Verify: A × x ≈ b</span></span></code></pre>
+<p><strong>Method</strong>: LU decomposition with pivoting</p>
+<p><strong>Requirements</strong>:</p>
+<ul>
+<li>A is a matrix (rank-2 tensor)</li>
+<li>b is a vector (rank-1 tensor)</li>
+<li>Dimension compatibility: <code>A.rows == b.length</code></li>
+<li>A must be non-singular</li>
+</ul>
+<p><strong>Preferred over inverse</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ❌ Slower and less accurate</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#B392F0"> dot</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">inverse</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">A</span><span style="color:#E1E4E8">), b)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Faster and more accurate</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#B392F0"> solve</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">A</span><span style="color:#E1E4E8">, b)</span></span></code></pre>
+<h2 id="matrix-utilities">Matrix Utilities</h2>
+<h3 id="check-symmetry">Check Symmetry</h3>
+<p>Test if matrix is symmetric:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> A</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">isSymmetric</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">A</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1e-10</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// true</span></span></code></pre>
+<p><strong>Definition</strong>: <code>A[i,j] ≈ A[j,i]</code> for all i, j (within tolerance)</p>
+<p><strong>Parameters</strong>:</p>
+<ul>
+<li><code>matrix</code>: The matrix to test</li>
+<li><code>tolerance</code>: Numerical tolerance (e.g., 1e-10)</li>
+</ul>
+<h3 id="check-positive-definite">Check Positive Definite</h3>
+<p>Test if matrix is positive definite:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> A</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">isPositiveDefinite</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">A</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// true</span></span></code></pre>
+<p><strong>Method</strong>: Attempts Cholesky decomposition</p>
+<p><strong>Definition</strong>: Matrix A is positive definite if:</p>
+<ul>
+<li><code>xᵀAx > 0</code> for all non-zero vectors x</li>
+<li>Equivalently: all eigenvalues > 0</li>
+<li>Equivalently: has Cholesky decomposition</li>
+</ul>
+<p><strong>Use case</strong>: Verify preconditions before using Cholesky or optimization algorithms.</p>
+<h2 id="practical-examples">Practical Examples</h2>
+<h3 id="least-squares-regression">Least Squares Regression</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Fit y = mx + b to data points</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> X</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">],  </span><span style="color:#6A737D">// [1, x₁]</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">],  </span><span style="color:#6A737D">// [1, x₂]</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">],  </span><span style="color:#6A737D">// [1, x₃]</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">]   </span><span style="color:#6A737D">// [1, x₄]</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> y </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">7</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Normal equation: (XᵀX)β = Xᵀy</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> XtX </span><span style="color:#F97583">=</span><span style="color:#B392F0"> dot</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">transpose</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">X</span><span style="color:#E1E4E8">), </span><span style="color:#79B8FF">X</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> Xty </span><span style="color:#F97583">=</span><span style="color:#B392F0"> dot</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">transpose</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">X</span><span style="color:#E1E4E8">), y)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> beta </span><span style="color:#F97583">=</span><span style="color:#B392F0"> solve</span><span style="color:#E1E4E8">(XtX, Xty)</span></span>
+<span class="line"><span style="color:#6A737D">// [0.3, 1.5] → y = 1.5x + 0.3</span></span></code></pre>
+<h3 id="distance-between-points">Distance Between Points</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Distance in n-dimensional space</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> distance</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">p1</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">p2</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    let</span><span style="color:#E1E4E8"> diff </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">a</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">b</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> b, p1, p2)</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#B392F0"> norm</span><span style="color:#E1E4E8">(diff)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">distance</span><span style="color:#E1E4E8">([</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">], [</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">])  </span><span style="color:#6A737D">// 5.0</span></span>
+<span class="line"><span style="color:#B392F0">distance</span><span style="color:#E1E4E8">([</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">], [</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">])  </span><span style="color:#6A737D">// 5.196...</span></span></code></pre>
+<h3 id="angle-between-vectors">Angle Between Vectors</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Angle using dot product</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> angle</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">v1</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">v2</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    let</span><span style="color:#E1E4E8"> cos_theta </span><span style="color:#F97583">=</span><span style="color:#B392F0"> dot</span><span style="color:#E1E4E8">(v1, v2) </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> (</span><span style="color:#B392F0">norm</span><span style="color:#E1E4E8">(v1) </span><span style="color:#F97583">*</span><span style="color:#B392F0"> norm</span><span style="color:#E1E4E8">(v2))</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#B392F0"> acos</span><span style="color:#E1E4E8">(cos_theta)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> v1 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> v2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#B392F0">angle</span><span style="color:#E1E4E8">(v1, v2)  </span><span style="color:#6A737D">// π/4 = 45 degrees</span></span></code></pre>
+<h3 id="project-vector-onto-another">Project Vector onto Another</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Project v onto u</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> project</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">v</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">u</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    let</span><span style="color:#E1E4E8"> scalar </span><span style="color:#F97583">=</span><span style="color:#B392F0"> dot</span><span style="color:#E1E4E8">(v, u) </span><span style="color:#F97583">/</span><span style="color:#B392F0"> dot</span><span style="color:#E1E4E8">(u, u)</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> scalar, u)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> v </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> u </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#B392F0">project</span><span style="color:#E1E4E8">(v, u)  </span><span style="color:#6A737D">// [3, 0]</span></span></code></pre>
+<h3 id="gram-schmidt-orthogonalization">Gram-Schmidt Orthogonalization</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Orthogonalize two vectors</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> v1 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> v2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// u1 = v1</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> u1 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> v1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// u2 = v2 - proj(v2 onto u1)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> proj </span><span style="color:#F97583">=</span><span style="color:#B392F0"> project</span><span style="color:#E1E4E8">(v2, u1)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> u2 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">a</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">b</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> b, v2, proj)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Now u1 and u2 are orthogonal</span></span>
+<span class="line"><span style="color:#B392F0">dot</span><span style="color:#E1E4E8">(u1, u2)  </span><span style="color:#6A737D">// ≈ 0</span></span></code></pre>
+<h3 id="rotation-matrix">Rotation Matrix</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// 2D rotation by angle θ</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> rotation_2d</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> theta</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#B392F0">cos</span><span style="color:#E1E4E8">(theta), </span><span style="color:#F97583">-</span><span style="color:#B392F0">sin</span><span style="color:#E1E4E8">(theta)],</span></span>
+<span class="line"><span style="color:#E1E4E8">    [</span><span style="color:#B392F0">sin</span><span style="color:#E1E4E8">(theta), </span><span style="color:#B392F0">cos</span><span style="color:#E1E4E8">(theta)]</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Rotate vector by 90 degrees</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> R</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> rotation_2d</span><span style="color:#E1E4E8">(pi</span><span style="color:#F97583">/</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> v </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#6A737D">// Apply: R × v = [0, 1]</span></span></code></pre>
+<h3 id="matrix-condition-number">Matrix Condition Number</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Estimate condition number (ratio of extreme singular values)</span></span>
+<span class="line"><span style="color:#6A737D">// Large condition number → ill-conditioned (numerical instability)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> condition_approx</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> A</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">    // TODO: Implement using SVD</span></span>
+<span class="line"><span style="color:#6A737D">    // κ(A) = σ_max / σ_min</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="performance-considerations">Performance Considerations</h2>
+<h3 id="algorithm-complexity">Algorithm Complexity</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Operation</th><th>Complexity</th><th>Notes</th></tr></thead><tbody><tr><td>dot</td><td>O(n)</td><td>Fast, vectorized</td></tr><tr><td>cross</td><td>O(1)</td><td>Only 3D vectors</td></tr><tr><td>norm</td><td>O(n)</td><td>Fast, vectorized</td></tr><tr><td>transpose</td><td>O(mn)</td><td>Element copy</td></tr><tr><td>det</td><td>O(n³)</td><td>Uses LU</td></tr><tr><td>trace</td><td>O(n)</td><td>Diagonal sum</td></tr><tr><td>LU</td><td>O(n³)</td><td>With pivoting</td></tr><tr><td>QR</td><td>O(mn²)</td><td>Householder</td></tr><tr><td>Cholesky</td><td>O(n³/3)</td><td>Fastest for SPD</td></tr><tr><td>SVD</td><td>O(min(m,n)²max(m,n))</td><td>Most expensive</td></tr><tr><td>eigenvalues</td><td>O(n³)</td><td>Full decomposition</td></tr><tr><td>inverse</td><td>O(n³)</td><td>Uses LU</td></tr><tr><td>solve</td><td>O(n³)</td><td>Uses LU</td></tr></tbody></table>
+<h3 id="numerical-stability">Numerical Stability</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ✅ Stable: Solve system directly</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#B392F0"> solve</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">A</span><span style="color:#E1E4E8">, b)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ⚠️ Less stable: Use inverse</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#B392F0"> dot</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">inverse</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">A</span><span style="color:#E1E4E8">), b)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Stable: QR for least squares</span></span>
+<span class="line"><span style="color:#6A737D">// ⚠️ Less stable: Normal equations with XᵀX</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Stable: Cholesky for SPD matrices</span></span>
+<span class="line"><span style="color:#6A737D">// ⚠️ Less stable: General LU for SPD</span></span></code></pre>
+<h3 id="choose-appropriate-method">Choose Appropriate Method</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Symmetric positive-definite system</span></span>
+<span class="line"><span style="color:#6A737D">// ✅ Use Cholesky (fastest, most stable)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#B392F0"> solve_cholesky</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">A</span><span style="color:#E1E4E8">, b)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// General square system</span></span>
+<span class="line"><span style="color:#6A737D">// ✅ Use LU</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#B392F0"> solve</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">A</span><span style="color:#E1E4E8">, b)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Overdetermined system (more equations than unknowns)</span></span>
+<span class="line"><span style="color:#6A737D">// ✅ Use QR or normal equations</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#B392F0"> solve_least_squares</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">A</span><span style="color:#E1E4E8">, b)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Large sparse system</span></span>
+<span class="line"><span style="color:#6A737D">// ✅ Use iterative solvers (TODO: not yet implemented)</span></span></code></pre>
+<h2 id="type-support">Type Support</h2>
+<p>All linear algebra functions work with:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Regular arrays (inferred as tensors)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> v </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#79B8FF"> A</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">], [</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">]]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Explicit tensors</span></span>
+<span class="line"><span style="color:#6A737D">// (When working from Rust/WASM)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Complex numbers</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> z </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">2i, </span><span style="color:#79B8FF">3</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">4i]</span></span>
+<span class="line"><span style="color:#B392F0">norm</span><span style="color:#E1E4E8">(z)  </span><span style="color:#6A737D">// Works with complex vectors</span></span></code></pre>
+<h2 id="error-handling">Error Handling</h2>
+<p>Common errors and how to handle them:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Dimension mismatch</span></span>
+<span class="line"><span style="color:#B392F0">dot</span><span style="color:#E1E4E8">([</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">], [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">])  </span><span style="color:#6A737D">// Error: incompatible dimensions</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Non-square matrix for operations requiring it</span></span>
+<span class="line"><span style="color:#B392F0">det</span><span style="color:#E1E4E8">([[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">], [</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">]])  </span><span style="color:#6A737D">// Error: must be square</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Singular matrix</span></span>
+<span class="line"><span style="color:#B392F0">inverse</span><span style="color:#E1E4E8">([[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">], [</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">]])  </span><span style="color:#6A737D">// Error: determinant = 0</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Non-positive-definite for Cholesky</span></span>
+<span class="line"><span style="color:#6A737D">// cholesky([[1, 2], [2, 1]])  // Error: not positive definite</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Zero vector for normalize</span></span>
+<span class="line"><span style="color:#B392F0">normalize</span><span style="color:#E1E4E8">([</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">])  </span><span style="color:#6A737D">// Error: zero norm</span></span></code></pre>
+<h2 id="summary">Summary</h2>
+<p><strong>Vector operations</strong>: dot, cross, norm, normalize</p>
+<p><strong>Matrix operations</strong>: transpose, det, trace</p>
+<p><strong>Decompositions</strong>: LU, QR, Cholesky, SVD</p>
+<p><strong>Eigenvalues</strong>: eigenvalues, eigenvectors, power iteration</p>
+<p><strong>Linear systems</strong>: inverse, solve</p>
+<p><strong>Utilities</strong>: isSymmetric, isPositiveDefinite</p>
+<p><strong>Key features</strong>:</p>
+<ul>
+<li>High-performance faer backend</li>
+<li>Numerically stable algorithms</li>
+<li>WASM-compatible</li>
+<li>Support for real and complex numbers</li>
+</ul>
+<p><strong>Best practices</strong>:</p>
+<ul>
+<li>Prefer <code>solve()</code> over <code>inverse()</code></li>
+<li>Use Cholesky for symmetric positive-definite systems</li>
+<li>Check matrix properties before expensive operations</li>
+<li>Consider numerical stability</li>
+</ul>
+<hr>
+<p><strong>Next</strong>: <a href="complex-numbers.md">Complex Numbers</a></p>  </article> <div class="mt-12 border-t border-slate-800 pt-6"> <nav class="flex items-center justify-between"> <div></div> <div></div> </nav> </div> </div> <!-- Right sidebar (table of contents) --> <div class="hidden xl:flex xl:flex-shrink-0"> <div class="w-64 py-8 pl-8 border-l border-slate-800"> <div class="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto"> <div class="space-y-4"><h4 class="font-display text-sm font-semibold text-white">
+On this page
+</h4><nav><ul class="space-y-2.5 text-sm"><li class><a href="#overview" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Overview</a></li><li class><a href="#vector-operations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Vector Operations</a></li><li class="ml-4"><a href="#dot-product" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Dot Product</a></li><li class="ml-4"><a href="#cross-product" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Cross Product</a></li><li class="ml-4"><a href="#vector-norm" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Vector Norm</a></li><li class="ml-4"><a href="#normalize-vector" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Normalize Vector</a></li><li class><a href="#matrix-operations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Matrix Operations</a></li><li class="ml-4"><a href="#transpose" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Transpose</a></li><li class="ml-4"><a href="#determinant" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Determinant</a></li><li class="ml-4"><a href="#trace" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Trace</a></li><li class><a href="#matrix-decompositions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Matrix Decompositions</a></li><li class="ml-4"><a href="#lu-decomposition" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">LU Decomposition</a></li><li class="ml-4"><a href="#qr-decomposition" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">QR Decomposition</a></li><li class="ml-4"><a href="#cholesky-decomposition" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Cholesky Decomposition</a></li><li class="ml-4"><a href="#svd---singular-value-decomposition" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">SVD - Singular Value Decomposition</a></li><li class><a href="#eigenvalue-problems" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Eigenvalue Problems</a></li><li class="ml-4"><a href="#eigenvalues" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Eigenvalues</a></li><li class="ml-4"><a href="#eigenvectors" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Eigenvectors</a></li><li class="ml-4"><a href="#power-iteration" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Power Iteration</a></li><li class="ml-4"><a href="#symmetric-eigendecomposition" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Symmetric Eigendecomposition</a></li><li class><a href="#linear-system-solving" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Linear System Solving</a></li><li class="ml-4"><a href="#matrix-inverse" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Matrix Inverse</a></li><li class="ml-4"><a href="#solve-linear-system" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Solve Linear System</a></li><li class><a href="#matrix-utilities" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Matrix Utilities</a></li><li class="ml-4"><a href="#check-symmetry" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Check Symmetry</a></li><li class="ml-4"><a href="#check-positive-definite" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Check Positive Definite</a></li><li class><a href="#practical-examples" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Practical Examples</a></li><li class="ml-4"><a href="#least-squares-regression" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Least Squares Regression</a></li><li class="ml-4"><a href="#distance-between-points" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Distance Between Points</a></li><li class="ml-4"><a href="#angle-between-vectors" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Angle Between Vectors</a></li><li class="ml-4"><a href="#project-vector-onto-another" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Project Vector onto Another</a></li><li class="ml-4"><a href="#gram-schmidt-orthogonalization" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Gram-Schmidt Orthogonalization</a></li><li class="ml-4"><a href="#rotation-matrix" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Rotation Matrix</a></li><li class="ml-4"><a href="#matrix-condition-number" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Matrix Condition Number</a></li><li class><a href="#performance-considerations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Performance Considerations</a></li><li class="ml-4"><a href="#algorithm-complexity" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Algorithm Complexity</a></li><li class="ml-4"><a href="#numerical-stability" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Numerical Stability</a></li><li class="ml-4"><a href="#choose-appropriate-method" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Choose Appropriate Method</a></li><li class><a href="#type-support" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Type Support</a></li><li class><a href="#error-handling" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Error Handling</a></li><li class><a href="#summary" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Summary</a></li></ul></nav></div> </div> </div> </div> </div> </div> </div>  </body></html>

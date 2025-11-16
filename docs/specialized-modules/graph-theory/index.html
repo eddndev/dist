@@ -1,0 +1,1576 @@
+<!DOCTYPE html><html lang="en" class="h-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Network construction, traversal algorithms (BFS, DFS), shortest paths, MST, connectivity, topological sorting, and PERT/CPM project management"><meta name="generator" content="Astro v5.15.8"><link rel="canonical" href="http://localhost:4321/docs/specialized-modules/graph-theory/"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Graph Theory | Achronyme</title><!-- Preload fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="/_astro/_slug_.CyadsZWk.css">
+<style>[data-astro-cid-k5z7lb4y][x-cloak]{display:none!important}
+</style><script type="module" src="/_astro/page.BE54bNVT.js"></script></head> <body class="h-full bg-slate-950" x-data>  <div class="min-h-full"> <header class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur supports-[backdrop-filter]:bg-slate-950/80"> <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex h-16 items-center justify-between"> <!-- Logo --> <div class="flex items-center"> <a href="/" class="flex items-center space-x-3"> <picture> <source srcset="/logo.avif" type="image/avif"> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';"> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden"> <span class="text-white font-bold text-sm">A</span> </div> <span class="font-display text-xl font-semibold text-white">
+Achronyme
+</span> </a> </div> <!-- Center navigation --> <nav class="hidden md:flex items-center justify-center flex-1 space-x-6"> <a href="/docs" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">
+Documentation
+</a> <a href="https://github.com/achronyme/achronyme-core" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-slate-400 hover:text-white transition-colors inline-flex items-center"> <svg class="mr-1.5 h-4 w-4" fill="currentColor" viewBox="0 0 24 24"> <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path> </svg>
+GitHub
+</a> </nav> <!-- Right side - Changelog link + Mobile menu button --> <div class="flex items-center space-x-4"> <a href="/changelog" class="hidden md:block text-sm font-medium text-slate-400 hover:text-white transition-colors">
+Changelog
+</a> <button type="button" class="md:hidden rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.toggle()"> <span class="sr-only">Open menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path> </svg> </button> </div> </div> </div> </header> <div class="fixed inset-0 z-40 lg:hidden" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-cloak data-astro-cid-k5z7lb4y> <!-- Backdrop --> <div class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm" @click="$store.nav.close()" data-astro-cid-k5z7lb4y></div> <!-- Sidebar --> <div class="fixed inset-y-0 left-0 w-full max-w-xs bg-slate-900 shadow-xl" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full" data-astro-cid-k5z7lb4y> <div class="flex h-16 items-center justify-between px-6 border-b border-slate-800" data-astro-cid-k5z7lb4y> <a href="/" class="flex items-center space-x-2" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <picture data-astro-cid-k5z7lb4y> <source srcset="/logo.avif" type="image/avif" data-astro-cid-k5z7lb4y> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';" data-astro-cid-k5z7lb4y> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden" data-astro-cid-k5z7lb4y> <span class="text-white font-bold text-sm" data-astro-cid-k5z7lb4y>A</span> </div> <span class="font-display text-xl font-semibold text-white" data-astro-cid-k5z7lb4y>
+Achronyme
+</span> </a> <button type="button" class="rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <span class="sr-only" data-astro-cid-k5z7lb4y>Close menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-astro-cid-k5z7lb4y> <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" data-astro-cid-k5z7lb4y></path> </svg> </button> </div> <nav class="overflow-y-auto p-6 space-y-8" data-astro-cid-k5z7lb4y> <div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Getting Started </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/introduction" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Introduction </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/installation" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Installation </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/syntax-basics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Syntax Basics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Core Language </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/data-types" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Data Types </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/operators" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Operators </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/variables" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Variables </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/control-flow" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Control Flow </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Data Structures </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/arrays-tensors" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Arrays &amp; Tensors </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/indexing-slicing" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Indexing &amp; Slicing </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/records" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Records </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/strings" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Strings </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Functional Programming </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/higher-order-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Higher-Order Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/do-blocks" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Do Blocks </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/recursion" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Recursion </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Mathematical Computing </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/mathematical-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mathematical Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/linear-algebra" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Linear Algebra </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/complex-numbers" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Complex Numbers </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/numerical-analysis" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Numerical Analysis </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/statistics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Statistics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Specialized Modules </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/dsp" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> DSP </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/graph-theory" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Graph Theory </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/optimization" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Optimization </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Advanced Topics </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/best-practices" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Best Practices </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/examples" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Examples </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/performance" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Performance </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/mutability" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mutability </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/io-persistence" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div>  <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex"> <!-- Left sidebar (navigation) --> <div class="hidden lg:flex lg:flex-shrink-0"> <div class="w-64 py-8 pr-8 border-r border-slate-800"> <div class="sticky top-20"> <nav class="space-y-8"> <div> <h3 class="font-display text-sm font-semibold text-white"> Getting Started </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/getting-started/introduction" class="block text-sm transition-colors text-slate-400 hover:text-white"> Introduction </a> </li><li> <a href="/docs/getting-started/installation" class="block text-sm transition-colors text-slate-400 hover:text-white"> Installation </a> </li><li> <a href="/docs/getting-started/syntax-basics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Syntax Basics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Core Language </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/core-language/data-types" class="block text-sm transition-colors text-slate-400 hover:text-white"> Data Types </a> </li><li> <a href="/docs/core-language/operators" class="block text-sm transition-colors text-slate-400 hover:text-white"> Operators </a> </li><li> <a href="/docs/core-language/variables" class="block text-sm transition-colors text-slate-400 hover:text-white"> Variables </a> </li><li> <a href="/docs/core-language/functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Functions </a> </li><li> <a href="/docs/core-language/control-flow" class="block text-sm transition-colors text-slate-400 hover:text-white"> Control Flow </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Data Structures </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/data-structures/arrays-tensors" class="block text-sm transition-colors text-slate-400 hover:text-white"> Arrays &amp; Tensors </a> </li><li> <a href="/docs/data-structures/indexing-slicing" class="block text-sm transition-colors text-slate-400 hover:text-white"> Indexing &amp; Slicing </a> </li><li> <a href="/docs/data-structures/records" class="block text-sm transition-colors text-slate-400 hover:text-white"> Records </a> </li><li> <a href="/docs/data-structures/strings" class="block text-sm transition-colors text-slate-400 hover:text-white"> Strings </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Functional Programming </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/functional-programming/higher-order-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Higher-Order Functions </a> </li><li> <a href="/docs/functional-programming/do-blocks" class="block text-sm transition-colors text-slate-400 hover:text-white"> Do Blocks </a> </li><li> <a href="/docs/functional-programming/recursion" class="block text-sm transition-colors text-slate-400 hover:text-white"> Recursion </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Mathematical Computing </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/mathematical-computing/mathematical-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mathematical Functions </a> </li><li> <a href="/docs/mathematical-computing/linear-algebra" class="block text-sm transition-colors text-slate-400 hover:text-white"> Linear Algebra </a> </li><li> <a href="/docs/mathematical-computing/complex-numbers" class="block text-sm transition-colors text-slate-400 hover:text-white"> Complex Numbers </a> </li><li> <a href="/docs/mathematical-computing/numerical-analysis" class="block text-sm transition-colors text-slate-400 hover:text-white"> Numerical Analysis </a> </li><li> <a href="/docs/mathematical-computing/statistics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Statistics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Specialized Modules </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/specialized-modules/dsp" class="block text-sm transition-colors text-slate-400 hover:text-white"> DSP </a> </li><li> <a href="/docs/specialized-modules/graph-theory" class="block text-sm transition-colors text-slate-400 hover:text-white"> Graph Theory </a> </li><li> <a href="/docs/specialized-modules/optimization" class="block text-sm transition-colors text-slate-400 hover:text-white"> Optimization </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Advanced Topics </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/advanced-topics/best-practices" class="block text-sm transition-colors text-slate-400 hover:text-white"> Best Practices </a> </li><li> <a href="/docs/advanced-topics/examples" class="block text-sm transition-colors text-slate-400 hover:text-white"> Examples </a> </li><li> <a href="/docs/advanced-topics/performance" class="block text-sm transition-colors text-slate-400 hover:text-white"> Performance </a> </li><li> <a href="/docs/advanced-topics/mutability" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mutability </a> </li><li> <a href="/docs/advanced-topics/io-persistence" class="block text-sm transition-colors text-slate-400 hover:text-white"> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div> </div> <!-- Main content --> <div class="min-w-0 flex-1 py-8 lg:pl-8"> <article class="prose prose-invert max-w-none"> <h1 class="font-display text-4xl font-bold tracking-tight text-white"> Graph Theory </h1> <p class="lead text-xl text-slate-400"> Network construction, traversal algorithms (BFS, DFS), shortest paths, MST, connectivity, topological sorting, and PERT/CPM project management </p>  <p>Achronyme provides comprehensive graph theory and network analysis capabilities, including graph construction, traversal algorithms, shortest paths, minimum spanning trees, and project management with PERT/CPM methods.</p>
+<h2 id="overview">Overview</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Category</th><th>Functions</th></tr></thead><tbody><tr><td><strong>Graph Construction</strong></td><td>network, -> (directed edge), &#x3C;> (undirected edge)</td></tr><tr><td><strong>Graph Properties</strong></td><td>nodes, edges, neighbors, degree</td></tr><tr><td><strong>Traversal</strong></td><td>bfs, dfs, bfs_path</td></tr><tr><td><strong>Shortest Paths</strong></td><td>dijkstra</td></tr><tr><td><strong>Cycle Detection</strong></td><td>has_cycle</td></tr><tr><td><strong>Minimum Spanning Tree</strong></td><td>kruskal, prim</td></tr><tr><td><strong>Connectivity</strong></td><td>connected_components, is_connected</td></tr><tr><td><strong>Topological Sorting</strong></td><td>topological_sort</td></tr><tr><td><strong>PERT/CPM</strong></td><td>forward_pass, backward_pass, calculate_slack, critical_path, all_critical_paths, project_duration</td></tr><tr><td><strong>PERT Probabilistic</strong></td><td>expected_time, task_variance, project_variance, project_std_dev, completion_probability, time_for_probability</td></tr><tr><td><strong>Complete Analysis</strong></td><td>pert_analysis</td></tr></tbody></table>
+<h2 id="graph-construction">Graph Construction</h2>
+<h3 id="network-creation">Network Creation</h3>
+<p>Create a graph using the <code>network()</code> function with edge expressions:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Directed graph</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> g </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> B</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> C</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> C</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Undirected graph</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> g </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> &#x3C;></span><span style="color:#79B8FF"> B</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> &#x3C;></span><span style="color:#79B8FF"> C</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> &#x3C;></span><span style="color:#79B8FF"> C</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Mixed edges</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> g </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> B</span><span style="color:#E1E4E8">,    </span><span style="color:#6A737D">// Directed: A to B</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> &#x3C;></span><span style="color:#79B8FF"> C</span><span style="color:#E1E4E8">,    </span><span style="color:#6A737D">// Undirected: B and C</span></span>
+<span class="line"><span style="color:#79B8FF">    C</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> D</span><span style="color:#6A737D">     // Directed: C to D</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span></code></pre>
+<p><strong>Syntax</strong>:</p>
+<ul>
+<li><code>A -> B</code>: Directed edge from A to B</li>
+<li><code>A &#x3C;> B</code>: Undirected edge between A and B</li>
+<li>Node names: Identifiers without quotes</li>
+</ul>
+<h3 id="weighted-graphs">Weighted Graphs</h3>
+<p>Add weights using tuples:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Weighted directed graph</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> g </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">B</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">],     </span><span style="color:#6A737D">// Edge from A to B with weight 5</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">C</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">C</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Weighted undirected graph</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> g </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> &#x3C;></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">B</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> &#x3C;></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">C</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> &#x3C;></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">C</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">7</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span></code></pre>
+<p><strong>Weight format</strong>: <code>[destination, weight]</code></p>
+<p><strong>Default weight</strong>: 1.0 if not specified</p>
+<h2 id="graph-properties">Graph Properties</h2>
+<h3 id="get-nodes">Get Nodes</h3>
+<p>Retrieve all nodes in the graph:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> g </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> B</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> C</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    C</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> D</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> node_list </span><span style="color:#F97583">=</span><span style="color:#B392F0"> nodes</span><span style="color:#E1E4E8">(g)</span></span>
+<span class="line"><span style="color:#6A737D">// ["A", "B", "C", "D"]</span></span></code></pre>
+<p><strong>Signature</strong>: <code>nodes(graph) -> Vector&#x3C;String></code></p>
+<h3 id="get-edges">Get Edges</h3>
+<p>Retrieve all edges:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> g </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">B</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">C</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> edge_list </span><span style="color:#F97583">=</span><span style="color:#B392F0"> edges</span><span style="color:#E1E4E8">(g)</span></span>
+<span class="line"><span style="color:#6A737D">// Returns vector of edge records</span></span>
+<span class="line"><span style="color:#6A737D">// Each edge: {from: "A", to: "B", weight: 5}</span></span></code></pre>
+<p><strong>Signature</strong>: <code>edges(graph) -> Vector&#x3C;Record></code></p>
+<p><strong>Edge record format</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#B392F0">    from</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"A"</span><span style="color:#E1E4E8">,      </span><span style="color:#6A737D">// Source node</span></span>
+<span class="line"><span style="color:#B392F0">    to</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"B"</span><span style="color:#E1E4E8">,        </span><span style="color:#6A737D">// Target node</span></span>
+<span class="line"><span style="color:#B392F0">    weight</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">5</span><span style="color:#6A737D">       // Edge weight</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="get-neighbors">Get Neighbors</h3>
+<p>Find adjacent nodes:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> g </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> B</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> C</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> D</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">neighbors</span><span style="color:#E1E4E8">(g, </span><span style="color:#9ECBFF">"A"</span><span style="color:#E1E4E8">)   </span><span style="color:#6A737D">// ["B", "C"]</span></span>
+<span class="line"><span style="color:#B392F0">neighbors</span><span style="color:#E1E4E8">(g, </span><span style="color:#9ECBFF">"B"</span><span style="color:#E1E4E8">)   </span><span style="color:#6A737D">// ["D"]</span></span>
+<span class="line"><span style="color:#B392F0">neighbors</span><span style="color:#E1E4E8">(g, </span><span style="color:#9ECBFF">"D"</span><span style="color:#E1E4E8">)   </span><span style="color:#6A737D">// []</span></span></code></pre>
+<p><strong>Signature</strong>: <code>neighbors(graph, node) -> Vector&#x3C;String></code></p>
+<p><strong>Note</strong>: For undirected edges, neighbors include both directions</p>
+<h3 id="node-degree">Node Degree</h3>
+<p>Get the degree (number of connections):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> g </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> B</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> C</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> C</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">degree</span><span style="color:#E1E4E8">(g, </span><span style="color:#9ECBFF">"A"</span><span style="color:#E1E4E8">)      </span><span style="color:#6A737D">// 2 (outgoing edges)</span></span>
+<span class="line"><span style="color:#B392F0">degree</span><span style="color:#E1E4E8">(g, </span><span style="color:#9ECBFF">"B"</span><span style="color:#E1E4E8">)      </span><span style="color:#6A737D">// 1</span></span>
+<span class="line"><span style="color:#B392F0">degree</span><span style="color:#E1E4E8">(g, </span><span style="color:#9ECBFF">"C"</span><span style="color:#E1E4E8">)      </span><span style="color:#6A737D">// 0 (no outgoing)</span></span></code></pre>
+<p><strong>Signature</strong>: <code>degree(graph, node) -> Number</code></p>
+<p><strong>Definition</strong>: Number of outgoing edges for directed graphs, total connections for undirected</p>
+<h2 id="graph-traversal">Graph Traversal</h2>
+<h3 id="breadth-first-search-bfs">Breadth-First Search (BFS)</h3>
+<p>Visit nodes level by level:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> g </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> B</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> C</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> D</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    C</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> D</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> order </span><span style="color:#F97583">=</span><span style="color:#B392F0"> bfs</span><span style="color:#E1E4E8">(g, </span><span style="color:#9ECBFF">"A"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D">// ["A", "B", "C", "D"]</span></span></code></pre>
+<p><strong>Signature</strong>: <code>bfs(graph, start) -> Vector&#x3C;String></code></p>
+<p><strong>Algorithm</strong>: Queue-based traversal</p>
+<p><strong>Use cases</strong>:</p>
+<ul>
+<li>Level-order traversal</li>
+<li>Finding shortest path (unweighted)</li>
+<li>Testing reachability</li>
+</ul>
+<h3 id="depth-first-search-dfs">Depth-First Search (DFS)</h3>
+<p>Visit nodes by exploring paths deeply:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> g </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> B</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> C</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> D</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    C</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> D</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> order </span><span style="color:#F97583">=</span><span style="color:#B392F0"> dfs</span><span style="color:#E1E4E8">(g, </span><span style="color:#9ECBFF">"A"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D">// ["A", "B", "D", "C"] or similar</span></span></code></pre>
+<p><strong>Signature</strong>: <code>dfs(graph, start) -> Vector&#x3C;String></code></p>
+<p><strong>Algorithm</strong>: Stack-based (recursive) traversal</p>
+<p><strong>Use cases</strong>:</p>
+<ul>
+<li>Topological sorting</li>
+<li>Cycle detection</li>
+<li>Path finding</li>
+</ul>
+<h3 id="bfs-path-finding">BFS Path Finding</h3>
+<p>Find shortest path between two nodes:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> g </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> B</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> C</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> D</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    C</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> D</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> path </span><span style="color:#F97583">=</span><span style="color:#B392F0"> bfs_path</span><span style="color:#E1E4E8">(g, </span><span style="color:#9ECBFF">"A"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"D"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D">// ["A", "B", "D"] - shortest path</span></span></code></pre>
+<p><strong>Signature</strong>: <code>bfs_path(graph, start, end) -> Vector&#x3C;String></code></p>
+<p><strong>Returns</strong>: Shortest path or empty vector if no path exists</p>
+<p><strong>Complexity</strong>: O(V + E)</p>
+<h2 id="shortest-paths">Shortest Paths</h2>
+<h3 id="dijkstras-algorithm">Dijkstra’s Algorithm</h3>
+<p>Find shortest paths from a source to all other nodes:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> g </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">B</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">C</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">C</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">D</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    C</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">D</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#B392F0"> dijkstra</span><span style="color:#E1E4E8">(g, </span><span style="color:#9ECBFF">"A"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D">// Returns record with distances and paths</span></span></code></pre>
+<p><strong>Signature</strong>: <code>dijkstra(graph, source) -> Record</code></p>
+<p><strong>Result format</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#B392F0">    distances</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#B392F0">        A</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">        B</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">        C</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">        D</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">9</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"><span style="color:#B392F0">    predecessors</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#B392F0">        A</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">null</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">        B</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"A"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">        C</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"A"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">        D</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"B"</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><strong>Algorithm</strong>: Priority queue-based</p>
+<p><strong>Complexity</strong>: O((V + E) log V) with binary heap</p>
+<p><strong>Requirements</strong>: Non-negative edge weights</p>
+<p><strong>Use cases</strong>:</p>
+<ul>
+<li>Shortest path in weighted graphs</li>
+<li>Route planning</li>
+<li>Network optimization</li>
+</ul>
+<h2 id="cycle-detection">Cycle Detection</h2>
+<h3 id="check-for-cycles">Check for Cycles</h3>
+<p>Detect if graph contains cycles:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Acyclic graph</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> g1 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> B</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> C</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> C</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#B392F0">has_cycle</span><span style="color:#E1E4E8">(g1)       </span><span style="color:#6A737D">// false</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Cyclic graph</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> g2 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> B</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> C</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    C</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> A</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#B392F0">has_cycle</span><span style="color:#E1E4E8">(g2)       </span><span style="color:#6A737D">// true</span></span></code></pre>
+<p><strong>Signature</strong>: <code>has_cycle(graph) -> Boolean</code></p>
+<p><strong>Algorithm</strong>: DFS with state tracking</p>
+<p><strong>Use cases</strong>:</p>
+<ul>
+<li>Validating DAGs</li>
+<li>Detecting deadlocks</li>
+<li>Dependency checking</li>
+</ul>
+<h2 id="minimum-spanning-tree">Minimum Spanning Tree</h2>
+<h3 id="kruskals-algorithm">Kruskal’s Algorithm</h3>
+<p>Find MST by sorting edges:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> g </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> &#x3C;></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">B</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> &#x3C;></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">C</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> &#x3C;></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">C</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> &#x3C;></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">D</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    C</span><span style="color:#F97583"> &#x3C;></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">D</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> mst </span><span style="color:#F97583">=</span><span style="color:#B392F0"> kruskal</span><span style="color:#E1E4E8">(g)</span></span>
+<span class="line"><span style="color:#6A737D">// Returns network with MST edges</span></span>
+<span class="line"><span style="color:#6A737D">// Total weight: 1 + 2 + 5 = 8</span></span></code></pre>
+<p><strong>Signature</strong>: <code>kruskal(graph) -> Graph</code></p>
+<p><strong>Algorithm</strong>: Union-Find based</p>
+<p><strong>Complexity</strong>: O(E log E)</p>
+<p><strong>Result</strong>: New graph containing only MST edges</p>
+<h3 id="prims-algorithm">Prim’s Algorithm</h3>
+<p>Find MST by growing from a vertex:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> g </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> &#x3C;></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">B</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> &#x3C;></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">C</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> &#x3C;></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">C</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> &#x3C;></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">D</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    C</span><span style="color:#F97583"> &#x3C;></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">D</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> mst </span><span style="color:#F97583">=</span><span style="color:#B392F0"> prim</span><span style="color:#E1E4E8">(g, </span><span style="color:#9ECBFF">"A"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D">// Returns network with MST edges</span></span>
+<span class="line"><span style="color:#6A737D">// Same total weight: 8</span></span></code></pre>
+<p><strong>Signature</strong>: <code>prim(graph, start) -> Graph</code></p>
+<p><strong>Algorithm</strong>: Priority queue-based</p>
+<p><strong>Complexity</strong>: O((V + E) log V)</p>
+<p><strong>Comparison with Kruskal</strong>:</p>
+<ul>
+<li>Prim: Better for dense graphs</li>
+<li>Kruskal: Better for sparse graphs</li>
+<li>Both produce optimal MST</li>
+</ul>
+<h2 id="connectivity">Connectivity</h2>
+<h3 id="connected-components">Connected Components</h3>
+<p>Find all connected components:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> g </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> &#x3C;></span><span style="color:#79B8FF"> B</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> &#x3C;></span><span style="color:#79B8FF"> C</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    D</span><span style="color:#F97583"> &#x3C;></span><span style="color:#79B8FF"> E</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    F</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> components </span><span style="color:#F97583">=</span><span style="color:#B392F0"> connected_components</span><span style="color:#E1E4E8">(g)</span></span>
+<span class="line"><span style="color:#6A737D">// [["A", "B", "C"], ["D", "E"], ["F"]]</span></span></code></pre>
+<p><strong>Signature</strong>: <code>connected_components(graph) -> Vector&#x3C;Vector&#x3C;String>></code></p>
+<p><strong>Algorithm</strong>: Multiple BFS/DFS</p>
+<p><strong>Use cases</strong>:</p>
+<ul>
+<li>Network analysis</li>
+<li>Cluster detection</li>
+<li>Identifying isolated nodes</li>
+</ul>
+<h3 id="check-connectivity">Check Connectivity</h3>
+<p>Test if graph is fully connected:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> g1 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> &#x3C;></span><span style="color:#79B8FF"> B</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> &#x3C;></span><span style="color:#79B8FF"> C</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    C</span><span style="color:#F97583"> &#x3C;></span><span style="color:#79B8FF"> A</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#B392F0">is_connected</span><span style="color:#E1E4E8">(g1)    </span><span style="color:#6A737D">// true</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> g2 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> &#x3C;></span><span style="color:#79B8FF"> B</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    C</span><span style="color:#F97583"> &#x3C;></span><span style="color:#79B8FF"> D</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#B392F0">is_connected</span><span style="color:#E1E4E8">(g2)    </span><span style="color:#6A737D">// false</span></span></code></pre>
+<p><strong>Signature</strong>: <code>is_connected(graph) -> Boolean</code></p>
+<p><strong>Definition</strong>: All nodes reachable from any starting node</p>
+<h2 id="topological-sorting">Topological Sorting</h2>
+<h3 id="topological-sort">Topological Sort</h3>
+<p>Order nodes in a DAG:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> g </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> B</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> C</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> D</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">    C</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> D</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> order </span><span style="color:#F97583">=</span><span style="color:#B392F0"> topological_sort</span><span style="color:#E1E4E8">(g)</span></span>
+<span class="line"><span style="color:#6A737D">// ["A", "B", "C", "D"] or ["A", "C", "B", "D"]</span></span></code></pre>
+<p><strong>Signature</strong>: <code>topological_sort(graph) -> Vector&#x3C;String></code></p>
+<p><strong>Algorithm</strong>: Kahn’s algorithm or DFS-based</p>
+<p><strong>Requirements</strong>: Must be a DAG (no cycles)</p>
+<p><strong>Error</strong>: Returns error if cycle detected</p>
+<p><strong>Use cases</strong>:</p>
+<ul>
+<li>Task scheduling</li>
+<li>Build systems</li>
+<li>Course prerequisites</li>
+<li><strong>PERT/CPM critical path</strong></li>
+</ul>
+<h2 id="pertcpm---project-management">PERT/CPM - Project Management</h2>
+<p>PERT (Program Evaluation and Review Technique) and CPM (Critical Path Method) are project management tools for scheduling and analyzing task networks.</p>
+<h3 id="network-setup-for-pertcpm">Network Setup for PERT/CPM</h3>
+<p>Create a task network with dependencies:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Task network: A -> B -> D</span></span>
+<span class="line"><span style="color:#6A737D">//               A -> C -> D</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> tasks </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">    Start </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">A</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">],    </span><span style="color:#6A737D">// A takes 3 days, depends on Start</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">B</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">],        </span><span style="color:#6A737D">// B takes 4 days, depends on A</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">C</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">],        </span><span style="color:#6A737D">// C takes 2 days, depends on A</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">D</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">],        </span><span style="color:#6A737D">// D depends on B (5 days)</span></span>
+<span class="line"><span style="color:#79B8FF">    C</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">D</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">]         </span><span style="color:#6A737D">// D also depends on C</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span></code></pre>
+<p><strong>Edge format</strong>: <code>predecessor -> [successor, duration]</code></p>
+<p><strong>Duration</strong>: Time to complete the task (days, weeks, etc.)</p>
+<h3 id="forward-pass">Forward Pass</h3>
+<p>Calculate earliest start and finish times:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> tasks </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">    Start </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">A</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">B</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">C</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">D</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    C</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">D</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> forward </span><span style="color:#F97583">=</span><span style="color:#B392F0"> forward_pass</span><span style="color:#E1E4E8">(tasks, </span><span style="color:#9ECBFF">"Start"</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p><strong>Signature</strong>: <code>forward_pass(graph, start) -> Record</code></p>
+<p><strong>Result format</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#B392F0">    A</span><span style="color:#E1E4E8">: {</span><span style="color:#B392F0">es</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">ef</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">},      </span><span style="color:#6A737D">// Earliest start: 0, finish: 3</span></span>
+<span class="line"><span style="color:#B392F0">    B</span><span style="color:#E1E4E8">: {</span><span style="color:#B392F0">es</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">ef</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">7</span><span style="color:#E1E4E8">},      </span><span style="color:#6A737D">// Start: 3, finish: 7</span></span>
+<span class="line"><span style="color:#B392F0">    C</span><span style="color:#E1E4E8">: {</span><span style="color:#B392F0">es</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">ef</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">},      </span><span style="color:#6A737D">// Start: 3, finish: 5</span></span>
+<span class="line"><span style="color:#B392F0">    D</span><span style="color:#E1E4E8">: {</span><span style="color:#B392F0">es</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">7</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">ef</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">12</span><span style="color:#E1E4E8">}      </span><span style="color:#6A737D">// Start: 7, finish: 12</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><strong>Algorithm</strong>:</p>
+<ul>
+<li>ES(task) = max(EF of all predecessors)</li>
+<li>EF(task) = ES(task) + duration</li>
+</ul>
+<h3 id="backward-pass">Backward Pass</h3>
+<p>Calculate latest start and finish times:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> forward </span><span style="color:#F97583">=</span><span style="color:#B392F0"> forward_pass</span><span style="color:#E1E4E8">(tasks, </span><span style="color:#9ECBFF">"Start"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> backward </span><span style="color:#F97583">=</span><span style="color:#B392F0"> backward_pass</span><span style="color:#E1E4E8">(tasks, forward, </span><span style="color:#9ECBFF">"D"</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p><strong>Signature</strong>: <code>backward_pass(graph, forward_result, end) -> Record</code></p>
+<p><strong>Result format</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#B392F0">    A</span><span style="color:#E1E4E8">: {</span><span style="color:#B392F0">ls</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">lf</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">},      </span><span style="color:#6A737D">// Latest start: 0, finish: 3</span></span>
+<span class="line"><span style="color:#B392F0">    B</span><span style="color:#E1E4E8">: {</span><span style="color:#B392F0">ls</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">lf</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">7</span><span style="color:#E1E4E8">},      </span><span style="color:#6A737D">// Start: 3, finish: 7</span></span>
+<span class="line"><span style="color:#B392F0">    C</span><span style="color:#E1E4E8">: {</span><span style="color:#B392F0">ls</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">lf</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">7</span><span style="color:#E1E4E8">},      </span><span style="color:#6A737D">// Start: 5, finish: 7</span></span>
+<span class="line"><span style="color:#B392F0">    D</span><span style="color:#E1E4E8">: {</span><span style="color:#B392F0">ls</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">7</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">lf</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">12</span><span style="color:#E1E4E8">}      </span><span style="color:#6A737D">// Start: 7, finish: 12</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><strong>Algorithm</strong>:</p>
+<ul>
+<li>LF(task) = min(LS of all successors)</li>
+<li>LS(task) = LF(task) - duration</li>
+</ul>
+<h3 id="calculate-slack-float">Calculate Slack (Float)</h3>
+<p>Determine scheduling flexibility:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> forward </span><span style="color:#F97583">=</span><span style="color:#B392F0"> forward_pass</span><span style="color:#E1E4E8">(tasks, </span><span style="color:#9ECBFF">"Start"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> backward </span><span style="color:#F97583">=</span><span style="color:#B392F0"> backward_pass</span><span style="color:#E1E4E8">(tasks, forward, </span><span style="color:#9ECBFF">"D"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> slack </span><span style="color:#F97583">=</span><span style="color:#B392F0"> calculate_slack</span><span style="color:#E1E4E8">(forward, backward)</span></span></code></pre>
+<p><strong>Signature</strong>: <code>calculate_slack(forward_result, backward_result) -> Record</code></p>
+<p><strong>Result format</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#B392F0">    A</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">,       </span><span style="color:#6A737D">// No slack - critical</span></span>
+<span class="line"><span style="color:#B392F0">    B</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">,       </span><span style="color:#6A737D">// No slack - critical</span></span>
+<span class="line"><span style="color:#B392F0">    C</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">,       </span><span style="color:#6A737D">// 2 days of slack</span></span>
+<span class="line"><span style="color:#B392F0">    D</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0</span><span style="color:#6A737D">        // No slack - critical</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><strong>Formula</strong>: <code>Slack = LS - ES = LF - EF</code></p>
+<p><strong>Interpretation</strong>:</p>
+<ul>
+<li>Slack = 0: Critical task (no delay allowed)</li>
+<li>Slack > 0: Can be delayed without affecting project</li>
+</ul>
+<h3 id="critical-path">Critical Path</h3>
+<p>Find the critical path (zero slack tasks):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> tasks </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">    Start </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">A</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">B</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">C</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">D</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    C</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">D</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> cp </span><span style="color:#F97583">=</span><span style="color:#B392F0"> critical_path</span><span style="color:#E1E4E8">(tasks, </span><span style="color:#9ECBFF">"Start"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"D"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D">// ["Start", "A", "B", "D"]</span></span></code></pre>
+<p><strong>Signature</strong>: <code>critical_path(graph, start, end) -> Vector&#x3C;String></code></p>
+<p><strong>Definition</strong>: Longest path through the network</p>
+<p><strong>Properties</strong>:</p>
+<ul>
+<li>Tasks with zero slack</li>
+<li>Determines minimum project duration</li>
+<li>Any delay affects project completion</li>
+</ul>
+<h3 id="all-critical-paths">All Critical Paths</h3>
+<p>Find all critical paths (if multiple exist):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> tasks </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">    Start </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">A</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    Start </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">B</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [End, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [End, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> paths </span><span style="color:#F97583">=</span><span style="color:#B392F0"> all_critical_paths</span><span style="color:#E1E4E8">(tasks, </span><span style="color:#9ECBFF">"Start"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"End"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D">// [["Start", "A", "End"], ["Start", "B", "End"]]</span></span></code></pre>
+<p><strong>Signature</strong>: <code>all_critical_paths(graph, start, end) -> Vector&#x3C;Vector&#x3C;String>></code></p>
+<p><strong>Use case</strong>: Identify all paths that determine project duration</p>
+<h3 id="project-duration">Project Duration</h3>
+<p>Get total project duration:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> tasks </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">    Start </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">A</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">B</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [End, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> duration </span><span style="color:#F97583">=</span><span style="color:#B392F0"> project_duration</span><span style="color:#E1E4E8">(tasks, </span><span style="color:#9ECBFF">"Start"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"End"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D">// 12 (days/weeks/etc.)</span></span></code></pre>
+<p><strong>Signature</strong>: <code>project_duration(graph, start, end) -> Number</code></p>
+<p><strong>Calculation</strong>: Length of critical path</p>
+<h2 id="pert-probabilistic-analysis">PERT Probabilistic Analysis</h2>
+<p>PERT extends CPM with probabilistic time estimates using three time estimates per task.</p>
+<h3 id="expected-time">Expected Time</h3>
+<p>Calculate expected task duration:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Three-point estimate: optimistic, most likely, pessimistic</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> optimistic </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> most_likely </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 4</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> pessimistic </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 8</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> expected </span><span style="color:#F97583">=</span><span style="color:#B392F0"> expected_time</span><span style="color:#E1E4E8">(optimistic, most_likely, pessimistic)</span></span>
+<span class="line"><span style="color:#6A737D">// (2 + 4*4 + 8) / 6 = 4.33</span></span></code></pre>
+<p><strong>Signature</strong>: <code>expected_time(optimistic, most_likely, pessimistic) -> Number</code></p>
+<p><strong>Formula</strong>: <code>te = (o + 4m + p) / 6</code></p>
+<p><strong>Beta distribution</strong>: Weighted average favoring most likely</p>
+<h3 id="task-variance">Task Variance</h3>
+<p>Calculate variance for a task:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> optimistic </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> pessimistic </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 8</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> variance </span><span style="color:#F97583">=</span><span style="color:#B392F0"> task_variance</span><span style="color:#E1E4E8">(optimistic, pessimistic)</span></span>
+<span class="line"><span style="color:#6A737D">// ((8 - 2) / 6)^2 = 1.0</span></span></code></pre>
+<p><strong>Signature</strong>: <code>task_variance(optimistic, pessimistic) -> Number</code></p>
+<p><strong>Formula</strong>: <code>σ² = ((p - o) / 6)²</code></p>
+<p><strong>Interpretation</strong>: Measure of uncertainty</p>
+<h3 id="project-variance">Project Variance</h3>
+<p>Calculate total project variance:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Variances of tasks on critical path</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> variances </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.44</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2.25</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> proj_var </span><span style="color:#F97583">=</span><span style="color:#B392F0"> project_variance</span><span style="color:#E1E4E8">(variances)</span></span>
+<span class="line"><span style="color:#6A737D">// 1.0 + 0.44 + 2.25 = 3.69</span></span></code></pre>
+<p><strong>Signature</strong>: <code>project_variance(variances) -> Number</code></p>
+<p><strong>Formula</strong>: Sum of variances on critical path</p>
+<p><strong>Assumption</strong>: Tasks are independent</p>
+<h3 id="project-standard-deviation">Project Standard Deviation</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> variances </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.44</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2.25</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> std_dev </span><span style="color:#F97583">=</span><span style="color:#B392F0"> project_std_dev</span><span style="color:#E1E4E8">(variances)</span></span>
+<span class="line"><span style="color:#6A737D">// sqrt(3.69) = 1.92</span></span></code></pre>
+<p><strong>Signature</strong>: <code>project_std_dev(variances) -> Number</code></p>
+<p><strong>Formula</strong>: <code>σ = √(Σ variances)</code></p>
+<h3 id="completion-probability">Completion Probability</h3>
+<p>Probability of completing by a given time:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> expected_duration </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 20</span><span style="color:#6A737D">   // Expected project duration</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> target_time </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 22</span><span style="color:#6A737D">         // Target completion time</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> std_dev </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 2.5</span><span style="color:#6A737D">            // Project standard deviation</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> prob </span><span style="color:#F97583">=</span><span style="color:#B392F0"> completion_probability</span><span style="color:#E1E4E8">(expected_duration, target_time, std_dev)</span></span>
+<span class="line"><span style="color:#6A737D">// Probability of completing within 22 time units</span></span>
+<span class="line"><span style="color:#6A737D">// Uses normal distribution: P(Z ≤ (22-20)/2.5)</span></span></code></pre>
+<p><strong>Signature</strong>: <code>completion_probability(expected, target, std_dev) -> Number</code></p>
+<p><strong>Formula</strong>: <code>P(T ≤ target) = Φ((target - expected) / σ)</code></p>
+<p><strong>Returns</strong>: Probability between 0 and 1</p>
+<p><strong>Uses</strong>: Normal distribution (Central Limit Theorem)</p>
+<h3 id="time-for-probability">Time for Probability</h3>
+<p>Find required time for desired probability:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> expected_duration </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 20</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> probability </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0.95</span><span style="color:#6A737D">       // 95% confidence</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> std_dev </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 2.5</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> time </span><span style="color:#F97583">=</span><span style="color:#B392F0"> time_for_probability</span><span style="color:#E1E4E8">(expected_duration, probability, std_dev)</span></span>
+<span class="line"><span style="color:#6A737D">// Time needed for 95% completion probability</span></span>
+<span class="line"><span style="color:#6A737D">// ≈ 24.1 time units</span></span></code></pre>
+<p><strong>Signature</strong>: <code>time_for_probability(expected, probability, std_dev) -> Number</code></p>
+<p><strong>Formula</strong>: <code>T = expected + Z(p) × σ</code></p>
+<p><strong>Use case</strong>: Determine project deadline for desired confidence level</p>
+<h2 id="complete-pert-analysis">Complete PERT Analysis</h2>
+<h3 id="one-stop-pert-analysis">One-Stop PERT Analysis</h3>
+<p>Perform complete PERT/CPM analysis:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Define tasks with three-point estimates</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> tasks </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    A: {</span></span>
+<span class="line"><span style="color:#E1E4E8">        predecessors: [],</span></span>
+<span class="line"><span style="color:#E1E4E8">        optimistic: </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        most_likely: </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        pessimistic: </span><span style="color:#79B8FF">8</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"><span style="color:#E1E4E8">    B: {</span></span>
+<span class="line"><span style="color:#E1E4E8">        predecessors: [</span><span style="color:#9ECBFF">"A"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">        optimistic: </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        most_likely: </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        pessimistic: </span><span style="color:#79B8FF">9</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"><span style="color:#E1E4E8">    C: {</span></span>
+<span class="line"><span style="color:#E1E4E8">        predecessors: [</span><span style="color:#9ECBFF">"A"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">        optimistic: </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        most_likely: </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        pessimistic: </span><span style="color:#79B8FF">3</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"><span style="color:#E1E4E8">    D: {</span></span>
+<span class="line"><span style="color:#E1E4E8">        predecessors: [</span><span style="color:#9ECBFF">"B"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"C"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">        optimistic: </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        most_likely: </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        pessimistic: </span><span style="color:#79B8FF">10</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> analysis </span><span style="color:#F97583">=</span><span style="color:#B392F0"> pert_analysis</span><span style="color:#E1E4E8">(tasks)</span></span></code></pre>
+<p><strong>Signature</strong>: <code>pert_analysis(task_definitions) -> Record</code></p>
+<p><strong>Result includes</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#B392F0">    expected_times</span><span style="color:#E1E4E8">: {</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">},      </span><span style="color:#6A737D">// Expected duration per task</span></span>
+<span class="line"><span style="color:#B392F0">    variances</span><span style="color:#E1E4E8">: {</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">},           </span><span style="color:#6A737D">// Variance per task</span></span>
+<span class="line"><span style="color:#B392F0">    forward_pass</span><span style="color:#E1E4E8">: {</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">},        </span><span style="color:#6A737D">// ES/EF times</span></span>
+<span class="line"><span style="color:#B392F0">    backward_pass</span><span style="color:#E1E4E8">: {</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">},       </span><span style="color:#6A737D">// LS/LF times</span></span>
+<span class="line"><span style="color:#B392F0">    slack</span><span style="color:#E1E4E8">: {</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">},               </span><span style="color:#6A737D">// Slack per task</span></span>
+<span class="line"><span style="color:#B392F0">    critical_path</span><span style="color:#E1E4E8">: [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">],       </span><span style="color:#6A737D">// Critical path nodes</span></span>
+<span class="line"><span style="color:#B392F0">    project_duration</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">16.33</span><span style="color:#E1E4E8">,    </span><span style="color:#6A737D">// Expected project duration</span></span>
+<span class="line"><span style="color:#B392F0">    project_variance</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">3.69</span><span style="color:#E1E4E8">,     </span><span style="color:#6A737D">// Project variance</span></span>
+<span class="line"><span style="color:#B392F0">    project_std_dev</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">1.92</span><span style="color:#E1E4E8">,      </span><span style="color:#6A737D">// Project std deviation</span></span>
+<span class="line"><span style="color:#B392F0">    probabilities</span><span style="color:#E1E4E8">: {            </span><span style="color:#6A737D">// Completion probabilities</span></span>
+<span class="line"><span style="color:#B392F0">        on_time</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.50</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">        within_1_sigma</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.84</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">        within_2_sigma</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.98</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="practical-examples">Practical Examples</h2>
+<h3 id="basic-graph-analysis">Basic Graph Analysis</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Create network</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> network </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">B</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    A</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">C</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    B</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">D</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    C</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">D</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    D</span><span style="color:#F97583"> -></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">E</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Analyze structure</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> all_nodes </span><span style="color:#F97583">=</span><span style="color:#B392F0"> nodes</span><span style="color:#E1E4E8">(network)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> all_edges </span><span style="color:#F97583">=</span><span style="color:#B392F0"> edges</span><span style="color:#E1E4E8">(network)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Find shortest path</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> shortest </span><span style="color:#F97583">=</span><span style="color:#B392F0"> dijkstra</span><span style="color:#E1E4E8">(network, </span><span style="color:#9ECBFF">"A"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> distance_to_E </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> shortest.distances.</span><span style="color:#79B8FF">E</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Traversal</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> bfs_order </span><span style="color:#F97583">=</span><span style="color:#B392F0"> bfs</span><span style="color:#E1E4E8">(network, </span><span style="color:#9ECBFF">"A"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> path_to_E </span><span style="color:#F97583">=</span><span style="color:#B392F0"> bfs_path</span><span style="color:#E1E4E8">(network, </span><span style="color:#9ECBFF">"A"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"E"</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<h3 id="minimum-spanning-tree-example">Minimum Spanning Tree Example</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// City connections with costs</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> cities </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#79B8FF">    NYC</span><span style="color:#F97583"> &#x3C;></span><span style="color:#E1E4E8"> [Boston, </span><span style="color:#79B8FF">215</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    NYC</span><span style="color:#F97583"> &#x3C;></span><span style="color:#E1E4E8"> [Philadelphia, </span><span style="color:#79B8FF">95</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    Boston </span><span style="color:#F97583">&#x3C;></span><span style="color:#E1E4E8"> [Philadelphia, </span><span style="color:#79B8FF">310</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    Philadelphia </span><span style="color:#F97583">&#x3C;></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">DC</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">140</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#79B8FF">    NYC</span><span style="color:#F97583"> &#x3C;></span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">DC</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">225</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Find minimum cost network</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> mst </span><span style="color:#F97583">=</span><span style="color:#B392F0"> kruskal</span><span style="color:#E1E4E8">(cities)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Calculate total cost (manual)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> total </span><span style="color:#F97583">=</span><span style="color:#B392F0"> sum</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">e</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> e.weight, </span><span style="color:#B392F0">edges</span><span style="color:#E1E4E8">(mst)))</span></span></code></pre>
+<h3 id="software-build-dependencies">Software Build Dependencies</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Build tasks with dependencies</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> build </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">    clean </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> compile,</span></span>
+<span class="line"><span style="color:#E1E4E8">    compile </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> test,</span></span>
+<span class="line"><span style="color:#E1E4E8">    compile </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> lint,</span></span>
+<span class="line"><span style="color:#E1E4E8">    test </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> package,</span></span>
+<span class="line"><span style="color:#E1E4E8">    lint </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> package,</span></span>
+<span class="line"><span style="color:#E1E4E8">    package </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> deploy</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Check for circular dependencies</span></span>
+<span class="line"><span style="color:#F97583">if</span><span style="color:#E1E4E8"> (</span><span style="color:#B392F0">has_cycle</span><span style="color:#E1E4E8">(build)) {</span></span>
+<span class="line"><span style="color:#B392F0">    error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Circular dependency detected!"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Get build order</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> build_order </span><span style="color:#F97583">=</span><span style="color:#B392F0"> topological_sort</span><span style="color:#E1E4E8">(build)</span></span>
+<span class="line"><span style="color:#6A737D">// ["clean", "compile", "test", "lint", "package", "deploy"]</span></span></code></pre>
+<h3 id="complete-project-management-example">Complete Project Management Example</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Software development project</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> project </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">    Start </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> [Requirements, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    Requirements </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> [Design, </span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    Requirements </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> [Database, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    Design </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> [Frontend, </span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    Design </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> [Backend, </span><span style="color:#79B8FF">12</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    Database </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> [Backend, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    Frontend </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> [Integration, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    Backend </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> [Integration, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    Integration </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> [Testing, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    Testing </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> [Deployment, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// CPM Analysis</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> forward </span><span style="color:#F97583">=</span><span style="color:#B392F0"> forward_pass</span><span style="color:#E1E4E8">(project, </span><span style="color:#9ECBFF">"Start"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> backward </span><span style="color:#F97583">=</span><span style="color:#B392F0"> backward_pass</span><span style="color:#E1E4E8">(project, forward, </span><span style="color:#9ECBFF">"Deployment"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> slack </span><span style="color:#F97583">=</span><span style="color:#B392F0"> calculate_slack</span><span style="color:#E1E4E8">(forward, backward)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> critical </span><span style="color:#F97583">=</span><span style="color:#B392F0"> critical_path</span><span style="color:#E1E4E8">(project, </span><span style="color:#9ECBFF">"Start"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Deployment"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> duration </span><span style="color:#F97583">=</span><span style="color:#B392F0"> project_duration</span><span style="color:#E1E4E8">(project, </span><span style="color:#9ECBFF">"Start"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Deployment"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Results</span></span>
+<span class="line"><span style="color:#6A737D">// Critical path: [Start, Requirements, Design, Backend, Integration, Testing, Deployment]</span></span>
+<span class="line"><span style="color:#6A737D">// Project duration: 33 days</span></span>
+<span class="line"><span style="color:#6A737D">// Tasks with slack: Frontend (4 days), Database (6 days)</span></span></code></pre>
+<h2 id="performance-considerations">Performance Considerations</h2>
+<h3 id="algorithm-complexity">Algorithm Complexity</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Algorithm</th><th>Time Complexity</th><th>Space</th></tr></thead><tbody><tr><td>BFS</td><td>O(V + E)</td><td>O(V)</td></tr><tr><td>DFS</td><td>O(V + E)</td><td>O(V)</td></tr><tr><td>Dijkstra</td><td>O((V + E) log V)</td><td>O(V)</td></tr><tr><td>Kruskal</td><td>O(E log E)</td><td>O(V)</td></tr><tr><td>Prim</td><td>O((V + E) log V)</td><td>O(V)</td></tr><tr><td>Topological Sort</td><td>O(V + E)</td><td>O(V)</td></tr><tr><td>PERT Analysis</td><td>O(V + E)</td><td>O(V)</td></tr></tbody></table>
+<h3 id="best-practices">Best Practices</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ✅ Reuse graph for multiple queries</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> g </span><span style="color:#F97583">=</span><span style="color:#B392F0"> network</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">A</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> B</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">B</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> C</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">C</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> D</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">=</span><span style="color:#B392F0"> nodes</span><span style="color:#E1E4E8">(g)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> path1 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> dijkstra</span><span style="color:#E1E4E8">(g, </span><span style="color:#9ECBFF">"A"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> path2 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> bfs</span><span style="color:#E1E4E8">(g, </span><span style="color:#9ECBFF">"A"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Choose right algorithm</span></span>
+<span class="line"><span style="color:#6A737D">// Dense graphs: Prim for MST</span></span>
+<span class="line"><span style="color:#6A737D">// Sparse graphs: Kruskal for MST</span></span>
+<span class="line"><span style="color:#6A737D">// Unweighted shortest path: BFS</span></span>
+<span class="line"><span style="color:#6A737D">// Weighted shortest path: Dijkstra</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ✅ Validate before expensive operations</span></span>
+<span class="line"><span style="color:#F97583">if</span><span style="color:#E1E4E8"> (</span><span style="color:#B392F0">has_cycle</span><span style="color:#E1E4E8">(g)) {</span></span>
+<span class="line"><span style="color:#B392F0">    error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Cannot topological sort cyclic graph"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> order </span><span style="color:#F97583">=</span><span style="color:#B392F0"> topological_sort</span><span style="color:#E1E4E8">(g)</span></span></code></pre>
+<h2 id="summary">Summary</h2>
+<p><strong>Graph construction</strong>: <code>network()</code> with <code>-></code> and <code>&#x3C;></code> operators</p>
+<p><strong>Properties</strong>: nodes, edges, neighbors, degree</p>
+<p><strong>Traversal</strong>: bfs, dfs, bfs_path</p>
+<p><strong>Paths</strong>: dijkstra (shortest weighted path)</p>
+<p><strong>Trees</strong>: kruskal, prim (minimum spanning tree)</p>
+<p><strong>Cycles</strong>: has_cycle</p>
+<p><strong>Connectivity</strong>: connected_components, is_connected</p>
+<p><strong>Ordering</strong>: topological_sort</p>
+<p><strong>PERT/CPM</strong>: forward_pass, backward_pass, calculate_slack, critical_path, project_duration</p>
+<p><strong>PERT Probabilistic</strong>: expected_time, task_variance, completion_probability</p>
+<p><strong>Complete analysis</strong>: pert_analysis</p>
+<p><strong>Key features</strong>:</p>
+<ul>
+<li>Natural edge syntax</li>
+<li>Directed and undirected edges</li>
+<li>Weighted graphs</li>
+<li>Industry-standard algorithms</li>
+<li>Project management support</li>
+<li>Probabilistic analysis</li>
+</ul>
+<p><strong>Best practices</strong>:</p>
+<ul>
+<li>Validate DAG before topological sort</li>
+<li>Use appropriate algorithm for graph density</li>
+<li>Check connectivity for network problems</li>
+<li>Use PERT for uncertain task durations</li>
+<li>Analyze critical path for project scheduling</li>
+</ul>
+<p><strong>Common applications</strong>:</p>
+<ul>
+<li>Route planning and navigation</li>
+<li>Network optimization</li>
+<li>Dependency management</li>
+<li>Project scheduling (PERT/CPM)</li>
+<li>Social network analysis</li>
+<li>Task sequencing</li>
+<li>Resource allocation</li>
+</ul>
+<hr>
+<p><strong>Next</strong>: <a href="optimization.md">Optimization</a></p>  </article> <div class="mt-12 border-t border-slate-800 pt-6"> <nav class="flex items-center justify-between"> <div></div> <div></div> </nav> </div> </div> <!-- Right sidebar (table of contents) --> <div class="hidden xl:flex xl:flex-shrink-0"> <div class="w-64 py-8 pl-8 border-l border-slate-800"> <div class="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto"> <div class="space-y-4"><h4 class="font-display text-sm font-semibold text-white">
+On this page
+</h4><nav><ul class="space-y-2.5 text-sm"><li class><a href="#overview" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Overview</a></li><li class><a href="#graph-construction" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Graph Construction</a></li><li class="ml-4"><a href="#network-creation" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Network Creation</a></li><li class="ml-4"><a href="#weighted-graphs" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Weighted Graphs</a></li><li class><a href="#graph-properties" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Graph Properties</a></li><li class="ml-4"><a href="#get-nodes" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Get Nodes</a></li><li class="ml-4"><a href="#get-edges" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Get Edges</a></li><li class="ml-4"><a href="#get-neighbors" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Get Neighbors</a></li><li class="ml-4"><a href="#node-degree" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Node Degree</a></li><li class><a href="#graph-traversal" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Graph Traversal</a></li><li class="ml-4"><a href="#breadth-first-search-bfs" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Breadth-First Search (BFS)</a></li><li class="ml-4"><a href="#depth-first-search-dfs" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Depth-First Search (DFS)</a></li><li class="ml-4"><a href="#bfs-path-finding" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">BFS Path Finding</a></li><li class><a href="#shortest-paths" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Shortest Paths</a></li><li class="ml-4"><a href="#dijkstras-algorithm" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Dijkstra’s Algorithm</a></li><li class><a href="#cycle-detection" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Cycle Detection</a></li><li class="ml-4"><a href="#check-for-cycles" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Check for Cycles</a></li><li class><a href="#minimum-spanning-tree" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Minimum Spanning Tree</a></li><li class="ml-4"><a href="#kruskals-algorithm" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Kruskal’s Algorithm</a></li><li class="ml-4"><a href="#prims-algorithm" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Prim’s Algorithm</a></li><li class><a href="#connectivity" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Connectivity</a></li><li class="ml-4"><a href="#connected-components" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Connected Components</a></li><li class="ml-4"><a href="#check-connectivity" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Check Connectivity</a></li><li class><a href="#topological-sorting" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Topological Sorting</a></li><li class="ml-4"><a href="#topological-sort" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Topological Sort</a></li><li class><a href="#pertcpm---project-management" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">PERT/CPM - Project Management</a></li><li class="ml-4"><a href="#network-setup-for-pertcpm" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Network Setup for PERT/CPM</a></li><li class="ml-4"><a href="#forward-pass" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Forward Pass</a></li><li class="ml-4"><a href="#backward-pass" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Backward Pass</a></li><li class="ml-4"><a href="#calculate-slack-float" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Calculate Slack (Float)</a></li><li class="ml-4"><a href="#critical-path" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Critical Path</a></li><li class="ml-4"><a href="#all-critical-paths" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">All Critical Paths</a></li><li class="ml-4"><a href="#project-duration" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Project Duration</a></li><li class><a href="#pert-probabilistic-analysis" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">PERT Probabilistic Analysis</a></li><li class="ml-4"><a href="#expected-time" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Expected Time</a></li><li class="ml-4"><a href="#task-variance" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Task Variance</a></li><li class="ml-4"><a href="#project-variance" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Project Variance</a></li><li class="ml-4"><a href="#project-standard-deviation" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Project Standard Deviation</a></li><li class="ml-4"><a href="#completion-probability" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Completion Probability</a></li><li class="ml-4"><a href="#time-for-probability" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Time for Probability</a></li><li class><a href="#complete-pert-analysis" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Complete PERT Analysis</a></li><li class="ml-4"><a href="#one-stop-pert-analysis" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">One-Stop PERT Analysis</a></li><li class><a href="#practical-examples" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Practical Examples</a></li><li class="ml-4"><a href="#basic-graph-analysis" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Basic Graph Analysis</a></li><li class="ml-4"><a href="#minimum-spanning-tree-example" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Minimum Spanning Tree Example</a></li><li class="ml-4"><a href="#software-build-dependencies" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Software Build Dependencies</a></li><li class="ml-4"><a href="#complete-project-management-example" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Complete Project Management Example</a></li><li class><a href="#performance-considerations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Performance Considerations</a></li><li class="ml-4"><a href="#algorithm-complexity" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Algorithm Complexity</a></li><li class="ml-4"><a href="#best-practices" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Best Practices</a></li><li class><a href="#summary" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Summary</a></li></ul></nav></div> </div> </div> </div> </div> </div> </div>  </body></html>

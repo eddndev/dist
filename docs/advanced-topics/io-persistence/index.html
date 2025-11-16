@@ -1,0 +1,1957 @@
+<!DOCTYPE html><html lang="en" class="h-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Save and restore REPL environments with save_env, restore_env, env_info functions, compression options, metadata, and .ach binary format"><meta name="generator" content="Astro v5.15.8"><link rel="canonical" href="http://localhost:4321/docs/advanced-topics/io-persistence/"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>I/O and Environment Persistence | Achronyme</title><!-- Preload fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="/_astro/_slug_.CyadsZWk.css">
+<style>[data-astro-cid-k5z7lb4y][x-cloak]{display:none!important}
+</style><script type="module" src="/_astro/page.BE54bNVT.js"></script></head> <body class="h-full bg-slate-950" x-data>  <div class="min-h-full"> <header class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur supports-[backdrop-filter]:bg-slate-950/80"> <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex h-16 items-center justify-between"> <!-- Logo --> <div class="flex items-center"> <a href="/" class="flex items-center space-x-3"> <picture> <source srcset="/logo.avif" type="image/avif"> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';"> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden"> <span class="text-white font-bold text-sm">A</span> </div> <span class="font-display text-xl font-semibold text-white">
+Achronyme
+</span> </a> </div> <!-- Center navigation --> <nav class="hidden md:flex items-center justify-center flex-1 space-x-6"> <a href="/docs" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">
+Documentation
+</a> <a href="https://github.com/achronyme/achronyme-core" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-slate-400 hover:text-white transition-colors inline-flex items-center"> <svg class="mr-1.5 h-4 w-4" fill="currentColor" viewBox="0 0 24 24"> <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path> </svg>
+GitHub
+</a> </nav> <!-- Right side - Changelog link + Mobile menu button --> <div class="flex items-center space-x-4"> <a href="/changelog" class="hidden md:block text-sm font-medium text-slate-400 hover:text-white transition-colors">
+Changelog
+</a> <button type="button" class="md:hidden rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.toggle()"> <span class="sr-only">Open menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path> </svg> </button> </div> </div> </div> </header> <div class="fixed inset-0 z-40 lg:hidden" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-cloak data-astro-cid-k5z7lb4y> <!-- Backdrop --> <div class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm" @click="$store.nav.close()" data-astro-cid-k5z7lb4y></div> <!-- Sidebar --> <div class="fixed inset-y-0 left-0 w-full max-w-xs bg-slate-900 shadow-xl" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full" data-astro-cid-k5z7lb4y> <div class="flex h-16 items-center justify-between px-6 border-b border-slate-800" data-astro-cid-k5z7lb4y> <a href="/" class="flex items-center space-x-2" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <picture data-astro-cid-k5z7lb4y> <source srcset="/logo.avif" type="image/avif" data-astro-cid-k5z7lb4y> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';" data-astro-cid-k5z7lb4y> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden" data-astro-cid-k5z7lb4y> <span class="text-white font-bold text-sm" data-astro-cid-k5z7lb4y>A</span> </div> <span class="font-display text-xl font-semibold text-white" data-astro-cid-k5z7lb4y>
+Achronyme
+</span> </a> <button type="button" class="rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <span class="sr-only" data-astro-cid-k5z7lb4y>Close menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-astro-cid-k5z7lb4y> <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" data-astro-cid-k5z7lb4y></path> </svg> </button> </div> <nav class="overflow-y-auto p-6 space-y-8" data-astro-cid-k5z7lb4y> <div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Getting Started </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/introduction" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Introduction </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/installation" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Installation </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/syntax-basics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Syntax Basics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Core Language </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/data-types" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Data Types </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/operators" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Operators </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/variables" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Variables </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/control-flow" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Control Flow </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Data Structures </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/arrays-tensors" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Arrays &amp; Tensors </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/indexing-slicing" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Indexing &amp; Slicing </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/records" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Records </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/strings" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Strings </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Functional Programming </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/higher-order-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Higher-Order Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/do-blocks" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Do Blocks </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/recursion" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Recursion </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Mathematical Computing </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/mathematical-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mathematical Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/linear-algebra" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Linear Algebra </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/complex-numbers" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Complex Numbers </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/numerical-analysis" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Numerical Analysis </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/statistics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Statistics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Specialized Modules </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/dsp" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> DSP </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/graph-theory" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Graph Theory </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/optimization" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Optimization </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Advanced Topics </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/best-practices" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Best Practices </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/examples" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Examples </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/performance" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Performance </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/mutability" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mutability </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/io-persistence" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div>  <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex"> <!-- Left sidebar (navigation) --> <div class="hidden lg:flex lg:flex-shrink-0"> <div class="w-64 py-8 pr-8 border-r border-slate-800"> <div class="sticky top-20"> <nav class="space-y-8"> <div> <h3 class="font-display text-sm font-semibold text-white"> Getting Started </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/getting-started/introduction" class="block text-sm transition-colors text-slate-400 hover:text-white"> Introduction </a> </li><li> <a href="/docs/getting-started/installation" class="block text-sm transition-colors text-slate-400 hover:text-white"> Installation </a> </li><li> <a href="/docs/getting-started/syntax-basics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Syntax Basics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Core Language </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/core-language/data-types" class="block text-sm transition-colors text-slate-400 hover:text-white"> Data Types </a> </li><li> <a href="/docs/core-language/operators" class="block text-sm transition-colors text-slate-400 hover:text-white"> Operators </a> </li><li> <a href="/docs/core-language/variables" class="block text-sm transition-colors text-slate-400 hover:text-white"> Variables </a> </li><li> <a href="/docs/core-language/functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Functions </a> </li><li> <a href="/docs/core-language/control-flow" class="block text-sm transition-colors text-slate-400 hover:text-white"> Control Flow </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Data Structures </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/data-structures/arrays-tensors" class="block text-sm transition-colors text-slate-400 hover:text-white"> Arrays &amp; Tensors </a> </li><li> <a href="/docs/data-structures/indexing-slicing" class="block text-sm transition-colors text-slate-400 hover:text-white"> Indexing &amp; Slicing </a> </li><li> <a href="/docs/data-structures/records" class="block text-sm transition-colors text-slate-400 hover:text-white"> Records </a> </li><li> <a href="/docs/data-structures/strings" class="block text-sm transition-colors text-slate-400 hover:text-white"> Strings </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Functional Programming </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/functional-programming/higher-order-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Higher-Order Functions </a> </li><li> <a href="/docs/functional-programming/do-blocks" class="block text-sm transition-colors text-slate-400 hover:text-white"> Do Blocks </a> </li><li> <a href="/docs/functional-programming/recursion" class="block text-sm transition-colors text-slate-400 hover:text-white"> Recursion </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Mathematical Computing </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/mathematical-computing/mathematical-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mathematical Functions </a> </li><li> <a href="/docs/mathematical-computing/linear-algebra" class="block text-sm transition-colors text-slate-400 hover:text-white"> Linear Algebra </a> </li><li> <a href="/docs/mathematical-computing/complex-numbers" class="block text-sm transition-colors text-slate-400 hover:text-white"> Complex Numbers </a> </li><li> <a href="/docs/mathematical-computing/numerical-analysis" class="block text-sm transition-colors text-slate-400 hover:text-white"> Numerical Analysis </a> </li><li> <a href="/docs/mathematical-computing/statistics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Statistics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Specialized Modules </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/specialized-modules/dsp" class="block text-sm transition-colors text-slate-400 hover:text-white"> DSP </a> </li><li> <a href="/docs/specialized-modules/graph-theory" class="block text-sm transition-colors text-slate-400 hover:text-white"> Graph Theory </a> </li><li> <a href="/docs/specialized-modules/optimization" class="block text-sm transition-colors text-slate-400 hover:text-white"> Optimization </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Advanced Topics </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/advanced-topics/best-practices" class="block text-sm transition-colors text-slate-400 hover:text-white"> Best Practices </a> </li><li> <a href="/docs/advanced-topics/examples" class="block text-sm transition-colors text-slate-400 hover:text-white"> Examples </a> </li><li> <a href="/docs/advanced-topics/performance" class="block text-sm transition-colors text-slate-400 hover:text-white"> Performance </a> </li><li> <a href="/docs/advanced-topics/mutability" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mutability </a> </li><li> <a href="/docs/advanced-topics/io-persistence" class="block text-sm transition-colors text-slate-400 hover:text-white"> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div> </div> <!-- Main content --> <div class="min-w-0 flex-1 py-8 lg:pl-8"> <article class="prose prose-invert max-w-none"> <h1 class="font-display text-4xl font-bold tracking-tight text-white"> I/O and Environment Persistence </h1> <p class="lead text-xl text-slate-400"> Save and restore REPL environments with save_env, restore_env, env_info functions, compression options, metadata, and .ach binary format </p>  <p>Achronyme provides powerful capabilities for saving and restoring REPL sessions, enabling reproducible workflows and long-term storage of computational environments.</p>
+<h2 id="overview">Overview</h2>
+<p>The I/O and persistence module includes three core functions:</p>
+<ul>
+<li><strong><code>save_env()</code></strong> - Save the current environment to a file</li>
+<li><strong><code>restore_env()</code></strong> - Load a saved environment</li>
+<li><strong><code>env_info()</code></strong> - Inspect metadata without loading</li>
+</ul>
+<p>All functions work with the <code>.ach</code> (Achronyme Archive) binary format, which includes:</p>
+<ul>
+<li><strong>Custom 64-byte header</strong> with version control and feature flags</li>
+<li><strong>MessagePack serialization</strong> for cross-platform compatibility</li>
+<li><strong>Zstd compression</strong> (configurable, level 1-22)</li>
+<li><strong>SHA-256 checksums</strong> for integrity verification</li>
+</ul>
+<hr>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="basic-workflow">Basic Workflow</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Define some variables</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 42</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> data </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">];</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#B392F0"> mean</span><span style="color:#E1E4E8">(data);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Save your work</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"my_session.ach"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Later, in a new session...</span></span>
+<span class="line"><span style="color:#B392F0">restore_env</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"my_session.ach"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Variables are restored</span></span>
+<span class="line"><span style="color:#B392F0">print</span><span style="color:#E1E4E8">(x);        </span><span style="color:#6A737D">// 42</span></span>
+<span class="line"><span style="color:#B392F0">print</span><span style="color:#E1E4E8">(result);   </span><span style="color:#6A737D">// 3</span></span></code></pre>
+<hr>
+<h2 id="save_env---save-environment">save_env - Save Environment</h2>
+<p>Saves the current REPL environment to an <code>.ach</code> file.</p>
+<h3 id="signatures">Signatures</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Simple: save everything to a file</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">(path: String) </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> Boolean</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Advanced: save with options</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: String,                    </span><span style="color:#6A737D">// Required</span></span>
+<span class="line"><span style="color:#E1E4E8">    compress: Boolean,               </span><span style="color:#6A737D">// Default: true</span></span>
+<span class="line"><span style="color:#E1E4E8">    compression_level: Number,       </span><span style="color:#6A737D">// Default: 3 (range: 1-22)</span></span>
+<span class="line"><span style="color:#E1E4E8">    description: String,             </span><span style="color:#6A737D">// Optional</span></span>
+<span class="line"><span style="color:#E1E4E8">    tags: [String],                  </span><span style="color:#6A737D">// Optional</span></span>
+<span class="line"><span style="color:#E1E4E8">    include_only: [String],          </span><span style="color:#6A737D">// Optional</span></span>
+<span class="line"><span style="color:#E1E4E8">    exclude: [String],               </span><span style="color:#6A737D">// Optional</span></span>
+<span class="line"><span style="color:#E1E4E8">    allow_overwrite: Boolean         </span><span style="color:#6A737D">// Default: false</span></span>
+<span class="line"><span style="color:#E1E4E8">}) </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> Boolean</span></span></code></pre>
+<h3 id="parameters">Parameters</h3>
+<h4 id="simple-form">Simple Form</h4>
+<ul>
+<li><code>path</code> - File path where to save (String)</li>
+</ul>
+<h4 id="advanced-form-record">Advanced Form (Record)</h4>
+<ul>
+<li><code>path</code> - File path where to save (required, String)</li>
+<li><code>compress</code> - Enable Zstd compression (default: <code>true</code>, Boolean)</li>
+<li><code>compression_level</code> - Compression level 1-22 (default: <code>3</code>, Number)
+<ul>
+<li>1 = fastest, less compression</li>
+<li>3 = balanced (recommended)</li>
+<li>22 = slowest, maximum compression</li>
+</ul>
+</li>
+<li><code>description</code> - Human-readable description (optional, String)</li>
+<li><code>tags</code> - Tags for categorization (optional, Vector of Strings)</li>
+<li><code>include_only</code> - Only save these variables (optional, Vector of Strings)</li>
+<li><code>exclude</code> - Exclude these variables (optional, Vector of Strings)
+<ul>
+<li>Supports wildcards: <code>"temp_*"</code> excludes all variables starting with <code>temp_</code></li>
+</ul>
+</li>
+<li><code>allow_overwrite</code> - Allow overwriting existing files (default: <code>false</code>, Boolean)</li>
+</ul>
+<h3 id="returns">Returns</h3>
+<ul>
+<li><code>true</code> if save succeeds</li>
+<li>Error string if save fails</li>
+</ul>
+<h3 id="examples">Examples</h3>
+<h4 id="basic-save">Basic Save</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 42</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> name </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "Achronyme"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> data </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Save everything</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"session.ach"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#6A737D">// Returns: true</span></span></code></pre>
+<h4 id="save-with-compression-options">Save with Compression Options</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Maximum compression for archival</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"archive.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    compress: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    compression_level: </span><span style="color:#79B8FF">22</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    description: </span><span style="color:#9ECBFF">"Long-term archive"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    allow_overwrite: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Fast compression for temporary saves</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"temp.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    compress: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    compression_level: </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    allow_overwrite: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// No compression (fastest)</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"uncompressed.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    compress: </span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    allow_overwrite: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span></code></pre>
+<h4 id="save-with-metadata">Save with Metadata</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"experiment_2024.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    description: </span><span style="color:#9ECBFF">"Neural network training results"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    tags: [</span><span style="color:#9ECBFF">"ml"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"experiment"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"2024"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"production"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    allow_overwrite: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span></code></pre>
+<h4 id="selective-save---include-only">Selective Save - Include Only</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Only save specific variables</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 10</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> y </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 20</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> temp </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 99</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> debug_info </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "not important"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"results.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    include_only: [</span><span style="color:#9ECBFF">"x"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"y"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    allow_overwrite: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"><span style="color:#6A737D">// Only x and y are saved, temp and debug_info are excluded</span></span></code></pre>
+<h4 id="selective-save---exclude-patterns">Selective Save - Exclude Patterns</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 42</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> data </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">];</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> temp_1 </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "ignore"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> temp_2 </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "ignore"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> debug_var </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "ignore"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"clean.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    exclude: [</span><span style="color:#9ECBFF">"temp_*"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"debug_var"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    allow_overwrite: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"><span style="color:#6A737D">// Saves: result, data</span></span>
+<span class="line"><span style="color:#6A737D">// Excludes: temp_1, temp_2, debug_var</span></span></code></pre>
+<h3 id="saved-value-types">Saved Value Types</h3>
+<p>The following types are fully supported:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Type</th><th>Saved</th><th>Notes</th></tr></thead><tbody><tr><td>Number</td><td>✅</td><td>Full precision</td></tr><tr><td>Boolean</td><td>✅</td><td></td></tr><tr><td>String</td><td>✅</td><td></td></tr><tr><td>Complex</td><td>✅</td><td>Real and imaginary parts</td></tr><tr><td>Vector</td><td>✅</td><td>Heterogeneous arrays</td></tr><tr><td>Tensor</td><td>✅</td><td>Shape and data preserved</td></tr><tr><td>ComplexTensor</td><td>✅</td><td>Complex number arrays</td></tr><tr><td>Record</td><td>✅</td><td>Nested records supported</td></tr><tr><td>Edge</td><td>✅</td><td>Graph edges with properties</td></tr><tr><td>Builtin Functions</td><td>⚠️</td><td>Name saved, not restored yet</td></tr><tr><td>User Lambdas</td><td>❌</td><td>Not serializable (future)</td></tr><tr><td>MutableRef</td><td>✅</td><td>Inner value is saved</td></tr></tbody></table>
+<h3 id="error-conditions">Error Conditions</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// File already exists</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"existing.ach"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#6A737D">// Error: "File already exists: ..., Use allow_overwrite option."</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Invalid compression level</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"test.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    compression_level: </span><span style="color:#79B8FF">99</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"><span style="color:#6A737D">// Error: "compression_level must be between 1 and 22"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Missing path in record</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">({compress: </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">});</span></span>
+<span class="line"><span style="color:#6A737D">// Error: "save_env() record must contain 'path' as a String"</span></span></code></pre>
+<hr>
+<h2 id="restore_env---restore-environment">restore_env - Restore Environment</h2>
+<p>Loads a saved environment from an <code>.ach</code> file.</p>
+<h3 id="signatures-1">Signatures</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Simple: merge without overwriting</span></span>
+<span class="line"><span style="color:#B392F0">restore_env</span><span style="color:#E1E4E8">(path: String) </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> Boolean</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Advanced: restore with options</span></span>
+<span class="line"><span style="color:#B392F0">restore_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: String,                    </span><span style="color:#6A737D">// Required</span></span>
+<span class="line"><span style="color:#E1E4E8">    mode: String,                    </span><span style="color:#6A737D">// "merge" | "replace" | "namespace"</span></span>
+<span class="line"><span style="color:#E1E4E8">    overwrite: Boolean,              </span><span style="color:#6A737D">// Default: false</span></span>
+<span class="line"><span style="color:#E1E4E8">    namespace: String,               </span><span style="color:#6A737D">// Required if mode="namespace"</span></span>
+<span class="line"><span style="color:#E1E4E8">    include_only: [String],          </span><span style="color:#6A737D">// Optional</span></span>
+<span class="line"><span style="color:#E1E4E8">    exclude: [String],               </span><span style="color:#6A737D">// Optional</span></span>
+<span class="line"><span style="color:#E1E4E8">    verify_checksum: Boolean,        </span><span style="color:#6A737D">// Default: true</span></span>
+<span class="line"><span style="color:#E1E4E8">    strict_version: Boolean          </span><span style="color:#6A737D">// Default: false</span></span>
+<span class="line"><span style="color:#E1E4E8">}) </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> Boolean</span></span></code></pre>
+<h3 id="parameters-1">Parameters</h3>
+<h4 id="simple-form-1">Simple Form</h4>
+<ul>
+<li><code>path</code> - File path to restore from (String)</li>
+</ul>
+<h4 id="advanced-form-record-1">Advanced Form (Record)</h4>
+<ul>
+<li><code>path</code> - File path to restore (required, String)</li>
+<li><code>mode</code> - Restore mode (default: <code>"merge"</code>, String)
+<ul>
+<li><code>"merge"</code> - Add variables, don’t overwrite existing</li>
+<li><code>"replace"</code> - Clear environment and load all variables</li>
+<li><code>"namespace"</code> - Load as a record under a namespace</li>
+</ul>
+</li>
+<li><code>overwrite</code> - In merge mode, overwrite existing variables (default: <code>false</code>, Boolean)</li>
+<li><code>namespace</code> - Namespace name (required if <code>mode="namespace"</code>, String)</li>
+<li><code>include_only</code> - Only restore these variables (optional, Vector of Strings)</li>
+<li><code>exclude</code> - Exclude these variables (optional, Vector of Strings)</li>
+<li><code>verify_checksum</code> - Verify file integrity (default: <code>true</code>, Boolean)</li>
+<li><code>strict_version</code> - Require exact version match (default: <code>false</code>, Boolean)</li>
+</ul>
+<h3 id="returns-1">Returns</h3>
+<ul>
+<li><code>true</code> if restore succeeds</li>
+<li>Error string if restore fails</li>
+</ul>
+<h3 id="examples-1">Examples</h3>
+<h4 id="basic-restore---merge-mode">Basic Restore - Merge Mode</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Current environment</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 99</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> z </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 30</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Restore (file contains: x=10, y=20)</span></span>
+<span class="line"><span style="color:#B392F0">restore_env</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"session.ach"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// After restore:</span></span>
+<span class="line"><span style="color:#6A737D">// x = 99  (not overwritten, original kept)</span></span>
+<span class="line"><span style="color:#6A737D">// y = 20  (added from file)</span></span>
+<span class="line"><span style="color:#6A737D">// z = 30  (unchanged)</span></span></code></pre>
+<h4 id="restore-with-overwrite">Restore with Overwrite</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 99</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">restore_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"session.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    mode: </span><span style="color:#9ECBFF">"merge"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    overwrite: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// After restore (file contains x=10):</span></span>
+<span class="line"><span style="color:#6A737D">// x = 10  (overwritten from file)</span></span></code></pre>
+<h4 id="replace-mode---clean-slate">Replace Mode - Clean Slate</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Current environment</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> b </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Replace everything</span></span>
+<span class="line"><span style="color:#B392F0">restore_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"session.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    mode: </span><span style="color:#9ECBFF">"replace"</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// After restore (file contains: x=10, y=20):</span></span>
+<span class="line"><span style="color:#6A737D">// a = undefined (removed)</span></span>
+<span class="line"><span style="color:#6A737D">// b = undefined (removed)</span></span>
+<span class="line"><span style="color:#6A737D">// x = 10 (loaded from file)</span></span>
+<span class="line"><span style="color:#6A737D">// y = 20 (loaded from file)</span></span></code></pre>
+<h4 id="namespace-mode---isolated-import">Namespace Mode - Isolated Import</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Load into a namespace</span></span>
+<span class="line"><span style="color:#B392F0">restore_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"ml_model.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    mode: </span><span style="color:#9ECBFF">"namespace"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    namespace: </span><span style="color:#9ECBFF">"model"</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Access via record</span></span>
+<span class="line"><span style="color:#B392F0">print</span><span style="color:#E1E4E8">(model.weights);</span></span>
+<span class="line"><span style="color:#B392F0">print</span><span style="color:#E1E4E8">(model.bias);</span></span>
+<span class="line"><span style="color:#B392F0">print</span><span style="color:#E1E4E8">(model.accuracy);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Namespace is just a record</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> keys_list </span><span style="color:#F97583">=</span><span style="color:#B392F0"> keys</span><span style="color:#E1E4E8">(model);</span></span></code></pre>
+<h4 id="selective-restore">Selective Restore</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Only restore specific variables</span></span>
+<span class="line"><span style="color:#B392F0">restore_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"big_session.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    include_only: [</span><span style="color:#9ECBFF">"result"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"accuracy"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    mode: </span><span style="color:#9ECBFF">"merge"</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Exclude temporary variables</span></span>
+<span class="line"><span style="color:#B392F0">restore_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"session.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    exclude: [</span><span style="color:#9ECBFF">"temp_*"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"debug_*"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    mode: </span><span style="color:#9ECBFF">"merge"</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span></code></pre>
+<h4 id="version-control">Version Control</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Strict version checking</span></span>
+<span class="line"><span style="color:#B392F0">restore_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"old_session.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    strict_version: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"><span style="color:#6A737D">// Fails if file was created with different major version</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Permissive (default)</span></span>
+<span class="line"><span style="color:#B392F0">restore_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"old_session.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    strict_version: </span><span style="color:#79B8FF">false</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"><span style="color:#6A737D">// Works if file is compatible (same or older major version)</span></span></code></pre>
+<h3 id="restore-modes-comparison">Restore Modes Comparison</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Mode</th><th>Keeps Existing?</th><th>Adds New?</th><th>Overwrites?</th></tr></thead><tbody><tr><td><code>merge</code> (default)</td><td>✅ Yes</td><td>✅ Yes</td><td>❌ No</td></tr><tr><td><code>merge</code> + <code>overwrite: true</code></td><td>✅ Yes</td><td>✅ Yes</td><td>✅ Yes</td></tr><tr><td><code>replace</code></td><td>❌ No</td><td>✅ Yes</td><td>N/A</td></tr><tr><td><code>namespace</code></td><td>✅ Yes</td><td>✅ (as record)</td><td>❌ No</td></tr></tbody></table>
+<h3 id="error-conditions-1">Error Conditions</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// File not found</span></span>
+<span class="line"><span style="color:#B392F0">restore_env</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"nonexistent.ach"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#6A737D">// Error: "Failed to restore environment: ..."</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Invalid mode</span></span>
+<span class="line"><span style="color:#B392F0">restore_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"session.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    mode: </span><span style="color:#9ECBFF">"invalid"</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"><span style="color:#6A737D">// Error: "Invalid mode 'invalid', must be 'merge', 'replace', or 'namespace'"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Namespace mode without namespace name</span></span>
+<span class="line"><span style="color:#B392F0">restore_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"session.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    mode: </span><span style="color:#9ECBFF">"namespace"</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"><span style="color:#6A737D">// Error: "namespace mode requires 'namespace' field"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Checksum mismatch (file corrupted)</span></span>
+<span class="line"><span style="color:#B392F0">restore_env</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"corrupted.ach"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#6A737D">// Error: "Failed to restore environment: Checksum verification failed"</span></span></code></pre>
+<hr>
+<h2 id="env_info---inspect-metadata">env_info - Inspect Metadata</h2>
+<p>Retrieves metadata from an <code>.ach</code> file without loading the entire environment.</p>
+<h3 id="signature">Signature</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">env_info</span><span style="color:#E1E4E8">(path: String) </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> Record</span></span></code></pre>
+<h3 id="parameters-2">Parameters</h3>
+<ul>
+<li><code>path</code> - Path to <code>.ach</code> file (String)</li>
+</ul>
+<h3 id="returns-2">Returns</h3>
+<p>A record containing metadata:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#B392F0">    created_by</span><span style="color:#E1E4E8">: String,         </span><span style="color:#6A737D">// "Achronyme v0.1.0"</span></span>
+<span class="line"><span style="color:#B392F0">    created_at</span><span style="color:#E1E4E8">: String,         </span><span style="color:#6A737D">// ISO 8601 timestamp</span></span>
+<span class="line"><span style="color:#B392F0">    platform</span><span style="color:#E1E4E8">: String,           </span><span style="color:#6A737D">// "windows x86_64"</span></span>
+<span class="line"><span style="color:#B392F0">    num_bindings</span><span style="color:#E1E4E8">: Number,       </span><span style="color:#6A737D">// Number of variables</span></span>
+<span class="line"><span style="color:#B392F0">    description</span><span style="color:#E1E4E8">: String,        </span><span style="color:#6A737D">// Optional description</span></span>
+<span class="line"><span style="color:#B392F0">    tags</span><span style="color:#E1E4E8">: [String],             </span><span style="color:#6A737D">// Optional tags</span></span>
+<span class="line"><span style="color:#B392F0">    binding_names</span><span style="color:#E1E4E8">: [String],    </span><span style="color:#6A737D">// List of variable names</span></span>
+<span class="line"><span style="color:#6A737D">    // ... custom fields</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="examples-2">Examples</h3>
+<h4 id="basic-inspection">Basic Inspection</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> info </span><span style="color:#F97583">=</span><span style="color:#B392F0"> env_info</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"session.ach"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Created:"</span><span style="color:#E1E4E8">, info.created_at);</span></span>
+<span class="line"><span style="color:#B392F0">print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Platform:"</span><span style="color:#E1E4E8">, info.platform);</span></span>
+<span class="line"><span style="color:#B392F0">print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Variables:"</span><span style="color:#E1E4E8">, info.num_bindings);</span></span>
+<span class="line"><span style="color:#B392F0">print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Names:"</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">str</span><span style="color:#E1E4E8">(info.binding_names));</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Output:</span></span>
+<span class="line"><span style="color:#6A737D">// Created: 2024-01-15T10:30:00Z</span></span>
+<span class="line"><span style="color:#6A737D">// Platform: windows x86_64</span></span>
+<span class="line"><span style="color:#6A737D">// Variables: 5</span></span>
+<span class="line"><span style="color:#6A737D">// Names: ["x", "y", "data", "result", "config"]</span></span></code></pre>
+<h4 id="check-before-restore">Check Before Restore</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> info </span><span style="color:#F97583">=</span><span style="color:#B392F0"> env_info</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"large_dataset.ach"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">if</span><span style="color:#E1E4E8"> info.num_bindings </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 1000</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Warning: Large file with"</span><span style="color:#E1E4E8">, info.num_bindings, </span><span style="color:#9ECBFF">"variables"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#B392F0">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"This may take a while to load"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Check if specific variable exists</span></span>
+<span class="line"><span style="color:#F97583">if</span><span style="color:#B392F0"> contains</span><span style="color:#E1E4E8">(info.binding_names, </span><span style="color:#9ECBFF">"critical_data"</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#B392F0">    restore_env</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"large_dataset.ach"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">} </span><span style="color:#F97583">else</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Error: critical_data not found in file"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h4 id="display-file-catalog">Display File Catalog</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> display_ach_info</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">path</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let info </span><span style="color:#F97583">=</span><span style="color:#B392F0"> env_info</span><span style="color:#E1E4E8">(path);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"=== File Information ==="</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#B392F0">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"File:"</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">path</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#B392F0">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Created:"</span><span style="color:#E1E4E8">, info.created_at);</span></span>
+<span class="line"><span style="color:#B392F0">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Creator:"</span><span style="color:#E1E4E8">, info.created_by);</span></span>
+<span class="line"><span style="color:#B392F0">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Platform:"</span><span style="color:#E1E4E8">, info.platform);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    if info.description {</span></span>
+<span class="line"><span style="color:#B392F0">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Description:"</span><span style="color:#E1E4E8">, info.description);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    if </span><span style="color:#B392F0">len</span><span style="color:#E1E4E8">(info.tags) > 0 {</span></span>
+<span class="line"><span style="color:#B392F0">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Tags:"</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">str</span><span style="color:#E1E4E8">(info.tags));</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF">\n</span><span style="color:#9ECBFF">=== Content ==="</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#B392F0">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Variables:"</span><span style="color:#E1E4E8">, info.num_bindings);</span></span>
+<span class="line"><span style="color:#B392F0">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Names:"</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">str</span><span style="color:#E1E4E8">(info.binding_names));</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">display_ach_info</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"experiment.ach"</span><span style="color:#E1E4E8">);</span></span></code></pre>
+<h4 id="compare-files">Compare Files</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> compare_sessions</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">path1</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">path2</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let info1 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> env_info</span><span style="color:#E1E4E8">(path1);</span></span>
+<span class="line"><span style="color:#E1E4E8">    let info2 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> env_info</span><span style="color:#E1E4E8">(path2);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Session 1:"</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">path1</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#B392F0">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"  Variables:"</span><span style="color:#E1E4E8">, info1.num_bindings);</span></span>
+<span class="line"><span style="color:#B392F0">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"  Date:"</span><span style="color:#E1E4E8">, info1.created_at);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF">\n</span><span style="color:#9ECBFF">Session 2:"</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">path2</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#B392F0">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"  Variables:"</span><span style="color:#E1E4E8">, info2.num_bindings);</span></span>
+<span class="line"><span style="color:#B392F0">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"  Date:"</span><span style="color:#E1E4E8">, info2.created_at);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // Find common variables</span></span>
+<span class="line"><span style="color:#E1E4E8">    let common </span><span style="color:#F97583">=</span><span style="color:#B392F0"> filter</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#FFAB70">        name</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> contains</span><span style="color:#E1E4E8">(info2.binding_names, name),</span></span>
+<span class="line"><span style="color:#E1E4E8">        info1.binding_names</span></span>
+<span class="line"><span style="color:#E1E4E8">    );</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF">\n</span><span style="color:#9ECBFF">Common variables:"</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">len</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">common</span><span style="color:#E1E4E8">));</span></span>
+<span class="line"><span style="color:#B392F0">    print</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">str</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">common</span><span style="color:#E1E4E8">));</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">compare_sessions</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"before.ach"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"after.ach"</span><span style="color:#E1E4E8">);</span></span></code></pre>
+<hr>
+<h2 id="file-format---ach-specification">File Format - <code>.ach</code> Specification</h2>
+<h3 id="structure">Structure</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[64-byte Header]</span></span>
+<span class="line"><span>[Compressed MessagePack Body]</span></span>
+<span class="line"><span>[32-byte SHA-256 Checksum]</span></span></code></pre>
+<h3 id="header-format-64-bytes">Header Format (64 bytes)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Offset</th><th>Size</th><th>Field</th><th>Description</th></tr></thead><tbody><tr><td>0</td><td>4</td><td>Magic</td><td><code>"ACH\0"</code> (0x41 0x43 0x48 0x00)</td></tr><tr><td>4</td><td>2</td><td>Version Major</td><td>Format version (currently 1)</td></tr><tr><td>6</td><td>2</td><td>Version Minor</td><td>Format minor version (currently 0)</td></tr><tr><td>8</td><td>4</td><td>Flags</td><td>Feature flags (compressed, etc.)</td></tr><tr><td>12</td><td>8</td><td>Timestamp</td><td>Unix timestamp</td></tr><tr><td>20</td><td>16</td><td>Achronyme Version</td><td>Null-terminated string</td></tr><tr><td>36</td><td>1</td><td>Compression</td><td>0=None, 1=Zstd</td></tr><tr><td>37</td><td>27</td><td>Reserved</td><td>Reserved for future use</td></tr></tbody></table>
+<h3 id="body-format">Body Format</h3>
+<p>MessagePack-encoded structure:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="rust"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#E1E4E8">    metadata</span><span style="color:#F97583">:</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">        created_by</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        created_at</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        platform</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        num_bindings</span><span style="color:#F97583">:</span><span style="color:#B392F0"> u32</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        description</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Option</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">>,</span></span>
+<span class="line"><span style="color:#E1E4E8">        tags</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Vec</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">>,</span></span>
+<span class="line"><span style="color:#E1E4E8">        binding_names</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Vec</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">>,</span></span>
+<span class="line"><span style="color:#E1E4E8">        custom</span><span style="color:#F97583">:</span><span style="color:#B392F0"> HashMap</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"><span style="color:#E1E4E8">    bindings</span><span style="color:#F97583">:</span><span style="color:#B392F0"> HashMap</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">SerializedValue</span><span style="color:#E1E4E8">></span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="compression">Compression</h3>
+<ul>
+<li>Algorithm: <strong>Zstandard (Zstd)</strong></li>
+<li>Levels: 1-22
+<ul>
+<li>Level 3 (default): ~3:1 ratio, very fast</li>
+<li>Level 22 (max): ~5:1 ratio, slower</li>
+</ul>
+</li>
+<li>Applied to: MessagePack body only (not header/checksum)</li>
+</ul>
+<h3 id="integrity">Integrity</h3>
+<ul>
+<li>Algorithm: <strong>SHA-256</strong></li>
+<li>Applied to: Compressed body (32 bytes appended)</li>
+<li>Verified on load (can be disabled with <code>verify_checksum: false</code>)</li>
+</ul>
+<hr>
+<h2 id="common-patterns">Common Patterns</h2>
+<h3 id="auto-save-workflow">Auto-Save Workflow</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Auto-save after expensive computations</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> expensive_computation</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">data</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let result </span><span style="color:#F97583">=</span><span style="color:#B392F0"> pipe</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">        data,</span></span>
+<span class="line"><span style="color:#FFAB70">        arr</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> complex_operation</span><span style="color:#E1E4E8">(x), arr),</span></span>
+<span class="line"><span style="color:#FFAB70">        arr</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> reduce</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">acc</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">x</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> acc </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> x, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, arr),</span></span>
+<span class="line"><span style="color:#FFAB70">        r</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> r </span><span style="color:#F97583">/</span><span style="color:#B392F0"> len</span><span style="color:#E1E4E8">(data)</span></span>
+<span class="line"><span style="color:#E1E4E8">    );</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // Auto-save result</span></span>
+<span class="line"><span style="color:#B392F0">    save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#FFAB70">        path</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"auto_save.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">        description</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Auto-saved after computation"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">        allow_overwrite</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">true</span></span>
+<span class="line"><span style="color:#E1E4E8">    });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    result</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span></code></pre>
+<h3 id="checkpoint-system">Checkpoint System</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Save checkpoints during long workflows</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> process_in_stages</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">data</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // Stage 1</span></span>
+<span class="line"><span style="color:#E1E4E8">    let preprocessed </span><span style="color:#F97583">=</span><span style="color:#B392F0"> preprocess</span><span style="color:#E1E4E8">(data);</span></span>
+<span class="line"><span style="color:#B392F0">    save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#FFAB70">        path</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"checkpoint_1_preprocessed.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">        description</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"After preprocessing"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">        allow_overwrite</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">true</span></span>
+<span class="line"><span style="color:#E1E4E8">    });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // Stage 2</span></span>
+<span class="line"><span style="color:#E1E4E8">    let analyzed </span><span style="color:#F97583">=</span><span style="color:#B392F0"> analyze</span><span style="color:#E1E4E8">(preprocessed);</span></span>
+<span class="line"><span style="color:#B392F0">    save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#FFAB70">        path</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"checkpoint_2_analyzed.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">        description</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"After analysis"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">        allow_overwrite</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">true</span></span>
+<span class="line"><span style="color:#E1E4E8">    });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // Stage 3</span></span>
+<span class="line"><span style="color:#E1E4E8">    let results </span><span style="color:#F97583">=</span><span style="color:#B392F0"> finalize</span><span style="color:#E1E4E8">(analyzed);</span></span>
+<span class="line"><span style="color:#B392F0">    save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#FFAB70">        path</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"checkpoint_3_final.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">        description</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Final results"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">        allow_overwrite</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">true</span></span>
+<span class="line"><span style="color:#E1E4E8">    });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    results</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span></code></pre>
+<h3 id="session-templates">Session Templates</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Create reusable environment templates</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> create_template</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">name</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // Define standard variables</span></span>
+<span class="line"><span style="color:#E1E4E8">    let pi </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 3.14159265359</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let e </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 2.71828182846</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let phi </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1.61803398875</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // Define helper functions</span></span>
+<span class="line"><span style="color:#E1E4E8">    let </span><span style="color:#B392F0">deg_to_rad</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">deg</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> deg </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> pi </span><span style="color:#F97583">/</span><span style="color:#79B8FF"> 180</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let </span><span style="color:#B392F0">rad_to_deg</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">rad</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> rad </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 180</span><span style="color:#F97583"> /</span><span style="color:#E1E4E8"> pi;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#FFAB70">        path</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">name</span><span style="color:#E1E4E8"> + </span><span style="color:#9ECBFF">"_template.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">        description</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Standard mathematical environment"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">        tags</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"template"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"math"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#FFAB70">        exclude</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"create_template"</span><span style="color:#E1E4E8">],  </span><span style="color:#6A737D">// Don't save this function</span></span>
+<span class="line"><span style="color:#FFAB70">        allow_overwrite</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">true</span></span>
+<span class="line"><span style="color:#E1E4E8">    });</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Create template</span></span>
+<span class="line"><span style="color:#B392F0">create_template</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"math"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Later, start new sessions from template</span></span>
+<span class="line"><span style="color:#B392F0">restore_env</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"math_template.ach"</span><span style="color:#E1E4E8">);</span></span></code></pre>
+<h3 id="experiment-tracking">Experiment Tracking</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> run_experiment</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">params</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">data</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let start_time </span><span style="color:#F97583">=</span><span style="color:#B392F0"> now</span><span style="color:#E1E4E8">();  </span><span style="color:#6A737D">// Hypothetical time function</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // Run experiment</span></span>
+<span class="line"><span style="color:#E1E4E8">    let results </span><span style="color:#F97583">=</span><span style="color:#B392F0"> train_model</span><span style="color:#E1E4E8">(params, data);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // Save with comprehensive metadata</span></span>
+<span class="line"><span style="color:#B392F0">    save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#FFAB70">        path</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"exp_"</span><span style="color:#E1E4E8"> + </span><span style="color:#FFAB70">params</span><span style="color:#E1E4E8">.</span><span style="color:#FFAB70">name</span><span style="color:#E1E4E8"> + </span><span style="color:#9ECBFF">".ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">        description</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Experiment: "</span><span style="color:#E1E4E8"> + </span><span style="color:#FFAB70">params</span><span style="color:#E1E4E8">.</span><span style="color:#FFAB70">description</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">        tags</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#9ECBFF">            "experiment"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">            "model_"</span><span style="color:#E1E4E8"> + </span><span style="color:#FFAB70">params</span><span style="color:#E1E4E8">.</span><span style="color:#FFAB70">model_type</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">            "date_"</span><span style="color:#E1E4E8"> + </span><span style="color:#FFAB70">start_time</span></span>
+<span class="line"><span style="color:#E1E4E8">        ],</span></span>
+<span class="line"><span style="color:#FFAB70">        include_only</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"params"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"results"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"metrics"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#FFAB70">        allow_overwrite</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">true</span></span>
+<span class="line"><span style="color:#E1E4E8">    });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Experiment saved to:"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"exp_"</span><span style="color:#E1E4E8"> + params.name + </span><span style="color:#9ECBFF">".ach"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">    results</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span></code></pre>
+<h3 id="collaborative-workflow">Collaborative Workflow</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Person A: Save specific results</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> share_results</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let x </span><span style="color:#F97583">=</span><span style="color:#B392F0"> compute_x</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#E1E4E8">    let y </span><span style="color:#F97583">=</span><span style="color:#B392F0"> compute_y</span><span style="color:#E1E4E8">();</span></span>
+<span class="line"><span style="color:#E1E4E8">    let final </span><span style="color:#F97583">=</span><span style="color:#B392F0"> combine</span><span style="color:#E1E4E8">(x, y);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">    save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#FFAB70">        path</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"shared_results.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">        description</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Results for review"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">        include_only</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"final"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"x"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"y"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#FFAB70">        tags</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"shared"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"team_a"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#FFAB70">        allow_overwrite</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">true</span></span>
+<span class="line"><span style="color:#E1E4E8">    });</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Person B: Load in namespace to avoid conflicts</span></span>
+<span class="line"><span style="color:#B392F0">restore_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"shared_results.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    mode: </span><span style="color:#9ECBFF">"namespace"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    namespace: </span><span style="color:#9ECBFF">"team_a"</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Use results</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> my_analysis </span><span style="color:#F97583">=</span><span style="color:#B392F0"> analyze</span><span style="color:#E1E4E8">(team_a.final);</span></span></code></pre>
+<hr>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="1-use-descriptive-names">1. Use Descriptive Names</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Good</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"neural_net_trained_2024_01_15.ach"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Bad</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"temp.ach"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"session1.ach"</span><span style="color:#E1E4E8">);</span></span></code></pre>
+<h3 id="2-add-metadata">2. Add Metadata</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Always include description and tags for important saves</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"final_model.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    description: </span><span style="color:#9ECBFF">"Final model after hyperparameter tuning"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    tags: [</span><span style="color:#9ECBFF">"production"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"v2.0"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"optimized"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    allow_overwrite: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span></code></pre>
+<h3 id="3-clean-before-saving">3. Clean Before Saving</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Exclude temporary variables</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"clean_session.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    exclude: [</span><span style="color:#9ECBFF">"temp_*"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"debug_*"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"_*"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    allow_overwrite: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span></code></pre>
+<h3 id="4-version-your-saves">4. Version Your Saves</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> version_save</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">base_name</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">version</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#B392F0">    save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#FFAB70">        path</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">base_name</span><span style="color:#E1E4E8"> + </span><span style="color:#9ECBFF">"_v"</span><span style="color:#E1E4E8"> + </span><span style="color:#FFAB70">str</span><span style="color:#E1E4E8">(version) + </span><span style="color:#9ECBFF">".ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">        description</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"Version "</span><span style="color:#E1E4E8"> + </span><span style="color:#FFAB70">str</span><span style="color:#E1E4E8">(version),</span></span>
+<span class="line"><span style="color:#FFAB70">        tags</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">"versioned"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"v"</span><span style="color:#E1E4E8"> + </span><span style="color:#FFAB70">str</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">version</span><span style="color:#E1E4E8">)],</span></span>
+<span class="line"><span style="color:#FFAB70">        allow_overwrite</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">true</span></span>
+<span class="line"><span style="color:#E1E4E8">    });</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">version_save</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"my_project"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#B392F0">version_save</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"my_project"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">);</span></span></code></pre>
+<h3 id="5-check-before-overwriting">5. Check Before Overwriting</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Check if file exists using env_info</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> safe_save</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">path</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // Try to get info</span></span>
+<span class="line"><span style="color:#E1E4E8">    let exists </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> true</span><span style="color:#E1E4E8">;  </span><span style="color:#6A737D">// Simplified check</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    if exists {</span></span>
+<span class="line"><span style="color:#B392F0">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Warning: File exists. Use allow_overwrite: true"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#79B8FF">        false</span></span>
+<span class="line"><span style="color:#E1E4E8">    } else {</span></span>
+<span class="line"><span style="color:#B392F0">        save_env</span><span style="color:#E1E4E8">(path);</span></span>
+<span class="line"><span style="color:#79B8FF">        true</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span></code></pre>
+<h3 id="6-validate-after-restore">6. Validate After Restore</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> restore_and_validate</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">path</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">expected_vars</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#B392F0">    restore_env</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">path</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // Check all expected variables exist</span></span>
+<span class="line"><span style="color:#E1E4E8">    let all_present </span><span style="color:#F97583">=</span><span style="color:#B392F0"> all</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#FFAB70">        name</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> type</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">eval</span><span style="color:#E1E4E8">(name)) </span><span style="color:#F97583">!=</span><span style="color:#9ECBFF"> "Undefined"</span><span style="color:#E1E4E8">,  </span><span style="color:#6A737D">// Hypothetical eval</span></span>
+<span class="line"><span style="color:#E1E4E8">        expected_vars</span></span>
+<span class="line"><span style="color:#E1E4E8">    );</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    if all_present {</span></span>
+<span class="line"><span style="color:#B392F0">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"All variables restored successfully"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#79B8FF">        true</span></span>
+<span class="line"><span style="color:#E1E4E8">    } else {</span></span>
+<span class="line"><span style="color:#B392F0">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Error: Some variables missing"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#79B8FF">        false</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span></code></pre>
+<hr>
+<h2 id="performance-considerations">Performance Considerations</h2>
+<h3 id="file-sizes">File Sizes</h3>
+<p>Typical compression ratios with default settings (level 3):</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Data Type</th><th>Original</th><th>Compressed</th><th>Ratio</th></tr></thead><tbody><tr><td>Numbers (1000)</td><td>~8 KB</td><td>~2-3 KB</td><td>~3:1</td></tr><tr><td>Strings</td><td>Varies</td><td>~2-4:1</td><td></td></tr><tr><td>Tensors (10000)</td><td>~80 KB</td><td>~20-30 KB</td><td>~3:1</td></tr><tr><td>Mixed</td><td>Varies</td><td>~3-4:1</td><td></td></tr></tbody></table>
+<h3 id="compression-trade-offs">Compression Trade-offs</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Fast save (level 1) - Use for frequent auto-saves</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"quick_save.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    compression_level: </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">,  </span><span style="color:#6A737D">// ~2x speedup</span></span>
+<span class="line"><span style="color:#E1E4E8">    allow_overwrite: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Balanced (level 3, default) - Use for normal saves</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"normal_save.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    compression_level: </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">,  </span><span style="color:#6A737D">// Good balance</span></span>
+<span class="line"><span style="color:#E1E4E8">    allow_overwrite: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Maximum compression (level 22) - Use for archives</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"archive.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    compression_level: </span><span style="color:#79B8FF">22</span><span style="color:#E1E4E8">,  </span><span style="color:#6A737D">// ~2x smaller, ~10x slower</span></span>
+<span class="line"><span style="color:#E1E4E8">    allow_overwrite: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span></code></pre>
+<h3 id="large-environments">Large Environments</h3>
+<p>For environments with thousands of variables:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Use include_only for faster saves</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"important_only.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    include_only: [</span><span style="color:#9ECBFF">"critical_result"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"final_model"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">    allow_overwrite: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Check size before loading</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> info </span><span style="color:#F97583">=</span><span style="color:#B392F0"> env_info</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"huge_file.ach"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#F97583">if</span><span style="color:#E1E4E8"> info.num_bindings </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 10000</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Large file detected, loading may take time"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<hr>
+<h2 id="error-handling">Error Handling</h2>
+<h3 id="robust-save">Robust Save</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> robust_save</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">path</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // Try to save</span></span>
+<span class="line"><span style="color:#E1E4E8">    let result </span><span style="color:#F97583">=</span><span style="color:#B392F0"> save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">        path: path,</span></span>
+<span class="line"><span style="color:#E1E4E8">        allow_overwrite: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">    });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // Check result</span></span>
+<span class="line"><span style="color:#E1E4E8">    if </span><span style="color:#B392F0">type</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">result</span><span style="color:#E1E4E8">) == "Boolean" &#x26;&#x26; result {</span></span>
+<span class="line"><span style="color:#B392F0">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Save successful:"</span><span style="color:#E1E4E8">, path);</span></span>
+<span class="line"><span style="color:#79B8FF">        true</span></span>
+<span class="line"><span style="color:#E1E4E8">    } else {</span></span>
+<span class="line"><span style="color:#B392F0">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Save failed:"</span><span style="color:#E1E4E8">, path);</span></span>
+<span class="line"><span style="color:#B392F0">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Error:"</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">str</span><span style="color:#E1E4E8">(result));</span></span>
+<span class="line"><span style="color:#79B8FF">        false</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span></code></pre>
+<h3 id="robust-restore">Robust Restore</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> robust_restore</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">path</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // Check file exists and is valid</span></span>
+<span class="line"><span style="color:#E1E4E8">    let info </span><span style="color:#F97583">=</span><span style="color:#B392F0"> env_info</span><span style="color:#E1E4E8">(path);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">    if </span><span style="color:#B392F0">type</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">info</span><span style="color:#E1E4E8">) == "Record" {</span></span>
+<span class="line"><span style="color:#B392F0">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Found"</span><span style="color:#E1E4E8">, info.num_bindings, </span><span style="color:#9ECBFF">"variables"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">        // Restore</span></span>
+<span class="line"><span style="color:#F97583">        let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#B392F0"> restore_env</span><span style="color:#E1E4E8">(path);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> result {</span></span>
+<span class="line"><span style="color:#B392F0">            print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Restore successful"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#79B8FF">            true</span></span>
+<span class="line"><span style="color:#E1E4E8">        } </span><span style="color:#F97583">else</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">            print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Restore failed"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#79B8FF">            false</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">    } else {</span></span>
+<span class="line"><span style="color:#B392F0">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Cannot read file:"</span><span style="color:#E1E4E8">, path);</span></span>
+<span class="line"><span style="color:#79B8FF">        false</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span></code></pre>
+<hr>
+<h2 id="limitations">Limitations</h2>
+<h3 id="current-limitations">Current Limitations</h3>
+<ol>
+<li>
+<p><strong>User-defined functions</strong> - Lambda functions cannot be serialized yet</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> my_func</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"test.ach"</span><span style="color:#E1E4E8">);  </span><span style="color:#6A737D">// my_func will NOT be saved</span></span></code></pre>
+</li>
+<li>
+<p><strong>Builtin functions</strong> - Names are saved but not restored</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> my_sin </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> sin;</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"test.ach"</span><span style="color:#E1E4E8">);  </span><span style="color:#6A737D">// Reference is saved but not restored</span></span></code></pre>
+</li>
+<li>
+<p><strong>Circular references</strong> - Not supported in records</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {value: </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">};</span></span>
+<span class="line"><span style="color:#E1E4E8">a.self </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> a;  </span><span style="color:#6A737D">// Circular reference</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"test.ach"</span><span style="color:#E1E4E8">);  </span><span style="color:#6A737D">// May fail</span></span></code></pre>
+</li>
+</ol>
+<h3 id="future-features">Future Features</h3>
+<p>Planned for future versions:</p>
+<ul>
+<li>User-defined function serialization</li>
+<li>Builtin function restoration</li>
+<li>Module imports/exports integration</li>
+<li>Incremental saves (delta compression)</li>
+<li>Environment diff/merge tools</li>
+<li>Remote storage backends</li>
+</ul>
+<hr>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="file-wont-save">File Won’t Save</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Problem: File exists</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"existing.ach"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#6A737D">// Error: File already exists</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Solution: Use allow_overwrite</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"existing.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    allow_overwrite: </span><span style="color:#79B8FF">true</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span></code></pre>
+<h3 id="variables-not-restored">Variables Not Restored</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Problem: Forgot to use 'let' when defining</span></span>
+<span class="line"><span style="color:#E1E4E8">x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 42</span><span style="color:#E1E4E8">;  </span><span style="color:#6A737D">// Wrong! Variable not actually defined</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"test.ach"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Solution: Use 'let' keyword</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 42</span><span style="color:#E1E4E8">;  </span><span style="color:#6A737D">// Correct</span></span>
+<span class="line"><span style="color:#B392F0">save_env</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"test.ach"</span><span style="color:#E1E4E8">);</span></span></code></pre>
+<h3 id="checksum-errors">Checksum Errors</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Problem: File corrupted</span></span>
+<span class="line"><span style="color:#B392F0">restore_env</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"corrupted.ach"</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#6A737D">// Error: Checksum verification failed</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Solution 1: Skip checksum (not recommended)</span></span>
+<span class="line"><span style="color:#B392F0">restore_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"corrupted.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    verify_checksum: </span><span style="color:#79B8FF">false</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Solution 2: Re-save from backup</span></span></code></pre>
+<h3 id="large-file-performance">Large File Performance</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Problem: Restore is slow</span></span>
+<span class="line"><span style="color:#B392F0">restore_env</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"huge_file.ach"</span><span style="color:#E1E4E8">);  </span><span style="color:#6A737D">// Takes forever</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Solution: Only load what you need</span></span>
+<span class="line"><span style="color:#B392F0">restore_env</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">    path: </span><span style="color:#9ECBFF">"huge_file.ach"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    include_only: [</span><span style="color:#9ECBFF">"result"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"final_data"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span></code></pre>
+<hr>
+<h2 id="implementation-details">Implementation Details</h2>
+<h3 id="module-location">Module Location</h3>
+<ul>
+<li>Implementation: <code>crates/achronyme-eval/src/function_modules/io.rs</code></li>
+<li>Binary format: <code>crates/achronyme-env/src/</code></li>
+</ul>
+<h3 id="dependencies">Dependencies</h3>
+<ul>
+<li><strong>MessagePack</strong> (rmp-serde 1.1+) - Serialization</li>
+<li><strong>Zstandard</strong> (zstd 0.13+) - Compression</li>
+<li><strong>SHA-256</strong> (sha2 0.10+) - Checksums</li>
+</ul>
+<h3 id="file-format-version">File Format Version</h3>
+<ul>
+<li>Current: <strong>1.0</strong></li>
+<li>Backward compatible within major version</li>
+<li>Forward compatible: newer versions can read older files</li>
+</ul>
+<hr>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="../core-language/variables.md">Variables</a> - Variable declaration and scoping</li>
+<li><a href="../data-structures/records.md">Records</a> - Working with records</li>
+<li><a href="utilities.md">Utilities</a> - print, type, str functions</li>
+<li><a href="best-practices.md">Best Practices</a> - Code organization</li>
+</ul>  </article> <div class="mt-12 border-t border-slate-800 pt-6"> <nav class="flex items-center justify-between"> <div></div> <div></div> </nav> </div> </div> <!-- Right sidebar (table of contents) --> <div class="hidden xl:flex xl:flex-shrink-0"> <div class="w-64 py-8 pl-8 border-l border-slate-800"> <div class="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto"> <div class="space-y-4"><h4 class="font-display text-sm font-semibold text-white">
+On this page
+</h4><nav><ul class="space-y-2.5 text-sm"><li class><a href="#overview" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Overview</a></li><li class><a href="#quick-start" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Quick Start</a></li><li class="ml-4"><a href="#basic-workflow" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Basic Workflow</a></li><li class><a href="#save_env---save-environment" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">save_env - Save Environment</a></li><li class="ml-4"><a href="#signatures" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Signatures</a></li><li class="ml-4"><a href="#parameters" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Parameters</a></li><li class="ml-4"><a href="#returns" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Returns</a></li><li class="ml-4"><a href="#examples" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Examples</a></li><li class="ml-4"><a href="#saved-value-types" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Saved Value Types</a></li><li class="ml-4"><a href="#error-conditions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Error Conditions</a></li><li class><a href="#restore_env---restore-environment" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">restore_env - Restore Environment</a></li><li class="ml-4"><a href="#signatures-1" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Signatures</a></li><li class="ml-4"><a href="#parameters-1" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Parameters</a></li><li class="ml-4"><a href="#returns-1" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Returns</a></li><li class="ml-4"><a href="#examples-1" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Examples</a></li><li class="ml-4"><a href="#restore-modes-comparison" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Restore Modes Comparison</a></li><li class="ml-4"><a href="#error-conditions-1" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Error Conditions</a></li><li class><a href="#env_info---inspect-metadata" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">env_info - Inspect Metadata</a></li><li class="ml-4"><a href="#signature" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Signature</a></li><li class="ml-4"><a href="#parameters-2" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Parameters</a></li><li class="ml-4"><a href="#returns-2" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Returns</a></li><li class="ml-4"><a href="#examples-2" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Examples</a></li><li class><a href="#file-format---ach-specification" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">File Format - .ach Specification</a></li><li class="ml-4"><a href="#structure" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Structure</a></li><li class="ml-4"><a href="#header-format-64-bytes" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Header Format (64 bytes)</a></li><li class="ml-4"><a href="#body-format" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Body Format</a></li><li class="ml-4"><a href="#compression" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Compression</a></li><li class="ml-4"><a href="#integrity" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Integrity</a></li><li class><a href="#common-patterns" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Common Patterns</a></li><li class="ml-4"><a href="#auto-save-workflow" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Auto-Save Workflow</a></li><li class="ml-4"><a href="#checkpoint-system" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Checkpoint System</a></li><li class="ml-4"><a href="#session-templates" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Session Templates</a></li><li class="ml-4"><a href="#experiment-tracking" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Experiment Tracking</a></li><li class="ml-4"><a href="#collaborative-workflow" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Collaborative Workflow</a></li><li class><a href="#best-practices" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Best Practices</a></li><li class="ml-4"><a href="#1-use-descriptive-names" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">1. Use Descriptive Names</a></li><li class="ml-4"><a href="#2-add-metadata" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">2. Add Metadata</a></li><li class="ml-4"><a href="#3-clean-before-saving" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">3. Clean Before Saving</a></li><li class="ml-4"><a href="#4-version-your-saves" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">4. Version Your Saves</a></li><li class="ml-4"><a href="#5-check-before-overwriting" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">5. Check Before Overwriting</a></li><li class="ml-4"><a href="#6-validate-after-restore" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">6. Validate After Restore</a></li><li class><a href="#performance-considerations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Performance Considerations</a></li><li class="ml-4"><a href="#file-sizes" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">File Sizes</a></li><li class="ml-4"><a href="#compression-trade-offs" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Compression Trade-offs</a></li><li class="ml-4"><a href="#large-environments" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Large Environments</a></li><li class><a href="#error-handling" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Error Handling</a></li><li class="ml-4"><a href="#robust-save" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Robust Save</a></li><li class="ml-4"><a href="#robust-restore" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Robust Restore</a></li><li class><a href="#limitations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Limitations</a></li><li class="ml-4"><a href="#current-limitations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Current Limitations</a></li><li class="ml-4"><a href="#future-features" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Future Features</a></li><li class><a href="#troubleshooting" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Troubleshooting</a></li><li class="ml-4"><a href="#file-wont-save" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">File Won’t Save</a></li><li class="ml-4"><a href="#variables-not-restored" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Variables Not Restored</a></li><li class="ml-4"><a href="#checksum-errors" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Checksum Errors</a></li><li class="ml-4"><a href="#large-file-performance" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Large File Performance</a></li><li class><a href="#implementation-details" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Implementation Details</a></li><li class="ml-4"><a href="#module-location" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Module Location</a></li><li class="ml-4"><a href="#dependencies" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Dependencies</a></li><li class="ml-4"><a href="#file-format-version" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">File Format Version</a></li><li class><a href="#see-also" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">See Also</a></li></ul></nav></div> </div> </div> </div> </div> </div> </div>  </body></html>

@@ -1,0 +1,1054 @@
+<!DOCTYPE html><html lang="en" class="h-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="FFT operations, window functions (Hanning, Hamming, Blackman), convolution, and spectral analysis for signal processing"><meta name="generator" content="Astro v5.15.8"><link rel="canonical" href="http://localhost:4321/docs/specialized-modules/dsp/"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Digital Signal Processing | Achronyme</title><!-- Preload fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="/_astro/_slug_.CyadsZWk.css">
+<style>[data-astro-cid-k5z7lb4y][x-cloak]{display:none!important}
+</style><script type="module" src="/_astro/page.BE54bNVT.js"></script></head> <body class="h-full bg-slate-950" x-data>  <div class="min-h-full"> <header class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur supports-[backdrop-filter]:bg-slate-950/80"> <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex h-16 items-center justify-between"> <!-- Logo --> <div class="flex items-center"> <a href="/" class="flex items-center space-x-3"> <picture> <source srcset="/logo.avif" type="image/avif"> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';"> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden"> <span class="text-white font-bold text-sm">A</span> </div> <span class="font-display text-xl font-semibold text-white">
+Achronyme
+</span> </a> </div> <!-- Center navigation --> <nav class="hidden md:flex items-center justify-center flex-1 space-x-6"> <a href="/docs" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">
+Documentation
+</a> <a href="https://github.com/achronyme/achronyme-core" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-slate-400 hover:text-white transition-colors inline-flex items-center"> <svg class="mr-1.5 h-4 w-4" fill="currentColor" viewBox="0 0 24 24"> <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path> </svg>
+GitHub
+</a> </nav> <!-- Right side - Changelog link + Mobile menu button --> <div class="flex items-center space-x-4"> <a href="/changelog" class="hidden md:block text-sm font-medium text-slate-400 hover:text-white transition-colors">
+Changelog
+</a> <button type="button" class="md:hidden rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.toggle()"> <span class="sr-only">Open menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path> </svg> </button> </div> </div> </div> </header> <div class="fixed inset-0 z-40 lg:hidden" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-cloak data-astro-cid-k5z7lb4y> <!-- Backdrop --> <div class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm" @click="$store.nav.close()" data-astro-cid-k5z7lb4y></div> <!-- Sidebar --> <div class="fixed inset-y-0 left-0 w-full max-w-xs bg-slate-900 shadow-xl" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full" data-astro-cid-k5z7lb4y> <div class="flex h-16 items-center justify-between px-6 border-b border-slate-800" data-astro-cid-k5z7lb4y> <a href="/" class="flex items-center space-x-2" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <picture data-astro-cid-k5z7lb4y> <source srcset="/logo.avif" type="image/avif" data-astro-cid-k5z7lb4y> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';" data-astro-cid-k5z7lb4y> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden" data-astro-cid-k5z7lb4y> <span class="text-white font-bold text-sm" data-astro-cid-k5z7lb4y>A</span> </div> <span class="font-display text-xl font-semibold text-white" data-astro-cid-k5z7lb4y>
+Achronyme
+</span> </a> <button type="button" class="rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <span class="sr-only" data-astro-cid-k5z7lb4y>Close menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-astro-cid-k5z7lb4y> <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" data-astro-cid-k5z7lb4y></path> </svg> </button> </div> <nav class="overflow-y-auto p-6 space-y-8" data-astro-cid-k5z7lb4y> <div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Getting Started </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/introduction" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Introduction </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/installation" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Installation </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/syntax-basics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Syntax Basics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Core Language </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/data-types" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Data Types </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/operators" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Operators </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/variables" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Variables </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/control-flow" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Control Flow </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Data Structures </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/arrays-tensors" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Arrays &amp; Tensors </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/indexing-slicing" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Indexing &amp; Slicing </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/records" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Records </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/strings" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Strings </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Functional Programming </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/higher-order-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Higher-Order Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/do-blocks" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Do Blocks </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/recursion" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Recursion </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Mathematical Computing </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/mathematical-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mathematical Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/linear-algebra" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Linear Algebra </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/complex-numbers" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Complex Numbers </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/numerical-analysis" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Numerical Analysis </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/statistics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Statistics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Specialized Modules </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/dsp" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> DSP </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/graph-theory" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Graph Theory </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/optimization" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Optimization </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Advanced Topics </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/best-practices" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Best Practices </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/examples" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Examples </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/performance" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Performance </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/mutability" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mutability </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/io-persistence" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div>  <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex"> <!-- Left sidebar (navigation) --> <div class="hidden lg:flex lg:flex-shrink-0"> <div class="w-64 py-8 pr-8 border-r border-slate-800"> <div class="sticky top-20"> <nav class="space-y-8"> <div> <h3 class="font-display text-sm font-semibold text-white"> Getting Started </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/getting-started/introduction" class="block text-sm transition-colors text-slate-400 hover:text-white"> Introduction </a> </li><li> <a href="/docs/getting-started/installation" class="block text-sm transition-colors text-slate-400 hover:text-white"> Installation </a> </li><li> <a href="/docs/getting-started/syntax-basics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Syntax Basics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Core Language </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/core-language/data-types" class="block text-sm transition-colors text-slate-400 hover:text-white"> Data Types </a> </li><li> <a href="/docs/core-language/operators" class="block text-sm transition-colors text-slate-400 hover:text-white"> Operators </a> </li><li> <a href="/docs/core-language/variables" class="block text-sm transition-colors text-slate-400 hover:text-white"> Variables </a> </li><li> <a href="/docs/core-language/functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Functions </a> </li><li> <a href="/docs/core-language/control-flow" class="block text-sm transition-colors text-slate-400 hover:text-white"> Control Flow </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Data Structures </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/data-structures/arrays-tensors" class="block text-sm transition-colors text-slate-400 hover:text-white"> Arrays &amp; Tensors </a> </li><li> <a href="/docs/data-structures/indexing-slicing" class="block text-sm transition-colors text-slate-400 hover:text-white"> Indexing &amp; Slicing </a> </li><li> <a href="/docs/data-structures/records" class="block text-sm transition-colors text-slate-400 hover:text-white"> Records </a> </li><li> <a href="/docs/data-structures/strings" class="block text-sm transition-colors text-slate-400 hover:text-white"> Strings </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Functional Programming </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/functional-programming/higher-order-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Higher-Order Functions </a> </li><li> <a href="/docs/functional-programming/do-blocks" class="block text-sm transition-colors text-slate-400 hover:text-white"> Do Blocks </a> </li><li> <a href="/docs/functional-programming/recursion" class="block text-sm transition-colors text-slate-400 hover:text-white"> Recursion </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Mathematical Computing </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/mathematical-computing/mathematical-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mathematical Functions </a> </li><li> <a href="/docs/mathematical-computing/linear-algebra" class="block text-sm transition-colors text-slate-400 hover:text-white"> Linear Algebra </a> </li><li> <a href="/docs/mathematical-computing/complex-numbers" class="block text-sm transition-colors text-slate-400 hover:text-white"> Complex Numbers </a> </li><li> <a href="/docs/mathematical-computing/numerical-analysis" class="block text-sm transition-colors text-slate-400 hover:text-white"> Numerical Analysis </a> </li><li> <a href="/docs/mathematical-computing/statistics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Statistics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Specialized Modules </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/specialized-modules/dsp" class="block text-sm transition-colors text-slate-400 hover:text-white"> DSP </a> </li><li> <a href="/docs/specialized-modules/graph-theory" class="block text-sm transition-colors text-slate-400 hover:text-white"> Graph Theory </a> </li><li> <a href="/docs/specialized-modules/optimization" class="block text-sm transition-colors text-slate-400 hover:text-white"> Optimization </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Advanced Topics </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/advanced-topics/best-practices" class="block text-sm transition-colors text-slate-400 hover:text-white"> Best Practices </a> </li><li> <a href="/docs/advanced-topics/examples" class="block text-sm transition-colors text-slate-400 hover:text-white"> Examples </a> </li><li> <a href="/docs/advanced-topics/performance" class="block text-sm transition-colors text-slate-400 hover:text-white"> Performance </a> </li><li> <a href="/docs/advanced-topics/mutability" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mutability </a> </li><li> <a href="/docs/advanced-topics/io-persistence" class="block text-sm transition-colors text-slate-400 hover:text-white"> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div> </div> <!-- Main content --> <div class="min-w-0 flex-1 py-8 lg:pl-8"> <article class="prose prose-invert max-w-none"> <h1 class="font-display text-4xl font-bold tracking-tight text-white"> Digital Signal Processing </h1> <p class="lead text-xl text-slate-400"> FFT operations, window functions (Hanning, Hamming, Blackman), convolution, and spectral analysis for signal processing </p>  <p>Achronyme provides comprehensive digital signal processing capabilities including Fast Fourier Transform (FFT), window functions, and convolution for analyzing and processing signals.</p>
+<h2 id="overview">Overview</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Category</th><th>Functions</th></tr></thead><tbody><tr><td><strong>FFT Operations</strong></td><td>fft, ifft, fft_mag, fft_phase</td></tr><tr><td><strong>Window Functions</strong></td><td>hanning, hamming, blackman, rectangular</td></tr><tr><td><strong>Filtering</strong></td><td>conv, conv_fft</td></tr><tr><td><strong>Signal Generation</strong></td><td>linspace</td></tr></tbody></table>
+<p>All DSP functions use the high-performance <strong>rustfft</strong> library for FFT computations.</p>
+<h2 id="fft-operations">FFT Operations</h2>
+<h3 id="fast-fourier-transform---fft">Fast Fourier Transform - fft</h3>
+<p>Transform signal from time domain to frequency domain:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Simple signal</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> spectrum </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft</span><span style="color:#E1E4E8">(signal)  </span><span style="color:#6A737D">// Returns ComplexTensor</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Sine wave analysis</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> t </span><span style="color:#F97583">=</span><span style="color:#B392F0"> linspace</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1024</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> freq </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 50</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> sin</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#F97583"> *</span><span style="color:#E1E4E8"> pi </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> freq </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> x), t)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> spectrum </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft</span><span style="color:#E1E4E8">(signal)</span></span></code></pre>
+<p><strong>Signature</strong>: <code>fft(signal) -> ComplexTensor</code></p>
+<p><strong>Algorithm</strong>: Cooley-Tukey FFT with mixed-radix support</p>
+<p><strong>Input</strong>: Vector or Tensor (real-valued signal)</p>
+<p><strong>Output</strong>: ComplexTensor (frequency spectrum)</p>
+<p><strong>Performance</strong>: Optimized for power-of-2 lengths, works for any size</p>
+<h3 id="inverse-fft---ifft">Inverse FFT - ifft</h3>
+<p>Reconstruct time-domain signal from frequency spectrum:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// FFT roundtrip</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.707</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.707</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">-</span><span style="color:#79B8FF">0.707</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">-</span><span style="color:#79B8FF">0.707</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> spectrum </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft</span><span style="color:#E1E4E8">(signal)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> recovered </span><span style="color:#F97583">=</span><span style="color:#B392F0"> ifft</span><span style="color:#E1E4E8">(spectrum)  </span><span style="color:#6A737D">// Should match original</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Verify recovery</span></span>
+<span class="line"><span style="color:#6A737D">// recovered ≈ signal (within numerical precision)</span></span></code></pre>
+<p><strong>Signature</strong>: <code>ifft(spectrum) -> Tensor</code></p>
+<p><strong>Algorithm</strong>: Inverse FFT with 1/N scaling</p>
+<p><strong>Input</strong>: ComplexTensor (frequency spectrum)</p>
+<p><strong>Output</strong>: Tensor (real-valued signal)</p>
+<p><strong>Note</strong>: Automatically scales by 1/N</p>
+<h3 id="fft-magnitude---fft_mag">FFT Magnitude - fft_mag</h3>
+<p>Compute magnitude spectrum:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> magnitudes </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_mag</span><span style="color:#E1E4E8">(signal)</span></span>
+<span class="line"><span style="color:#6A737D">// Returns magnitudes of frequency components</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// With windowing</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> t </span><span style="color:#F97583">=</span><span style="color:#B392F0"> linspace</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1024</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> sin</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">pi</span><span style="color:#F97583">*</span><span style="color:#79B8FF">50</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">x), t)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> windowed </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">*</span><span style="color:#B392F0"> hanning</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1024</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> spectrum </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_mag</span><span style="color:#E1E4E8">(windowed)</span></span></code></pre>
+<p><strong>Signature</strong>: <code>fft_mag(signal) -> Tensor</code></p>
+<p><strong>Formula</strong>: <code>|z| = √(re² + im²)</code> for each frequency bin</p>
+<p><strong>Input</strong>: Real signal or ComplexTensor</p>
+<p><strong>Output</strong>: Tensor of magnitudes</p>
+<p><strong>Use cases</strong>:</p>
+<ul>
+<li>Spectral analysis</li>
+<li>Frequency identification</li>
+<li>Power spectrum estimation</li>
+</ul>
+<h3 id="fft-phase---fft_phase">FFT Phase - fft_phase</h3>
+<p>Compute phase spectrum in radians:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> phases </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_phase</span><span style="color:#E1E4E8">(signal)</span></span>
+<span class="line"><span style="color:#6A737D">// Returns phases in radians [-π, π]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Phase information useful for:</span></span>
+<span class="line"><span style="color:#6A737D">// - Signal reconstruction</span></span>
+<span class="line"><span style="color:#6A737D">// - Phase response analysis</span></span>
+<span class="line"><span style="color:#6A737D">// - Time delay estimation</span></span></code></pre>
+<p><strong>Signature</strong>: <code>fft_phase(signal) -> Tensor</code></p>
+<p><strong>Formula</strong>: <code>φ = atan2(im, re)</code> for each frequency bin</p>
+<p><strong>Input</strong>: Real signal or ComplexTensor</p>
+<p><strong>Output</strong>: Tensor of phases in radians</p>
+<p><strong>Range</strong>: [-π, π]</p>
+<h2 id="window-functions">Window Functions</h2>
+<p>Window functions reduce spectral leakage by smoothly tapering signal edges.</p>
+<h3 id="hanning-window">Hanning Window</h3>
+<p>Most commonly used window function:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1024</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> window </span><span style="color:#F97583">=</span><span style="color:#B392F0"> hanning</span><span style="color:#E1E4E8">(n)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Apply to signal</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> sin</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">pi</span><span style="color:#F97583">*</span><span style="color:#79B8FF">50</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">x), t)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> windowed </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> window</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> spectrum </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_mag</span><span style="color:#E1E4E8">(windowed)</span></span></code></pre>
+<p><strong>Signature</strong>: <code>hanning(n) -> Tensor</code></p>
+<p><strong>Formula</strong>: <code>w(n) = 0.5 × (1 - cos(2πn/(N-1)))</code></p>
+<p><strong>Properties</strong>:</p>
+<ul>
+<li>Smooth edges (starts/ends at 0)</li>
+<li>Good sidelobe suppression (-32 dB)</li>
+<li>Balanced performance</li>
+<li>Most popular choice</li>
+</ul>
+<p><strong>Use when</strong>: General-purpose spectral analysis</p>
+<h3 id="hamming-window">Hamming Window</h3>
+<p>Better sidelobe suppression than Hanning:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> window </span><span style="color:#F97583">=</span><span style="color:#B392F0"> hamming</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">256</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> windowed_signal </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> window</span></span></code></pre>
+<p><strong>Signature</strong>: <code>hamming(n) -> Tensor</code></p>
+<p><strong>Formula</strong>: <code>w(n) = 0.54 - 0.46 × cos(2πn/(N-1))</code></p>
+<p><strong>Properties</strong>:</p>
+<ul>
+<li>Non-zero endpoints (0.08)</li>
+<li>Better sidelobe suppression (-43 dB)</li>
+<li>Slightly wider main lobe</li>
+</ul>
+<p><strong>Use when</strong>: Need better rejection of spectral leakage</p>
+<h3 id="blackman-window">Blackman Window</h3>
+<p>Best sidelobe suppression:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> window </span><span style="color:#F97583">=</span><span style="color:#B392F0"> blackman</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">512</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> windowed </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> window</span></span></code></pre>
+<p><strong>Signature</strong>: <code>blackman(n) -> Tensor</code></p>
+<p><strong>Formula</strong>: <code>w(n) = 0.42 - 0.5×cos(2πn/(N-1)) + 0.08×cos(4πn/(N-1))</code></p>
+<p><strong>Properties</strong>:</p>
+<ul>
+<li>Excellent sidelobe suppression (-58 dB)</li>
+<li>Wider main lobe</li>
+<li>Best dynamic range</li>
+</ul>
+<p><strong>Use when</strong>: High dynamic range required, weak signals near strong ones</p>
+<h3 id="rectangular-window">Rectangular Window</h3>
+<p>No windowing (all ones):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> window </span><span style="color:#F97583">=</span><span style="color:#B392F0"> rectangular</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">64</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D">// Equivalent to no windowing at all</span></span></code></pre>
+<p><strong>Signature</strong>: <code>rectangular(n) -> Tensor</code></p>
+<p><strong>Formula</strong>: <code>w(n) = 1.0</code> for all n</p>
+<p><strong>Properties</strong>:</p>
+<ul>
+<li>Narrowest main lobe</li>
+<li>Poor sidelobe suppression (-13 dB)</li>
+<li>Maximum frequency resolution</li>
+</ul>
+<p><strong>Use when</strong>: Maximum frequency resolution needed, spectral leakage not a concern</p>
+<h3 id="window-comparison">Window Comparison</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 64</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Generate all windows</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> rect </span><span style="color:#F97583">=</span><span style="color:#B392F0"> rectangular</span><span style="color:#E1E4E8">(n)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> hann </span><span style="color:#F97583">=</span><span style="color:#B392F0"> hanning</span><span style="color:#E1E4E8">(n)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> hamm </span><span style="color:#F97583">=</span><span style="color:#B392F0"> hamming</span><span style="color:#E1E4E8">(n)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> black </span><span style="color:#F97583">=</span><span style="color:#B392F0"> blackman</span><span style="color:#E1E4E8">(n)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Compare properties:</span></span>
+<span class="line"><span style="color:#6A737D">// - Rectangular: best resolution, worst leakage</span></span>
+<span class="line"><span style="color:#6A737D">// - Hanning: balanced</span></span>
+<span class="line"><span style="color:#6A737D">// - Hamming: better leakage rejection</span></span>
+<span class="line"><span style="color:#6A737D">// - Blackman: best leakage rejection, worst resolution</span></span></code></pre>
+<h2 id="convolution">Convolution</h2>
+<h3 id="direct-convolution---conv">Direct Convolution - conv</h3>
+<p>Standard convolution using direct computation:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Moving average filter</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> kernel </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">0.5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.5</span><span style="color:#E1E4E8">]  </span><span style="color:#6A737D">// Average of 2 samples</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> smoothed </span><span style="color:#F97583">=</span><span style="color:#B392F0"> conv</span><span style="color:#E1E4E8">(signal, kernel)</span></span>
+<span class="line"><span style="color:#6A737D">// [0.5, 1.5, 2.5, 3.5, 4.5, 2.5]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Gaussian-like smoothing</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> kernel </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">0.25</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.25</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> smoothed </span><span style="color:#F97583">=</span><span style="color:#B392F0"> conv</span><span style="color:#E1E4E8">(signal, kernel)</span></span></code></pre>
+<p><strong>Signature</strong>: <code>conv(signal, kernel) -> Tensor</code></p>
+<p><strong>Algorithm</strong>: Direct convolution</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>(f * g)[n] = Σ f[m] × g[n - m]</span></span></code></pre>
+<p><strong>Output length</strong>: <code>signal.length + kernel.length - 1</code></p>
+<p><strong>Complexity</strong>: O(N × M)</p>
+<p><strong>Use when</strong>: Small kernels (&#x3C; 100 elements)</p>
+<h3 id="fft-based-convolution---conv_fft">FFT-based Convolution - conv_fft</h3>
+<p>Fast convolution using FFT:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Large signal/kernel</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">]  </span><span style="color:#6A737D">// 1000 elements</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> kernel </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">]  </span><span style="color:#6A737D">// 200 elements</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#B392F0"> conv_fft</span><span style="color:#E1E4E8">(signal, kernel)</span></span>
+<span class="line"><span style="color:#6A737D">// Much faster than conv() for large inputs</span></span></code></pre>
+<p><strong>Signature</strong>: <code>conv_fft(signal, kernel) -> Tensor</code></p>
+<p><strong>Algorithm</strong>: Convolution theorem</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>conv(f, g) = IFFT(FFT(f) × FFT(g))</span></span></code></pre>
+<p><strong>Complexity</strong>: O(N log N)</p>
+<p><strong>Use when</strong>: Large signals or kernels (> 100 elements)</p>
+<p><strong>Note</strong>: Pads to next power-of-2 for efficiency</p>
+<h2 id="signal-generation">Signal Generation</h2>
+<h3 id="linear-space---linspace">Linear Space - linspace</h3>
+<p>Generate evenly-spaced values:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Time vector</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> t </span><span style="color:#F97583">=</span><span style="color:#B392F0"> linspace</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1024</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// 1024 points from 0 to 1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Frequency axis</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> freqs </span><span style="color:#F97583">=</span><span style="color:#B392F0"> linspace</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">500</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">256</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// 0 to 500 Hz</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Generate sine wave</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> sin</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">pi</span><span style="color:#F97583">*</span><span style="color:#79B8FF">10</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">x), </span><span style="color:#B392F0">linspace</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">))</span></span></code></pre>
+<p><strong>Signature</strong>: <code>linspace(start, end, n) -> Tensor</code></p>
+<p><strong>Formula</strong>: <code>values[i] = start + step × i</code> where <code>step = (end - start) / (n - 1)</code></p>
+<p><strong>Requirements</strong>: n >= 2</p>
+<p><strong>Endpoints</strong>: Includes both start and end values</p>
+<h2 id="practical-examples">Practical Examples</h2>
+<h3 id="basic-spectral-analysis">Basic Spectral Analysis</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Setup</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> sample_rate </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1000</span><span style="color:#6A737D">  // Hz</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> duration </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1</span><span style="color:#6A737D">        // second</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> sample_rate </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> duration</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Generate signal: 50 Hz sine wave</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> t </span><span style="color:#F97583">=</span><span style="color:#B392F0"> linspace</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, duration, n)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> freq </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 50</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> sin</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">pi</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">freq</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">x), t)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Apply window to reduce leakage</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> windowed </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">*</span><span style="color:#B392F0"> hanning</span><span style="color:#E1E4E8">(n)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Compute spectrum</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> magnitudes </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_mag</span><span style="color:#E1E4E8">(windowed)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Result shows peak at 50 Hz bin</span></span></code></pre>
+<h3 id="multiple-frequency-components">Multiple Frequency Components</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Mixed signal: 50 Hz + 120 Hz</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> t </span><span style="color:#F97583">=</span><span style="color:#B392F0"> linspace</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1000</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#FFAB70">    x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> sin</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">pi</span><span style="color:#F97583">*</span><span style="color:#79B8FF">50</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">x) </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 0.5</span><span style="color:#F97583">*</span><span style="color:#B392F0">sin</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">pi</span><span style="color:#F97583">*</span><span style="color:#79B8FF">120</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">x),</span></span>
+<span class="line"><span style="color:#E1E4E8">    t</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Window and analyze</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> spectrum </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_mag</span><span style="color:#E1E4E8">(signal </span><span style="color:#F97583">*</span><span style="color:#B392F0"> hanning</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1000</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"><span style="color:#6A737D">// Shows peaks at bins corresponding to 50 and 120 Hz</span></span></code></pre>
+<h3 id="noise-reduction-with-filtering">Noise Reduction with Filtering</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Noisy signal</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">6</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">7</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Low-pass filter (moving average)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> kernel </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">0.2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.2</span><span style="color:#E1E4E8">]  </span><span style="color:#6A737D">// 5-point average</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> smoothed </span><span style="color:#F97583">=</span><span style="color:#B392F0"> conv</span><span style="color:#E1E4E8">(signal, kernel)</span></span></code></pre>
+<h3 id="spectral-components">Spectral Components</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Analyze FFT output</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.707</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.707</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">-</span><span style="color:#79B8FF">0.707</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">-</span><span style="color:#79B8FF">0.707</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> spectrum </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft</span><span style="color:#E1E4E8">(signal)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Extract information</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> real_parts </span><span style="color:#F97583">=</span><span style="color:#B392F0"> real</span><span style="color:#E1E4E8">(spectrum)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> imag_parts </span><span style="color:#F97583">=</span><span style="color:#B392F0"> imag</span><span style="color:#E1E4E8">(spectrum)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> magnitudes </span><span style="color:#F97583">=</span><span style="color:#B392F0"> abs</span><span style="color:#E1E4E8">(spectrum)  </span><span style="color:#6A737D">// or use fft_mag(signal)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> phases </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">z</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> arg</span><span style="color:#E1E4E8">(z), spectrum)  </span><span style="color:#6A737D">// or use fft_phase(signal)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Conjugate (useful for filtering)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> spectrum_conj </span><span style="color:#F97583">=</span><span style="color:#B392F0"> conj</span><span style="color:#E1E4E8">(spectrum)</span></span></code></pre>
+<h3 id="signal-reconstruction">Signal Reconstruction</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Forward transform</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> spectrum </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft</span><span style="color:#E1E4E8">(signal)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Manipulate in frequency domain</span></span>
+<span class="line"><span style="color:#6A737D">// (e.g., zero out high frequencies)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Inverse transform</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> recovered </span><span style="color:#F97583">=</span><span style="color:#B392F0"> ifft</span><span style="color:#E1E4E8">(spectrum)</span></span>
+<span class="line"><span style="color:#6A737D">// recovered ≈ signal</span></span></code></pre>
+<h3 id="window-comparison-1">Window Comparison</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> sin</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">pi</span><span style="color:#F97583">*</span><span style="color:#79B8FF">50</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">x), </span><span style="color:#B392F0">linspace</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">512</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Compare different windows</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> no_window </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_mag</span><span style="color:#E1E4E8">(signal)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> with_hanning </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_mag</span><span style="color:#E1E4E8">(signal </span><span style="color:#F97583">*</span><span style="color:#B392F0"> hanning</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">512</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> with_hamming </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_mag</span><span style="color:#E1E4E8">(signal </span><span style="color:#F97583">*</span><span style="color:#B392F0"> hamming</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">512</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> with_blackman </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_mag</span><span style="color:#E1E4E8">(signal </span><span style="color:#F97583">*</span><span style="color:#B392F0"> blackman</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">512</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Blackman has best sidelobe suppression</span></span>
+<span class="line"><span style="color:#6A737D">// Rectangular has best frequency resolution</span></span></code></pre>
+<h3 id="frequency-estimation">Frequency Estimation</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Find dominant frequency</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">]  </span><span style="color:#6A737D">// Some signal</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> magnitudes </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_mag</span><span style="color:#E1E4E8">(signal)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Find peak</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> max_magnitude </span><span style="color:#F97583">=</span><span style="color:#B392F0"> max</span><span style="color:#E1E4E8">(magnitudes)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> peak_bin </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span><span style="color:#6A737D">  // Would need argmax function</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Convert bin to frequency</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> sample_rate </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1000</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">=</span><span style="color:#B392F0"> length</span><span style="color:#E1E4E8">(signal)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> freq_resolution </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> sample_rate </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> n</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> dominant_freq </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> peak_bin </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> freq_resolution</span></span></code></pre>
+<h2 id="complete-dsp-pipeline">Complete DSP Pipeline</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Full signal processing pipeline</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 1. Parameters</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> sample_rate </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1024</span><span style="color:#6A737D">    // Samples per second</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> duration </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1</span><span style="color:#6A737D">          // Seconds</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> sample_rate </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> duration</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 2. Generate time vector</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> t </span><span style="color:#F97583">=</span><span style="color:#B392F0"> linspace</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, duration, n)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 3. Create signal (50 Hz sine)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> freq </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 50</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> sin</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">pi</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">freq</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">x), t)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 4. Apply window</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> window </span><span style="color:#F97583">=</span><span style="color:#B392F0"> hanning</span><span style="color:#E1E4E8">(n)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> windowed </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> window</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 5. Compute FFT</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> spectrum </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft</span><span style="color:#E1E4E8">(windowed)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 6. Extract magnitude and phase</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> magnitudes </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_mag</span><span style="color:#E1E4E8">(windowed)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> phases </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_phase</span><span style="color:#E1E4E8">(windowed)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 7. Analysis complete</span></span>
+<span class="line"><span style="color:#6A737D">// magnitudes shows frequency content</span></span>
+<span class="line"><span style="color:#6A737D">// phases shows phase relationships</span></span></code></pre>
+<h2 id="advanced-techniques">Advanced Techniques</h2>
+<h3 id="zero-padding-for-interpolation">Zero-Padding for Interpolation</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Zero-pad for frequency interpolation</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> padded </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">signal, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">]  </span><span style="color:#6A737D">// Double the length</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> spectrum </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft</span><span style="color:#E1E4E8">(padded)</span></span>
+<span class="line"><span style="color:#6A737D">// More frequency bins (interpolated)</span></span></code></pre>
+<h3 id="spectral-filtering">Spectral Filtering</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Filter in frequency domain</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> spectrum </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft</span><span style="color:#E1E4E8">(signal)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Zero out high frequencies (low-pass)</span></span>
+<span class="line"><span style="color:#6A737D">// (Would need array manipulation)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> filtered </span><span style="color:#F97583">=</span><span style="color:#B392F0"> ifft</span><span style="color:#E1E4E8">(spectrum)</span></span></code></pre>
+<h3 id="overlap-add-convolution">Overlap-Add Convolution</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// For very long signals, process in chunks</span></span>
+<span class="line"><span style="color:#6A737D">// (Conceptual - would need implementation)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> process_chunk</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">chunk</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">kernel</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span></span>
+<span class="line"><span style="color:#B392F0">    conv</span><span style="color:#E1E4E8">(chunk, kernel)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Process signal in blocks</span></span></code></pre>
+<h2 id="performance-considerations">Performance Considerations</h2>
+<h3 id="fft-size">FFT Size</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Power-of-2 sizes are fastest</span></span>
+<span class="line"><span style="color:#B392F0">fft</span><span style="color:#E1E4E8">(signal_512)    </span><span style="color:#6A737D">// Very fast</span></span>
+<span class="line"><span style="color:#B392F0">fft</span><span style="color:#E1E4E8">(signal_1024)   </span><span style="color:#6A737D">// Very fast</span></span>
+<span class="line"><span style="color:#B392F0">fft</span><span style="color:#E1E4E8">(signal_1000)   </span><span style="color:#6A737D">// Slower (not power-of-2)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Pad to power-of-2 for best performance</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1000</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> padded_n </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1024</span><span style="color:#6A737D">  // Next power-of-2</span></span>
+<span class="line"><span style="color:#6A737D">// Pad signal to 1024 samples</span></span></code></pre>
+<h3 id="convolution-method-selection">Convolution Method Selection</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Small kernel: use direct convolution</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> kernel_small </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">0.25</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.25</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#B392F0">conv</span><span style="color:#E1E4E8">(signal, kernel_small)  </span><span style="color:#6A737D">// Fast</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Large kernel: use FFT convolution</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> kernel_large </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">...</span><span style="color:#B392F0">Array</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">200</span><span style="color:#E1E4E8">)]  </span><span style="color:#6A737D">// 200 elements</span></span>
+<span class="line"><span style="color:#B392F0">conv_fft</span><span style="color:#E1E4E8">(signal, kernel_large)  </span><span style="color:#6A737D">// Much faster</span></span></code></pre>
+<h3 id="window-application">Window Application</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Pre-compute window for reuse</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> window </span><span style="color:#F97583">=</span><span style="color:#B392F0"> hanning</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1024</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Apply to multiple signals</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> spec1 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_mag</span><span style="color:#E1E4E8">(signal1 </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> window)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> spec2 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_mag</span><span style="color:#E1E4E8">(signal2 </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> window)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> spec3 </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_mag</span><span style="color:#E1E4E8">(signal3 </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> window)</span></span></code></pre>
+<h2 id="common-patterns">Common Patterns</h2>
+<h3 id="frequency-bin-to-hz">Frequency Bin to Hz</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> sample_rate </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1000</span><span style="color:#6A737D">  // Hz</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> n </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1024</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> freq_resolution </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> sample_rate </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> n  </span><span style="color:#6A737D">// Hz per bin</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Bin k corresponds to:</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> freq_at_bin</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> k</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> k </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> freq_resolution</span></span></code></pre>
+<h3 id="nyquist-frequency">Nyquist Frequency</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Maximum representable frequency</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> sample_rate </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1000</span><span style="color:#6A737D">  // Hz</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> nyquist </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> sample_rate </span><span style="color:#F97583">/</span><span style="color:#79B8FF"> 2</span><span style="color:#6A737D">  // 500 Hz</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Frequencies above Nyquist alias</span></span></code></pre>
+<h3 id="spectral-power">Spectral Power</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Power spectrum (magnitude squared)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> magnitudes </span><span style="color:#F97583">=</span><span style="color:#B392F0"> fft_mag</span><span style="color:#E1E4E8">(signal)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> power </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, magnitudes)</span></span></code></pre>
+<h2 id="error-handling">Error Handling</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// linspace requires n >= 2</span></span>
+<span class="line"><span style="color:#B392F0">linspace</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// Error</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// FFT works on any length, but power-of-2 is optimal</span></span>
+<span class="line"><span style="color:#B392F0">fft</span><span style="color:#E1E4E8">([</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">])  </span><span style="color:#6A737D">// Works, but consider padding</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Window length should match signal</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#F97583">...</span><span style="color:#B392F0">Array</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1024</span><span style="color:#E1E4E8">)]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> window </span><span style="color:#F97583">=</span><span style="color:#B392F0"> hanning</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1024</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// ✅ Match lengths</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> bad_window </span><span style="color:#F97583">=</span><span style="color:#B392F0"> hanning</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">512</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// ⚠️ Mismatch</span></span></code></pre>
+<h2 id="summary">Summary</h2>
+<p><strong>FFT operations</strong>: fft, ifft, fft_mag, fft_phase</p>
+<p><strong>Window functions</strong>: hanning, hamming, blackman, rectangular</p>
+<p><strong>Filtering</strong>: conv, conv_fft</p>
+<p><strong>Signal generation</strong>: linspace</p>
+<p><strong>Key features</strong>:</p>
+<ul>
+<li>High-performance rustfft backend</li>
+<li>ComplexTensor integration</li>
+<li>Power-of-2 optimization</li>
+<li>Full spectral analysis capabilities</li>
+</ul>
+<p><strong>Best practices</strong>:</p>
+<ul>
+<li>Use windowing to reduce spectral leakage</li>
+<li>Choose appropriate window for application</li>
+<li>Use FFT convolution for large kernels</li>
+<li>Pad to power-of-2 for best performance</li>
+</ul>
+<p><strong>Common applications</strong>:</p>
+<ul>
+<li>Frequency analysis</li>
+<li>Filter design and application</li>
+<li>Signal decomposition</li>
+<li>Spectral estimation</li>
+<li>Noise reduction</li>
+</ul>
+<hr>
+<p><strong>Next</strong>: <a href="graph-theory.md">Graph Theory</a></p>  </article> <div class="mt-12 border-t border-slate-800 pt-6"> <nav class="flex items-center justify-between"> <div></div> <div></div> </nav> </div> </div> <!-- Right sidebar (table of contents) --> <div class="hidden xl:flex xl:flex-shrink-0"> <div class="w-64 py-8 pl-8 border-l border-slate-800"> <div class="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto"> <div class="space-y-4"><h4 class="font-display text-sm font-semibold text-white">
+On this page
+</h4><nav><ul class="space-y-2.5 text-sm"><li class><a href="#overview" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Overview</a></li><li class><a href="#fft-operations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">FFT Operations</a></li><li class="ml-4"><a href="#fast-fourier-transform---fft" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Fast Fourier Transform - fft</a></li><li class="ml-4"><a href="#inverse-fft---ifft" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Inverse FFT - ifft</a></li><li class="ml-4"><a href="#fft-magnitude---fft_mag" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">FFT Magnitude - fft_mag</a></li><li class="ml-4"><a href="#fft-phase---fft_phase" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">FFT Phase - fft_phase</a></li><li class><a href="#window-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Window Functions</a></li><li class="ml-4"><a href="#hanning-window" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Hanning Window</a></li><li class="ml-4"><a href="#hamming-window" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Hamming Window</a></li><li class="ml-4"><a href="#blackman-window" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Blackman Window</a></li><li class="ml-4"><a href="#rectangular-window" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Rectangular Window</a></li><li class="ml-4"><a href="#window-comparison" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Window Comparison</a></li><li class><a href="#convolution" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Convolution</a></li><li class="ml-4"><a href="#direct-convolution---conv" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Direct Convolution - conv</a></li><li class="ml-4"><a href="#fft-based-convolution---conv_fft" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">FFT-based Convolution - conv_fft</a></li><li class><a href="#signal-generation" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Signal Generation</a></li><li class="ml-4"><a href="#linear-space---linspace" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Linear Space - linspace</a></li><li class><a href="#practical-examples" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Practical Examples</a></li><li class="ml-4"><a href="#basic-spectral-analysis" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Basic Spectral Analysis</a></li><li class="ml-4"><a href="#multiple-frequency-components" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Multiple Frequency Components</a></li><li class="ml-4"><a href="#noise-reduction-with-filtering" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Noise Reduction with Filtering</a></li><li class="ml-4"><a href="#spectral-components" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Spectral Components</a></li><li class="ml-4"><a href="#signal-reconstruction" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Signal Reconstruction</a></li><li class="ml-4"><a href="#window-comparison-1" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Window Comparison</a></li><li class="ml-4"><a href="#frequency-estimation" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Frequency Estimation</a></li><li class><a href="#complete-dsp-pipeline" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Complete DSP Pipeline</a></li><li class><a href="#advanced-techniques" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Advanced Techniques</a></li><li class="ml-4"><a href="#zero-padding-for-interpolation" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Zero-Padding for Interpolation</a></li><li class="ml-4"><a href="#spectral-filtering" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Spectral Filtering</a></li><li class="ml-4"><a href="#overlap-add-convolution" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Overlap-Add Convolution</a></li><li class><a href="#performance-considerations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Performance Considerations</a></li><li class="ml-4"><a href="#fft-size" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">FFT Size</a></li><li class="ml-4"><a href="#convolution-method-selection" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Convolution Method Selection</a></li><li class="ml-4"><a href="#window-application" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Window Application</a></li><li class><a href="#common-patterns" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Common Patterns</a></li><li class="ml-4"><a href="#frequency-bin-to-hz" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Frequency Bin to Hz</a></li><li class="ml-4"><a href="#nyquist-frequency" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Nyquist Frequency</a></li><li class="ml-4"><a href="#spectral-power" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Spectral Power</a></li><li class><a href="#error-handling" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Error Handling</a></li><li class><a href="#summary" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Summary</a></li></ul></nav></div> </div> </div> </div> </div> </div> </div>  </body></html>

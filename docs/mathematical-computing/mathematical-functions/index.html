@@ -1,0 +1,1231 @@
+<!DOCTYPE html><html lang="en" class="h-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Trigonometric, exponential, logarithmic, power, rounding, and utility functions with mathematical constants"><meta name="generator" content="Astro v5.15.8"><link rel="canonical" href="http://localhost:4321/docs/mathematical-computing/mathematical-functions/"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Mathematical Functions | Achronyme</title><!-- Preload fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="/_astro/_slug_.CyadsZWk.css">
+<style>[data-astro-cid-k5z7lb4y][x-cloak]{display:none!important}
+</style><script type="module" src="/_astro/page.BE54bNVT.js"></script></head> <body class="h-full bg-slate-950" x-data>  <div class="min-h-full"> <header class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur supports-[backdrop-filter]:bg-slate-950/80"> <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex h-16 items-center justify-between"> <!-- Logo --> <div class="flex items-center"> <a href="/" class="flex items-center space-x-3"> <picture> <source srcset="/logo.avif" type="image/avif"> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';"> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden"> <span class="text-white font-bold text-sm">A</span> </div> <span class="font-display text-xl font-semibold text-white">
+Achronyme
+</span> </a> </div> <!-- Center navigation --> <nav class="hidden md:flex items-center justify-center flex-1 space-x-6"> <a href="/docs" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">
+Documentation
+</a> <a href="https://github.com/achronyme/achronyme-core" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-slate-400 hover:text-white transition-colors inline-flex items-center"> <svg class="mr-1.5 h-4 w-4" fill="currentColor" viewBox="0 0 24 24"> <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path> </svg>
+GitHub
+</a> </nav> <!-- Right side - Changelog link + Mobile menu button --> <div class="flex items-center space-x-4"> <a href="/changelog" class="hidden md:block text-sm font-medium text-slate-400 hover:text-white transition-colors">
+Changelog
+</a> <button type="button" class="md:hidden rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.toggle()"> <span class="sr-only">Open menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path> </svg> </button> </div> </div> </div> </header> <div class="fixed inset-0 z-40 lg:hidden" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-cloak data-astro-cid-k5z7lb4y> <!-- Backdrop --> <div class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm" @click="$store.nav.close()" data-astro-cid-k5z7lb4y></div> <!-- Sidebar --> <div class="fixed inset-y-0 left-0 w-full max-w-xs bg-slate-900 shadow-xl" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full" data-astro-cid-k5z7lb4y> <div class="flex h-16 items-center justify-between px-6 border-b border-slate-800" data-astro-cid-k5z7lb4y> <a href="/" class="flex items-center space-x-2" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <picture data-astro-cid-k5z7lb4y> <source srcset="/logo.avif" type="image/avif" data-astro-cid-k5z7lb4y> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';" data-astro-cid-k5z7lb4y> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden" data-astro-cid-k5z7lb4y> <span class="text-white font-bold text-sm" data-astro-cid-k5z7lb4y>A</span> </div> <span class="font-display text-xl font-semibold text-white" data-astro-cid-k5z7lb4y>
+Achronyme
+</span> </a> <button type="button" class="rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <span class="sr-only" data-astro-cid-k5z7lb4y>Close menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-astro-cid-k5z7lb4y> <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" data-astro-cid-k5z7lb4y></path> </svg> </button> </div> <nav class="overflow-y-auto p-6 space-y-8" data-astro-cid-k5z7lb4y> <div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Getting Started </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/introduction" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Introduction </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/installation" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Installation </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/syntax-basics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Syntax Basics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Core Language </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/data-types" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Data Types </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/operators" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Operators </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/variables" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Variables </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/control-flow" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Control Flow </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Data Structures </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/arrays-tensors" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Arrays &amp; Tensors </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/indexing-slicing" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Indexing &amp; Slicing </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/records" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Records </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/strings" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Strings </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Functional Programming </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/higher-order-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Higher-Order Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/do-blocks" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Do Blocks </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/recursion" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Recursion </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Mathematical Computing </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/mathematical-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mathematical Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/linear-algebra" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Linear Algebra </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/complex-numbers" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Complex Numbers </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/numerical-analysis" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Numerical Analysis </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/statistics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Statistics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Specialized Modules </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/dsp" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> DSP </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/graph-theory" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Graph Theory </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/optimization" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Optimization </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Advanced Topics </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/best-practices" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Best Practices </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/examples" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Examples </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/performance" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Performance </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/mutability" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mutability </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/io-persistence" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div>  <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex"> <!-- Left sidebar (navigation) --> <div class="hidden lg:flex lg:flex-shrink-0"> <div class="w-64 py-8 pr-8 border-r border-slate-800"> <div class="sticky top-20"> <nav class="space-y-8"> <div> <h3 class="font-display text-sm font-semibold text-white"> Getting Started </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/getting-started/introduction" class="block text-sm transition-colors text-slate-400 hover:text-white"> Introduction </a> </li><li> <a href="/docs/getting-started/installation" class="block text-sm transition-colors text-slate-400 hover:text-white"> Installation </a> </li><li> <a href="/docs/getting-started/syntax-basics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Syntax Basics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Core Language </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/core-language/data-types" class="block text-sm transition-colors text-slate-400 hover:text-white"> Data Types </a> </li><li> <a href="/docs/core-language/operators" class="block text-sm transition-colors text-slate-400 hover:text-white"> Operators </a> </li><li> <a href="/docs/core-language/variables" class="block text-sm transition-colors text-slate-400 hover:text-white"> Variables </a> </li><li> <a href="/docs/core-language/functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Functions </a> </li><li> <a href="/docs/core-language/control-flow" class="block text-sm transition-colors text-slate-400 hover:text-white"> Control Flow </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Data Structures </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/data-structures/arrays-tensors" class="block text-sm transition-colors text-slate-400 hover:text-white"> Arrays &amp; Tensors </a> </li><li> <a href="/docs/data-structures/indexing-slicing" class="block text-sm transition-colors text-slate-400 hover:text-white"> Indexing &amp; Slicing </a> </li><li> <a href="/docs/data-structures/records" class="block text-sm transition-colors text-slate-400 hover:text-white"> Records </a> </li><li> <a href="/docs/data-structures/strings" class="block text-sm transition-colors text-slate-400 hover:text-white"> Strings </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Functional Programming </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/functional-programming/higher-order-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Higher-Order Functions </a> </li><li> <a href="/docs/functional-programming/do-blocks" class="block text-sm transition-colors text-slate-400 hover:text-white"> Do Blocks </a> </li><li> <a href="/docs/functional-programming/recursion" class="block text-sm transition-colors text-slate-400 hover:text-white"> Recursion </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Mathematical Computing </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/mathematical-computing/mathematical-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mathematical Functions </a> </li><li> <a href="/docs/mathematical-computing/linear-algebra" class="block text-sm transition-colors text-slate-400 hover:text-white"> Linear Algebra </a> </li><li> <a href="/docs/mathematical-computing/complex-numbers" class="block text-sm transition-colors text-slate-400 hover:text-white"> Complex Numbers </a> </li><li> <a href="/docs/mathematical-computing/numerical-analysis" class="block text-sm transition-colors text-slate-400 hover:text-white"> Numerical Analysis </a> </li><li> <a href="/docs/mathematical-computing/statistics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Statistics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Specialized Modules </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/specialized-modules/dsp" class="block text-sm transition-colors text-slate-400 hover:text-white"> DSP </a> </li><li> <a href="/docs/specialized-modules/graph-theory" class="block text-sm transition-colors text-slate-400 hover:text-white"> Graph Theory </a> </li><li> <a href="/docs/specialized-modules/optimization" class="block text-sm transition-colors text-slate-400 hover:text-white"> Optimization </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Advanced Topics </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/advanced-topics/best-practices" class="block text-sm transition-colors text-slate-400 hover:text-white"> Best Practices </a> </li><li> <a href="/docs/advanced-topics/examples" class="block text-sm transition-colors text-slate-400 hover:text-white"> Examples </a> </li><li> <a href="/docs/advanced-topics/performance" class="block text-sm transition-colors text-slate-400 hover:text-white"> Performance </a> </li><li> <a href="/docs/advanced-topics/mutability" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mutability </a> </li><li> <a href="/docs/advanced-topics/io-persistence" class="block text-sm transition-colors text-slate-400 hover:text-white"> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div> </div> <!-- Main content --> <div class="min-w-0 flex-1 py-8 lg:pl-8"> <article class="prose prose-invert max-w-none"> <h1 class="font-display text-4xl font-bold tracking-tight text-white"> Mathematical Functions </h1> <p class="lead text-xl text-slate-400"> Trigonometric, exponential, logarithmic, power, rounding, and utility functions with mathematical constants </p>  <p>Achronyme provides a comprehensive library of mathematical functions for numerical computing, including trigonometric, exponential, logarithmic, and utility functions.</p>
+<h2 id="function-categories">Function Categories</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Category</th><th>Functions</th></tr></thead><tbody><tr><td><strong>Trigonometric</strong></td><td>sin, cos, tan, asin, acos, atan, atan2</td></tr><tr><td><strong>Hyperbolic</strong></td><td>sinh, cosh, tanh</td></tr><tr><td><strong>Exponential</strong></td><td>exp, ln, log, log10, log2</td></tr><tr><td><strong>Power &#x26; Root</strong></td><td>sqrt, cbrt, pow, ^ operator</td></tr><tr><td><strong>Rounding</strong></td><td>floor, ceil, round, trunc</td></tr><tr><td><strong>Utility</strong></td><td>abs, sign, min, max</td></tr><tr><td><strong>Conversion</strong></td><td>deg, rad</td></tr><tr><td><strong>Constants</strong></td><td>pi, e, phi, sqrt2, sqrt3, ln2, ln10</td></tr></tbody></table>
+<h2 id="type-support">Type Support</h2>
+<p>Most mathematical functions work with:</p>
+<ul>
+<li><strong>Numbers</strong> (scalars)</li>
+<li><strong>Vectors</strong> (element-wise operations)</li>
+<li><strong>Tensors</strong> (element-wise operations)</li>
+<li><strong>Complex numbers</strong> (where applicable)</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Scalar</span></span>
+<span class="line"><span style="color:#B392F0">sin</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3.14159</span><span style="color:#E1E4E8">)           </span><span style="color:#6A737D">// Single value</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Vector/Tensor - element-wise</span></span>
+<span class="line"><span style="color:#B392F0">sin</span><span style="color:#E1E4E8">([</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">])      </span><span style="color:#6A737D">// [sin(0), sin(1), sin(2), sin(3)]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Complex (where supported)</span></span>
+<span class="line"><span style="color:#B392F0">abs</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 4i)            </span><span style="color:#6A737D">// 5.0</span></span></code></pre>
+<h2 id="trigonometric-functions">Trigonometric Functions</h2>
+<h3 id="basic-trigonometry">Basic Trigonometry</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Sine</span></span>
+<span class="line"><span style="color:#B392F0">sin</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)                 </span><span style="color:#6A737D">// 0</span></span>
+<span class="line"><span style="color:#B392F0">sin</span><span style="color:#E1E4E8">(pi</span><span style="color:#F97583">/</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)              </span><span style="color:#6A737D">// 1</span></span>
+<span class="line"><span style="color:#B392F0">sin</span><span style="color:#E1E4E8">(pi)                </span><span style="color:#6A737D">// ~0</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Cosine</span></span>
+<span class="line"><span style="color:#B392F0">cos</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)                 </span><span style="color:#6A737D">// 1</span></span>
+<span class="line"><span style="color:#B392F0">cos</span><span style="color:#E1E4E8">(pi</span><span style="color:#F97583">/</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)              </span><span style="color:#6A737D">// ~0</span></span>
+<span class="line"><span style="color:#B392F0">cos</span><span style="color:#E1E4E8">(pi)                </span><span style="color:#6A737D">// -1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Tangent</span></span>
+<span class="line"><span style="color:#B392F0">tan</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)                 </span><span style="color:#6A737D">// 0</span></span>
+<span class="line"><span style="color:#B392F0">tan</span><span style="color:#E1E4E8">(pi</span><span style="color:#F97583">/</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">)              </span><span style="color:#6A737D">// 1</span></span>
+<span class="line"><span style="color:#B392F0">tan</span><span style="color:#E1E4E8">(pi</span><span style="color:#F97583">/</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)              </span><span style="color:#6A737D">// Infinity (undefined)</span></span></code></pre>
+<h3 id="inverse-trigonometric">Inverse Trigonometric</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Arcsine - range: [-pi/2, pi/2]</span></span>
+<span class="line"><span style="color:#B392F0">asin</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 0</span></span>
+<span class="line"><span style="color:#B392F0">asin</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// pi/2</span></span>
+<span class="line"><span style="color:#B392F0">asin</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)               </span><span style="color:#6A737D">// -pi/2</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Arccosine - range: [0, pi]</span></span>
+<span class="line"><span style="color:#B392F0">acos</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 0</span></span>
+<span class="line"><span style="color:#B392F0">acos</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// pi/2</span></span>
+<span class="line"><span style="color:#B392F0">acos</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)               </span><span style="color:#6A737D">// pi</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Arctangent - range: (-pi/2, pi/2)</span></span>
+<span class="line"><span style="color:#B392F0">atan</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 0</span></span>
+<span class="line"><span style="color:#B392F0">atan</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// pi/4</span></span>
+<span class="line"><span style="color:#B392F0">atan</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)               </span><span style="color:#6A737D">// -pi/4</span></span></code></pre>
+<h3 id="two-argument-arctangent">Two-Argument Arctangent</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// atan2(y, x) - full circle range: (-pi, pi]</span></span>
+<span class="line"><span style="color:#6A737D">// Handles quadrants correctly</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">atan2</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)            </span><span style="color:#6A737D">// pi/4 (first quadrant)</span></span>
+<span class="line"><span style="color:#B392F0">atan2</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)           </span><span style="color:#6A737D">// 3pi/4 (second quadrant)</span></span>
+<span class="line"><span style="color:#B392F0">atan2</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)          </span><span style="color:#6A737D">// -3pi/4 (third quadrant)</span></span>
+<span class="line"><span style="color:#B392F0">atan2</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)           </span><span style="color:#6A737D">// -pi/4 (fourth quadrant)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Special cases</span></span>
+<span class="line"><span style="color:#B392F0">atan2</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)            </span><span style="color:#6A737D">// 0 (positive x-axis)</span></span>
+<span class="line"><span style="color:#B392F0">atan2</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)            </span><span style="color:#6A737D">// pi/2 (positive y-axis)</span></span>
+<span class="line"><span style="color:#B392F0">atan2</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)           </span><span style="color:#6A737D">// pi (negative x-axis)</span></span>
+<span class="line"><span style="color:#B392F0">atan2</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)           </span><span style="color:#6A737D">// -pi/2 (negative y-axis)</span></span></code></pre>
+<h3 id="hyperbolic-functions">Hyperbolic Functions</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Hyperbolic sine</span></span>
+<span class="line"><span style="color:#B392F0">sinh</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 0</span></span>
+<span class="line"><span style="color:#B392F0">sinh</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 1.175...</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Hyperbolic cosine</span></span>
+<span class="line"><span style="color:#B392F0">cosh</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 1</span></span>
+<span class="line"><span style="color:#B392F0">cosh</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 1.543...</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Hyperbolic tangent</span></span>
+<span class="line"><span style="color:#B392F0">tanh</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 0</span></span>
+<span class="line"><span style="color:#B392F0">tanh</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 0.761...</span></span>
+<span class="line"><span style="color:#B392F0">tanh</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)               </span><span style="color:#6A737D">// ~1 (asymptotically approaches 1)</span></span></code></pre>
+<h3 id="working-with-angles">Working with Angles</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Generate angles</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> angles </span><span style="color:#F97583">=</span><span style="color:#B392F0"> linspace</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">pi, </span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Apply trigonometric functions</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> sin_values </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(sin, angles)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> cos_values </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(cos, angles)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Parametric circle</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(cos, angles)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> y </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(sin, angles)</span></span></code></pre>
+<h2 id="exponential-and-logarithmic">Exponential and Logarithmic</h2>
+<h3 id="exponential-function">Exponential Function</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// e^x</span></span>
+<span class="line"><span style="color:#B392F0">exp</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)                 </span><span style="color:#6A737D">// 1</span></span>
+<span class="line"><span style="color:#B392F0">exp</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)                 </span><span style="color:#6A737D">// e = 2.718...</span></span>
+<span class="line"><span style="color:#B392F0">exp</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)                 </span><span style="color:#6A737D">// e^2 = 7.389...</span></span>
+<span class="line"><span style="color:#B392F0">exp</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 1/e = 0.368...</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Vector exponential</span></span>
+<span class="line"><span style="color:#B392F0">exp</span><span style="color:#E1E4E8">([</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">])         </span><span style="color:#6A737D">// [1, 2.718..., 7.389...]</span></span></code></pre>
+<h3 id="natural-logarithm">Natural Logarithm</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// ln(x) - base e</span></span>
+<span class="line"><span style="color:#B392F0">ln</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)                  </span><span style="color:#6A737D">// 0</span></span>
+<span class="line"><span style="color:#B392F0">ln</span><span style="color:#E1E4E8">(e)                  </span><span style="color:#6A737D">// 1</span></span>
+<span class="line"><span style="color:#B392F0">ln</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)                 </span><span style="color:#6A737D">// 2.302...</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Inverse of exp</span></span>
+<span class="line"><span style="color:#B392F0">ln</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">exp</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">))             </span><span style="color:#6A737D">// 5</span></span>
+<span class="line"><span style="color:#B392F0">exp</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">ln</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">))             </span><span style="color:#6A737D">// 5</span></span></code></pre>
+<h3 id="other-logarithms">Other Logarithms</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// log is alias for ln</span></span>
+<span class="line"><span style="color:#B392F0">log</span><span style="color:#E1E4E8">(e)                 </span><span style="color:#6A737D">// 1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Base 10 logarithm</span></span>
+<span class="line"><span style="color:#B392F0">log10</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)               </span><span style="color:#6A737D">// 0</span></span>
+<span class="line"><span style="color:#B392F0">log10</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)              </span><span style="color:#6A737D">// 1</span></span>
+<span class="line"><span style="color:#B392F0">log10</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">)             </span><span style="color:#6A737D">// 2</span></span>
+<span class="line"><span style="color:#B392F0">log10</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1000</span><span style="color:#E1E4E8">)            </span><span style="color:#6A737D">// 3</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Base 2 logarithm (useful in computer science)</span></span>
+<span class="line"><span style="color:#B392F0">log2</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 0</span></span>
+<span class="line"><span style="color:#B392F0">log2</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 1</span></span>
+<span class="line"><span style="color:#B392F0">log2</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 3</span></span>
+<span class="line"><span style="color:#B392F0">log2</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1024</span><span style="color:#E1E4E8">)             </span><span style="color:#6A737D">// 10</span></span></code></pre>
+<h3 id="change-of-base">Change of Base</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Calculate log_b(x) using change of base formula</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> log_base</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">base</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">x</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> ln</span><span style="color:#E1E4E8">(x) </span><span style="color:#F97583">/</span><span style="color:#B392F0"> ln</span><span style="color:#E1E4E8">(base)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">log_base</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">125</span><span style="color:#E1E4E8">)       </span><span style="color:#6A737D">// 3 (5^3 = 125)</span></span>
+<span class="line"><span style="color:#B392F0">log_base</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">81</span><span style="color:#E1E4E8">)        </span><span style="color:#6A737D">// 4 (3^4 = 81)</span></span></code></pre>
+<h2 id="power-and-root-functions">Power and Root Functions</h2>
+<h3 id="square-root">Square Root</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">sqrt</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 2</span></span>
+<span class="line"><span style="color:#B392F0">sqrt</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">9</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 3</span></span>
+<span class="line"><span style="color:#B392F0">sqrt</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 1.414...</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Vector</span></span>
+<span class="line"><span style="color:#B392F0">sqrt</span><span style="color:#E1E4E8">([</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">9</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">16</span><span style="color:#E1E4E8">])    </span><span style="color:#6A737D">// [1, 2, 3, 4]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Negative numbers return NaN</span></span>
+<span class="line"><span style="color:#B392F0">sqrt</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)               </span><span style="color:#6A737D">// NaN (use complex numbers: (-1)^0.5)</span></span></code></pre>
+<h3 id="cube-root">Cube Root</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">cbrt</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 2</span></span>
+<span class="line"><span style="color:#B392F0">cbrt</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">27</span><span style="color:#E1E4E8">)               </span><span style="color:#6A737D">// 3</span></span>
+<span class="line"><span style="color:#B392F0">cbrt</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">)               </span><span style="color:#6A737D">// -2 (works with negatives)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Vector</span></span>
+<span class="line"><span style="color:#B392F0">cbrt</span><span style="color:#E1E4E8">([</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">27</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">64</span><span style="color:#E1E4E8">])   </span><span style="color:#6A737D">// [1, 2, 3, 4]</span></span></code></pre>
+<h3 id="power-function">Power Function</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// pow(base, exponent)</span></span>
+<span class="line"><span style="color:#B392F0">pow</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">)              </span><span style="color:#6A737D">// 8</span></span>
+<span class="line"><span style="color:#B392F0">pow</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)              </span><span style="color:#6A737D">// 25</span></span>
+<span class="line"><span style="color:#B392F0">pow</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)            </span><span style="color:#6A737D">// 0.1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Fractional exponents</span></span>
+<span class="line"><span style="color:#B392F0">pow</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.5</span><span style="color:#E1E4E8">)            </span><span style="color:#6A737D">// 2 (square root)</span></span>
+<span class="line"><span style="color:#B392F0">pow</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#F97583">/</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">)            </span><span style="color:#6A737D">// 2 (cube root)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Using ^ operator (preferred)</span></span>
+<span class="line"><span style="color:#79B8FF">2</span><span style="color:#F97583">^</span><span style="color:#79B8FF">3</span><span style="color:#6A737D">                    // 8</span></span>
+<span class="line"><span style="color:#79B8FF">5</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#6A737D">                    // 25</span></span>
+<span class="line"><span style="color:#79B8FF">4</span><span style="color:#F97583">^</span><span style="color:#79B8FF">0.5</span><span style="color:#6A737D">                  // 2</span></span></code></pre>
+<h3 id="nth-root">nth Root</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Calculate nth root using fractional exponent</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> nthroot</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">n</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">x</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">^</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#F97583">/</span><span style="color:#E1E4E8">n)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">nthroot</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">16</span><span style="color:#E1E4E8">)         </span><span style="color:#6A737D">// 4 (square root)</span></span>
+<span class="line"><span style="color:#B392F0">nthroot</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">27</span><span style="color:#E1E4E8">)         </span><span style="color:#6A737D">// 3 (cube root)</span></span>
+<span class="line"><span style="color:#B392F0">nthroot</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">81</span><span style="color:#E1E4E8">)         </span><span style="color:#6A737D">// 3 (fourth root)</span></span></code></pre>
+<h2 id="rounding-functions">Rounding Functions</h2>
+<h3 id="floor-ceil-round">Floor, Ceil, Round</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 3.7</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">floor</span><span style="color:#E1E4E8">(x)               </span><span style="color:#6A737D">// 3 (round down)</span></span>
+<span class="line"><span style="color:#B392F0">ceil</span><span style="color:#E1E4E8">(x)                </span><span style="color:#6A737D">// 4 (round up)</span></span>
+<span class="line"><span style="color:#B392F0">round</span><span style="color:#E1E4E8">(x)               </span><span style="color:#6A737D">// 4 (round to nearest)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Negative numbers</span></span>
+<span class="line"><span style="color:#B392F0">floor</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">3.7</span><span style="color:#E1E4E8">)            </span><span style="color:#6A737D">// -4 (towards -infinity)</span></span>
+<span class="line"><span style="color:#B392F0">ceil</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">3.7</span><span style="color:#E1E4E8">)             </span><span style="color:#6A737D">// -3 (towards +infinity)</span></span>
+<span class="line"><span style="color:#B392F0">round</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">3.7</span><span style="color:#E1E4E8">)            </span><span style="color:#6A737D">// -4 (to nearest)</span></span></code></pre>
+<h3 id="truncate">Truncate</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Remove decimal part (round towards zero)</span></span>
+<span class="line"><span style="color:#B392F0">trunc</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3.7</span><span style="color:#E1E4E8">)             </span><span style="color:#6A737D">// 3</span></span>
+<span class="line"><span style="color:#B392F0">trunc</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">3.7</span><span style="color:#E1E4E8">)            </span><span style="color:#6A737D">// -3</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Difference from floor</span></span>
+<span class="line"><span style="color:#B392F0">floor</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3.7</span><span style="color:#E1E4E8">)             </span><span style="color:#6A737D">// 3</span></span>
+<span class="line"><span style="color:#B392F0">trunc</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3.7</span><span style="color:#E1E4E8">)             </span><span style="color:#6A737D">// 3 (same for positive)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">floor</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">3.7</span><span style="color:#E1E4E8">)            </span><span style="color:#6A737D">// -4</span></span>
+<span class="line"><span style="color:#B392F0">trunc</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">3.7</span><span style="color:#E1E4E8">)            </span><span style="color:#6A737D">// -3 (different for negative)</span></span></code></pre>
+<h3 id="vector-rounding">Vector Rounding</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> data </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1.2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2.5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3.7</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4.9</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">floor</span><span style="color:#E1E4E8">(data)            </span><span style="color:#6A737D">// [1, 2, 3, 4]</span></span>
+<span class="line"><span style="color:#B392F0">ceil</span><span style="color:#E1E4E8">(data)             </span><span style="color:#6A737D">// [2, 3, 4, 5]</span></span>
+<span class="line"><span style="color:#B392F0">round</span><span style="color:#E1E4E8">(data)            </span><span style="color:#6A737D">// [1, 2, 4, 5]</span></span>
+<span class="line"><span style="color:#B392F0">trunc</span><span style="color:#E1E4E8">(data)            </span><span style="color:#6A737D">// [1, 2, 3, 4]</span></span></code></pre>
+<h2 id="utility-functions">Utility Functions</h2>
+<h3 id="absolute-value">Absolute Value</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Numbers</span></span>
+<span class="line"><span style="color:#B392F0">abs</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)                 </span><span style="color:#6A737D">// 5</span></span>
+<span class="line"><span style="color:#B392F0">abs</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 5</span></span>
+<span class="line"><span style="color:#B392F0">abs</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)                 </span><span style="color:#6A737D">// 0</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Vector</span></span>
+<span class="line"><span style="color:#B392F0">abs</span><span style="color:#E1E4E8">([</span><span style="color:#F97583">-</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">]) </span><span style="color:#6A737D">// [3, 1, 0, 2, 4]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Complex numbers (magnitude)</span></span>
+<span class="line"><span style="color:#B392F0">abs</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 4i)            </span><span style="color:#6A737D">// 5</span></span>
+<span class="line"><span style="color:#B392F0">abs</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 1i)            </span><span style="color:#6A737D">// sqrt(2) = 1.414...</span></span></code></pre>
+<h3 id="sign-function">Sign Function</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Returns -1, 0, or 1</span></span>
+<span class="line"><span style="color:#B392F0">sign</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 1</span></span>
+<span class="line"><span style="color:#B392F0">sign</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)               </span><span style="color:#6A737D">// -1</span></span>
+<span class="line"><span style="color:#B392F0">sign</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 0</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Vector</span></span>
+<span class="line"><span style="color:#B392F0">sign</span><span style="color:#E1E4E8">([</span><span style="color:#F97583">-</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#6A737D">// [-1, -1, 0, 1, 1]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Useful for normalizing direction</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> direction</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> sign</span><span style="color:#E1E4E8">(x)</span></span></code></pre>
+<h3 id="minimum-and-maximum">Minimum and Maximum</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Variadic (multiple arguments)</span></span>
+<span class="line"><span style="color:#B392F0">min</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)        </span><span style="color:#6A737D">// 1</span></span>
+<span class="line"><span style="color:#B392F0">max</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)        </span><span style="color:#6A737D">// 8</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Single collection</span></span>
+<span class="line"><span style="color:#B392F0">min</span><span style="color:#E1E4E8">([</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">])      </span><span style="color:#6A737D">// 1</span></span>
+<span class="line"><span style="color:#B392F0">max</span><span style="color:#E1E4E8">([</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">])      </span><span style="color:#6A737D">// 8</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Two arguments</span></span>
+<span class="line"><span style="color:#B392F0">min</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">20</span><span style="color:#E1E4E8">)            </span><span style="color:#6A737D">// 10</span></span>
+<span class="line"><span style="color:#B392F0">max</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">20</span><span style="color:#E1E4E8">)            </span><span style="color:#6A737D">// 20</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Common pattern: clamp value to range</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> clamp</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">x</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">low</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">high</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> max</span><span style="color:#E1E4E8">(low, </span><span style="color:#B392F0">min</span><span style="color:#E1E4E8">(high, x))</span></span>
+<span class="line"><span style="color:#B392F0">clamp</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">15</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)       </span><span style="color:#6A737D">// 10</span></span>
+<span class="line"><span style="color:#B392F0">clamp</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)       </span><span style="color:#6A737D">// 0</span></span>
+<span class="line"><span style="color:#B392F0">clamp</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)        </span><span style="color:#6A737D">// 5</span></span></code></pre>
+<h2 id="angle-conversion">Angle Conversion</h2>
+<h3 id="degrees-and-radians">Degrees and Radians</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Radians to degrees</span></span>
+<span class="line"><span style="color:#B392F0">deg</span><span style="color:#E1E4E8">(pi)                </span><span style="color:#6A737D">// 180</span></span>
+<span class="line"><span style="color:#B392F0">deg</span><span style="color:#E1E4E8">(pi</span><span style="color:#F97583">/</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)              </span><span style="color:#6A737D">// 90</span></span>
+<span class="line"><span style="color:#B392F0">deg</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">pi)              </span><span style="color:#6A737D">// 360</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Degrees to radians</span></span>
+<span class="line"><span style="color:#B392F0">rad</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">180</span><span style="color:#E1E4E8">)               </span><span style="color:#6A737D">// pi</span></span>
+<span class="line"><span style="color:#B392F0">rad</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">90</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// pi/2</span></span>
+<span class="line"><span style="color:#B392F0">rad</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">360</span><span style="color:#E1E4E8">)               </span><span style="color:#6A737D">// 2*pi</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Round trip</span></span>
+<span class="line"><span style="color:#B392F0">deg</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">rad</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">45</span><span style="color:#E1E4E8">))           </span><span style="color:#6A737D">// 45</span></span>
+<span class="line"><span style="color:#B392F0">rad</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">deg</span><span style="color:#E1E4E8">(pi</span><span style="color:#F97583">/</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">))         </span><span style="color:#6A737D">// pi/4</span></span></code></pre>
+<h3 id="working-with-degrees">Working with Degrees</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Sine in degrees</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> sind</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> sin</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">rad</span><span style="color:#E1E4E8">(x))</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> cosd</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> cos</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">rad</span><span style="color:#E1E4E8">(x))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">sind</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 0</span></span>
+<span class="line"><span style="color:#B392F0">sind</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">90</span><span style="color:#E1E4E8">)               </span><span style="color:#6A737D">// 1</span></span>
+<span class="line"><span style="color:#B392F0">sind</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">180</span><span style="color:#E1E4E8">)              </span><span style="color:#6A737D">// ~0</span></span>
+<span class="line"><span style="color:#B392F0">cosd</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 1</span></span>
+<span class="line"><span style="color:#B392F0">cosd</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">90</span><span style="color:#E1E4E8">)               </span><span style="color:#6A737D">// ~0</span></span>
+<span class="line"><span style="color:#B392F0">cosd</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">180</span><span style="color:#E1E4E8">)              </span><span style="color:#6A737D">// -1</span></span></code></pre>
+<h2 id="mathematical-constants">Mathematical Constants</h2>
+<h3 id="available-constants">Available Constants</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Pi (case-insensitive)</span></span>
+<span class="line"><span style="color:#E1E4E8">pi                     </span><span style="color:#6A737D">// 3.141592653589793</span></span>
+<span class="line"><span style="color:#79B8FF">PI</span><span style="color:#6A737D">                     // 3.141592653589793</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Euler's number</span></span>
+<span class="line"><span style="color:#E1E4E8">e                      </span><span style="color:#6A737D">// 2.718281828459045</span></span>
+<span class="line"><span style="color:#79B8FF">E</span><span style="color:#6A737D">                      // 2.718281828459045</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Golden ratio</span></span>
+<span class="line"><span style="color:#E1E4E8">phi                    </span><span style="color:#6A737D">// 1.618033988749895</span></span>
+<span class="line"><span style="color:#79B8FF">PHI</span><span style="color:#6A737D">                    // 1.618033988749895</span></span>
+<span class="line"><span style="color:#E1E4E8">goldenratio            </span><span style="color:#6A737D">// 1.618033988749895</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Square roots</span></span>
+<span class="line"><span style="color:#E1E4E8">sqrt2                  </span><span style="color:#6A737D">// 1.4142135623730951</span></span>
+<span class="line"><span style="color:#79B8FF">SQRT2</span><span style="color:#6A737D">                  // 1.4142135623730951</span></span>
+<span class="line"><span style="color:#E1E4E8">sqrt3                  </span><span style="color:#6A737D">// 1.7320508075688772</span></span>
+<span class="line"><span style="color:#79B8FF">SQRT3</span><span style="color:#6A737D">                  // 1.7320508075688772</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Natural logarithms</span></span>
+<span class="line"><span style="color:#E1E4E8">ln2                    </span><span style="color:#6A737D">// 0.6931471805599453</span></span>
+<span class="line"><span style="color:#79B8FF">LN2</span><span style="color:#6A737D">                    // 0.6931471805599453</span></span>
+<span class="line"><span style="color:#E1E4E8">ln10                   </span><span style="color:#6A737D">// 2.302585092994046</span></span>
+<span class="line"><span style="color:#79B8FF">LN10</span><span style="color:#6A737D">                   // 2.302585092994046</span></span></code></pre>
+<h3 id="using-constants">Using Constants</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Circle area</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> area</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> r</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> pi </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> r</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#B392F0">area</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// 78.539...</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Compound interest</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> compound</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">p</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">r</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">t</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> p </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> e</span><span style="color:#F97583">^</span><span style="color:#E1E4E8">(r </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> t)</span></span>
+<span class="line"><span style="color:#B392F0">compound</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1000</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0.05</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// 1648.72...</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Golden rectangle</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> golden_rect</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> w</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    width</span><span style="color:#E1E4E8">: w,</span></span>
+<span class="line"><span style="color:#B392F0">    height</span><span style="color:#E1E4E8">: w </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> phi</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="practical-examples">Practical Examples</h2>
+<h3 id="signal-generation">Signal Generation</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Generate sine wave</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> t </span><span style="color:#F97583">=</span><span style="color:#B392F0"> linspace</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1000</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> freq </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 50</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> signal </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> sin</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#F97583"> *</span><span style="color:#E1E4E8"> pi </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> freq </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> x), t)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Multiple frequencies</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> f1 </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 50</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> f2 </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 120</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> mixed </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#FFAB70">    x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> sin</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">pi</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">f1</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">x) </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 0.5</span><span style="color:#F97583">*</span><span style="color:#B392F0">sin</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">pi</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">f2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">x),</span></span>
+<span class="line"><span style="color:#E1E4E8">    t</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span></code></pre>
+<h3 id="exponential-decay">Exponential Decay</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Decay function: A * e^(-lambda*t)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> decay</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">A</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">lambda</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">t</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#79B8FF"> A</span><span style="color:#F97583"> *</span><span style="color:#B392F0"> exp</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#E1E4E8">lambda </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> t)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> half_life </span><span style="color:#F97583">=</span><span style="color:#B392F0"> ln</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> lambda</span></span></code></pre>
+<h3 id="gaussian-normal-distribution">Gaussian (Normal) Distribution</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// PDF of normal distribution</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> gaussian</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">x</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">mu</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">sigma</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span></span>
+<span class="line"><span style="color:#E1E4E8">    (</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> /</span><span style="color:#E1E4E8"> (sigma </span><span style="color:#F97583">*</span><span style="color:#B392F0"> sqrt</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">pi))) </span><span style="color:#F97583">*</span><span style="color:#B392F0"> exp</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">0.5</span><span style="color:#F97583"> *</span><span style="color:#E1E4E8"> ((x </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> mu) </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> sigma)</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">=</span><span style="color:#B392F0"> linspace</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> pdf </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">t</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> gaussian</span><span style="color:#E1E4E8">(t, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">), x)</span></span></code></pre>
+<h3 id="polar-to-cartesian">Polar to Cartesian</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Convert (r, theta) to (x, y)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> polar_to_cart</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">r</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">theta</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    x</span><span style="color:#E1E4E8">: r </span><span style="color:#F97583">*</span><span style="color:#B392F0"> cos</span><span style="color:#E1E4E8">(theta),</span></span>
+<span class="line"><span style="color:#B392F0">    y</span><span style="color:#E1E4E8">: r </span><span style="color:#F97583">*</span><span style="color:#B392F0"> sin</span><span style="color:#E1E4E8">(theta)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">polar_to_cart</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, pi</span><span style="color:#F97583">/</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D">// {x: 3.535..., y: 3.535...}</span></span></code></pre>
+<h3 id="distance-and-magnitude">Distance and Magnitude</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// 2D distance</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> distance_2d</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">x1</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">y1</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">x2</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">y2</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span></span>
+<span class="line"><span style="color:#B392F0">    sqrt</span><span style="color:#E1E4E8">((x2 </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> x1)</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> (y2 </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> y1)</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 3D distance</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> distance_3d</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">p1</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">p2</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span></span>
+<span class="line"><span style="color:#B392F0">    sqrt</span><span style="color:#E1E4E8">((p2[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> p1[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">])</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> (p2[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> p1[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">])</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> (p2[</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> p1[</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">])</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Vector magnitude</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> magnitude</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> v</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> sqrt</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">reduce</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">acc</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">x</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> acc </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, v))</span></span></code></pre>
+<h3 id="normalization">Normalization</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Normalize data to [0, 1]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> normalize_01</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#FFAB70">    params</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> (x </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> params[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">]) </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> (params[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">-</span><span style="color:#E1E4E8"> params[</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">]), data)</span></span>
+<span class="line"><span style="color:#E1E4E8">)([</span><span style="color:#B392F0">min</span><span style="color:#E1E4E8">(data), </span><span style="color:#B392F0">max</span><span style="color:#E1E4E8">(data)])</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Z-score normalization (mean=0, std=1)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> normalize_z</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> data</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> (x </span><span style="color:#F97583">-</span><span style="color:#B392F0"> mean</span><span style="color:#E1E4E8">(data)) </span><span style="color:#F97583">/</span><span style="color:#B392F0"> std</span><span style="color:#E1E4E8">(data), data)</span></span></code></pre>
+<h3 id="clamping-and-smoothing">Clamping and Smoothing</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Clamp to range</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> clamp</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">x</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">low</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">high</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> max</span><span style="color:#E1E4E8">(low, </span><span style="color:#B392F0">min</span><span style="color:#E1E4E8">(high, x))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Smooth step (0 to 1)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> smoothstep</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#79B8FF"> 3</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">x</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#F97583"> -</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">x</span><span style="color:#F97583">^</span><span style="color:#79B8FF">3</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Sigmoid function</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> sigmoid</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#79B8FF"> 1</span><span style="color:#F97583"> /</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> +</span><span style="color:#B392F0"> exp</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#E1E4E8">x))</span></span></code></pre>
+<h2 id="complex-number-support">Complex Number Support</h2>
+<p>Some functions support complex numbers:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Magnitude</span></span>
+<span class="line"><span style="color:#B392F0">abs</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 4i)            </span><span style="color:#6A737D">// 5</span></span>
+<span class="line"><span style="color:#B392F0">abs</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 1i)            </span><span style="color:#6A737D">// sqrt(2)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Real and imaginary parts</span></span>
+<span class="line"><span style="color:#B392F0">real</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 4i)           </span><span style="color:#6A737D">// 3</span></span>
+<span class="line"><span style="color:#B392F0">imag</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 4i)           </span><span style="color:#6A737D">// 4</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Conjugate</span></span>
+<span class="line"><span style="color:#B392F0">conj</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 4i)           </span><span style="color:#6A737D">// 3 - 4i</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Argument (phase)</span></span>
+<span class="line"><span style="color:#B392F0">arg</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 1i)            </span><span style="color:#6A737D">// pi/4</span></span>
+<span class="line"><span style="color:#B392F0">arg</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// pi</span></span></code></pre>
+<p>See <a href="complex-numbers.md">Complex Numbers</a> for more details.</p>
+<h2 id="error-handling">Error Handling</h2>
+<h3 id="domain-errors">Domain Errors</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// sqrt of negative (real mode)</span></span>
+<span class="line"><span style="color:#B392F0">sqrt</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)               </span><span style="color:#6A737D">// NaN or error</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// ln of non-positive</span></span>
+<span class="line"><span style="color:#B392F0">ln</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">)                  </span><span style="color:#6A737D">// -Infinity or error</span></span>
+<span class="line"><span style="color:#B392F0">ln</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)                 </span><span style="color:#6A737D">// NaN or error</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// asin/acos outside [-1, 1]</span></span>
+<span class="line"><span style="color:#B392F0">asin</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)                </span><span style="color:#6A737D">// NaN or error</span></span>
+<span class="line"><span style="color:#B392F0">acos</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">-</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)               </span><span style="color:#6A737D">// NaN or error</span></span></code></pre>
+<h3 id="division-by-zero">Division by Zero</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Some functions may error on division by zero</span></span>
+<span class="line"><span style="color:#B392F0">tan</span><span style="color:#E1E4E8">(pi</span><span style="color:#F97583">/</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)              </span><span style="color:#6A737D">// Infinity or error</span></span>
+<span class="line"><span style="color:#79B8FF">1</span><span style="color:#F97583"> /</span><span style="color:#79B8FF"> 0</span><span style="color:#6A737D">                  // Error (see language limitations)</span></span></code></pre>
+<h2 id="performance-tips">Performance Tips</h2>
+<h3 id="vector-operations">Vector Operations</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Efficient: single vectorized call</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#B392F0"> sin</span><span style="color:#E1E4E8">(large_array)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Less efficient: element-by-element with map</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(sin, large_array)</span></span>
+<span class="line"><span style="color:#6A737D">// (Note: both work, but vectorized is faster internally)</span></span></code></pre>
+<h3 id="prefer-constants">Prefer Constants</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Use constant</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> area</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> r</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> pi </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> r</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Calculate each time</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> area</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> r</span><span style="color:#F97583"> =></span><span style="color:#79B8FF"> 3.14159265359</span><span style="color:#F97583"> *</span><span style="color:#E1E4E8"> r</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span></span></code></pre>
+<h3 id="combine-operations">Combine Operations</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Single pass</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> sin</span><span style="color:#E1E4E8">(x) </span><span style="color:#F97583">+</span><span style="color:#B392F0"> cos</span><span style="color:#E1E4E8">(x), data)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Two passes</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> sins </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(sin, data)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> coss </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(cos, data)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">s</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">c</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> s </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> c, sins, coss)</span></span></code></pre>
+<h2 id="summary">Summary</h2>
+<p><strong>Trigonometric</strong>: sin, cos, tan, asin, acos, atan, atan2, sinh, cosh, tanh</p>
+<p><strong>Exponential/Log</strong>: exp, ln, log, log10, log2</p>
+<p><strong>Power/Root</strong>: sqrt, cbrt, pow, ^</p>
+<p><strong>Rounding</strong>: floor, ceil, round, trunc</p>
+<p><strong>Utility</strong>: abs, sign, min, max, deg, rad</p>
+<p><strong>Constants</strong>: pi, e, phi, sqrt2, sqrt3, ln2, ln10</p>
+<p><strong>Key features</strong>:</p>
+<ul>
+<li>Vectorized operations</li>
+<li>Complex number support (where applicable)</li>
+<li>Standard mathematical conventions</li>
+<li>Case-insensitive constants</li>
+</ul>
+<hr>
+<p><strong>Next</strong>: <a href="linear-algebra.md">Linear Algebra</a></p>  </article> <div class="mt-12 border-t border-slate-800 pt-6"> <nav class="flex items-center justify-between"> <div></div> <div></div> </nav> </div> </div> <!-- Right sidebar (table of contents) --> <div class="hidden xl:flex xl:flex-shrink-0"> <div class="w-64 py-8 pl-8 border-l border-slate-800"> <div class="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto"> <div class="space-y-4"><h4 class="font-display text-sm font-semibold text-white">
+On this page
+</h4><nav><ul class="space-y-2.5 text-sm"><li class><a href="#function-categories" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Function Categories</a></li><li class><a href="#type-support" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Type Support</a></li><li class><a href="#trigonometric-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Trigonometric Functions</a></li><li class="ml-4"><a href="#basic-trigonometry" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Basic Trigonometry</a></li><li class="ml-4"><a href="#inverse-trigonometric" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Inverse Trigonometric</a></li><li class="ml-4"><a href="#two-argument-arctangent" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Two-Argument Arctangent</a></li><li class="ml-4"><a href="#hyperbolic-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Hyperbolic Functions</a></li><li class="ml-4"><a href="#working-with-angles" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Working with Angles</a></li><li class><a href="#exponential-and-logarithmic" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Exponential and Logarithmic</a></li><li class="ml-4"><a href="#exponential-function" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Exponential Function</a></li><li class="ml-4"><a href="#natural-logarithm" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Natural Logarithm</a></li><li class="ml-4"><a href="#other-logarithms" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Other Logarithms</a></li><li class="ml-4"><a href="#change-of-base" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Change of Base</a></li><li class><a href="#power-and-root-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Power and Root Functions</a></li><li class="ml-4"><a href="#square-root" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Square Root</a></li><li class="ml-4"><a href="#cube-root" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Cube Root</a></li><li class="ml-4"><a href="#power-function" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Power Function</a></li><li class="ml-4"><a href="#nth-root" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">nth Root</a></li><li class><a href="#rounding-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Rounding Functions</a></li><li class="ml-4"><a href="#floor-ceil-round" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Floor, Ceil, Round</a></li><li class="ml-4"><a href="#truncate" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Truncate</a></li><li class="ml-4"><a href="#vector-rounding" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Vector Rounding</a></li><li class><a href="#utility-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Utility Functions</a></li><li class="ml-4"><a href="#absolute-value" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Absolute Value</a></li><li class="ml-4"><a href="#sign-function" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Sign Function</a></li><li class="ml-4"><a href="#minimum-and-maximum" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Minimum and Maximum</a></li><li class><a href="#angle-conversion" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Angle Conversion</a></li><li class="ml-4"><a href="#degrees-and-radians" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Degrees and Radians</a></li><li class="ml-4"><a href="#working-with-degrees" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Working with Degrees</a></li><li class><a href="#mathematical-constants" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Mathematical Constants</a></li><li class="ml-4"><a href="#available-constants" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Available Constants</a></li><li class="ml-4"><a href="#using-constants" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Using Constants</a></li><li class><a href="#practical-examples" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Practical Examples</a></li><li class="ml-4"><a href="#signal-generation" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Signal Generation</a></li><li class="ml-4"><a href="#exponential-decay" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Exponential Decay</a></li><li class="ml-4"><a href="#gaussian-normal-distribution" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Gaussian (Normal) Distribution</a></li><li class="ml-4"><a href="#polar-to-cartesian" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Polar to Cartesian</a></li><li class="ml-4"><a href="#distance-and-magnitude" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Distance and Magnitude</a></li><li class="ml-4"><a href="#normalization" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Normalization</a></li><li class="ml-4"><a href="#clamping-and-smoothing" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Clamping and Smoothing</a></li><li class><a href="#complex-number-support" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Complex Number Support</a></li><li class><a href="#error-handling" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Error Handling</a></li><li class="ml-4"><a href="#domain-errors" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Domain Errors</a></li><li class="ml-4"><a href="#division-by-zero" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Division by Zero</a></li><li class><a href="#performance-tips" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Performance Tips</a></li><li class="ml-4"><a href="#vector-operations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Vector Operations</a></li><li class="ml-4"><a href="#prefer-constants" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Prefer Constants</a></li><li class="ml-4"><a href="#combine-operations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Combine Operations</a></li><li class><a href="#summary" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Summary</a></li></ul></nav></div> </div> </div> </div> </div> </div> </div>  </body></html>
