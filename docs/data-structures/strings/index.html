@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en" class="h-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="String literals, escape sequences, concatenation, case conversion, trimming, searching, splitting, joining, and padding operations"><meta name="generator" content="Astro v5.15.8"><link rel="canonical" href="http://localhost:4321/docs/data-structures/strings/"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>String Manipulation | Achronyme</title><!-- Preload fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="/_astro/_slug_.CyadsZWk.css">
+<!DOCTYPE html><html lang="en" class="h-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="String operations, interpolation, and text processing in Achronyme"><meta name="generator" content="Astro v5.15.8"><link rel="canonical" href="http://localhost:4321/docs/data-structures/strings/"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>String Manipulation | Achronyme</title><!-- Preload fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="/_astro/_slug_.DqW8sfBE.css">
 <style>[data-astro-cid-k5z7lb4y][x-cloak]{display:none!important}
 </style><script type="module" src="/_astro/page.BE54bNVT.js"></script></head> <body class="h-full bg-slate-950" x-data>  <div class="min-h-full"> <header class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur supports-[backdrop-filter]:bg-slate-950/80"> <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex h-16 items-center justify-between"> <!-- Logo --> <div class="flex items-center"> <a href="/" class="flex items-center space-x-3"> <picture> <source srcset="/logo.avif" type="image/avif"> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';"> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden"> <span class="text-white font-bold text-sm">A</span> </div> <span class="font-display text-xl font-semibold text-white">
 Achronyme
@@ -10,13 +10,19 @@ GitHub
 Changelog
 </a> <button type="button" class="md:hidden rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.toggle()"> <span class="sr-only">Open menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path> </svg> </button> </div> </div> </div> </header> <div class="fixed inset-0 z-40 lg:hidden" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-cloak data-astro-cid-k5z7lb4y> <!-- Backdrop --> <div class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm" @click="$store.nav.close()" data-astro-cid-k5z7lb4y></div> <!-- Sidebar --> <div class="fixed inset-y-0 left-0 w-full max-w-xs bg-slate-900 shadow-xl" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full" data-astro-cid-k5z7lb4y> <div class="flex h-16 items-center justify-between px-6 border-b border-slate-800" data-astro-cid-k5z7lb4y> <a href="/" class="flex items-center space-x-2" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <picture data-astro-cid-k5z7lb4y> <source srcset="/logo.avif" type="image/avif" data-astro-cid-k5z7lb4y> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';" data-astro-cid-k5z7lb4y> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden" data-astro-cid-k5z7lb4y> <span class="text-white font-bold text-sm" data-astro-cid-k5z7lb4y>A</span> </div> <span class="font-display text-xl font-semibold text-white" data-astro-cid-k5z7lb4y>
 Achronyme
-</span> </a> <button type="button" class="rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <span class="sr-only" data-astro-cid-k5z7lb4y>Close menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-astro-cid-k5z7lb4y> <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" data-astro-cid-k5z7lb4y></path> </svg> </button> </div> <nav class="overflow-y-auto p-6 space-y-8" data-astro-cid-k5z7lb4y> <div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Getting Started </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/introduction" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Introduction </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/installation" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Installation </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/syntax-basics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Syntax Basics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Core Language </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/data-types" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Data Types </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/operators" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Operators </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/variables" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Variables </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/control-flow" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Control Flow </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Data Structures </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/arrays-tensors" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Arrays &amp; Tensors </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/indexing-slicing" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Indexing &amp; Slicing </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/records" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Records </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/strings" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Strings </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Functional Programming </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/higher-order-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Higher-Order Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/do-blocks" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Do Blocks </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/recursion" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Recursion </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Mathematical Computing </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/mathematical-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mathematical Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/linear-algebra" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Linear Algebra </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/complex-numbers" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Complex Numbers </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/numerical-analysis" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Numerical Analysis </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/statistics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Statistics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Specialized Modules </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/dsp" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> DSP </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/graph-theory" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Graph Theory </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/optimization" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Optimization </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Advanced Topics </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/best-practices" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Best Practices </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/examples" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Examples </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/performance" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Performance </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/mutability" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mutability </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/io-persistence" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div>  <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex"> <!-- Left sidebar (navigation) --> <div class="hidden lg:flex lg:flex-shrink-0"> <div class="w-64 py-8 pr-8 border-r border-slate-800"> <div class="sticky top-20"> <nav class="space-y-8"> <div> <h3 class="font-display text-sm font-semibold text-white"> Getting Started </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/getting-started/introduction" class="block text-sm transition-colors text-slate-400 hover:text-white"> Introduction </a> </li><li> <a href="/docs/getting-started/installation" class="block text-sm transition-colors text-slate-400 hover:text-white"> Installation </a> </li><li> <a href="/docs/getting-started/syntax-basics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Syntax Basics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Core Language </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/core-language/data-types" class="block text-sm transition-colors text-slate-400 hover:text-white"> Data Types </a> </li><li> <a href="/docs/core-language/operators" class="block text-sm transition-colors text-slate-400 hover:text-white"> Operators </a> </li><li> <a href="/docs/core-language/variables" class="block text-sm transition-colors text-slate-400 hover:text-white"> Variables </a> </li><li> <a href="/docs/core-language/functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Functions </a> </li><li> <a href="/docs/core-language/control-flow" class="block text-sm transition-colors text-slate-400 hover:text-white"> Control Flow </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Data Structures </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/data-structures/arrays-tensors" class="block text-sm transition-colors text-slate-400 hover:text-white"> Arrays &amp; Tensors </a> </li><li> <a href="/docs/data-structures/indexing-slicing" class="block text-sm transition-colors text-slate-400 hover:text-white"> Indexing &amp; Slicing </a> </li><li> <a href="/docs/data-structures/records" class="block text-sm transition-colors text-slate-400 hover:text-white"> Records </a> </li><li> <a href="/docs/data-structures/strings" class="block text-sm transition-colors text-slate-400 hover:text-white"> Strings </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Functional Programming </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/functional-programming/higher-order-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Higher-Order Functions </a> </li><li> <a href="/docs/functional-programming/do-blocks" class="block text-sm transition-colors text-slate-400 hover:text-white"> Do Blocks </a> </li><li> <a href="/docs/functional-programming/recursion" class="block text-sm transition-colors text-slate-400 hover:text-white"> Recursion </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Mathematical Computing </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/mathematical-computing/mathematical-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mathematical Functions </a> </li><li> <a href="/docs/mathematical-computing/linear-algebra" class="block text-sm transition-colors text-slate-400 hover:text-white"> Linear Algebra </a> </li><li> <a href="/docs/mathematical-computing/complex-numbers" class="block text-sm transition-colors text-slate-400 hover:text-white"> Complex Numbers </a> </li><li> <a href="/docs/mathematical-computing/numerical-analysis" class="block text-sm transition-colors text-slate-400 hover:text-white"> Numerical Analysis </a> </li><li> <a href="/docs/mathematical-computing/statistics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Statistics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Specialized Modules </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/specialized-modules/dsp" class="block text-sm transition-colors text-slate-400 hover:text-white"> DSP </a> </li><li> <a href="/docs/specialized-modules/graph-theory" class="block text-sm transition-colors text-slate-400 hover:text-white"> Graph Theory </a> </li><li> <a href="/docs/specialized-modules/optimization" class="block text-sm transition-colors text-slate-400 hover:text-white"> Optimization </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Advanced Topics </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/advanced-topics/best-practices" class="block text-sm transition-colors text-slate-400 hover:text-white"> Best Practices </a> </li><li> <a href="/docs/advanced-topics/examples" class="block text-sm transition-colors text-slate-400 hover:text-white"> Examples </a> </li><li> <a href="/docs/advanced-topics/performance" class="block text-sm transition-colors text-slate-400 hover:text-white"> Performance </a> </li><li> <a href="/docs/advanced-topics/mutability" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mutability </a> </li><li> <a href="/docs/advanced-topics/io-persistence" class="block text-sm transition-colors text-slate-400 hover:text-white"> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div> </div> <!-- Main content --> <div class="min-w-0 flex-1 py-8 lg:pl-8"> <article class="prose prose-invert max-w-none"> <h1 class="font-display text-4xl font-bold tracking-tight text-white"> String Manipulation </h1> <p class="lead text-xl text-slate-400"> String literals, escape sequences, concatenation, case conversion, trimming, searching, splitting, joining, and padding operations </p>  <p>Strings in Achronyme are a fundamental data type for text processing. This guide covers string literals, functions, operations, and advanced features including case conversion, trimming, searching, and padding.</p>
+</span> </a> <button type="button" class="rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <span class="sr-only" data-astro-cid-k5z7lb4y>Close menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-astro-cid-k5z7lb4y> <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" data-astro-cid-k5z7lb4y></path> </svg> </button> </div> <nav class="overflow-y-auto p-6 space-y-8" data-astro-cid-k5z7lb4y> <div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Getting Started </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/introduction" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Introduction </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/installation" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Installation </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/syntax-basics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Syntax Basics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Core Language </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/data-types" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Data Types </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/operators" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Operators </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/variables" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Variables </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/control-flow" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Control Flow </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Data Structures </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/arrays-tensors" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Arrays &amp; Tensors </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/indexing-slicing" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Indexing &amp; Slicing </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/records" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Records </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/strings" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Strings </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Functional Programming </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/higher-order-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Higher-Order Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/do-blocks" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Do Blocks </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/recursion" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Recursion </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Mathematical Computing </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/mathematical-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mathematical Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/linear-algebra" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Linear Algebra </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/complex-numbers" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Complex Numbers </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/numerical-analysis" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Numerical Analysis </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/statistics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Statistics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Specialized Modules </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/dsp" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> DSP </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/graph-theory" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Graph Theory </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/optimization" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Optimization </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Advanced Topics </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/best-practices" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Best Practices </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/examples" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Examples </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/performance" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Performance </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/mutability" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mutability </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/io-persistence" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div>  <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex"> <!-- Left sidebar (navigation) --> <div class="hidden lg:flex lg:flex-shrink-0"> <div class="w-64 py-8 pr-8 border-r border-slate-800"> <div class="sticky top-20"> <nav class="space-y-8"> <div> <h3 class="font-display text-sm font-semibold text-white"> Getting Started </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/getting-started/introduction" class="block text-sm transition-colors text-slate-400 hover:text-white"> Introduction </a> </li><li> <a href="/docs/getting-started/installation" class="block text-sm transition-colors text-slate-400 hover:text-white"> Installation </a> </li><li> <a href="/docs/getting-started/syntax-basics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Syntax Basics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Core Language </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/core-language/data-types" class="block text-sm transition-colors text-slate-400 hover:text-white"> Data Types </a> </li><li> <a href="/docs/core-language/operators" class="block text-sm transition-colors text-slate-400 hover:text-white"> Operators </a> </li><li> <a href="/docs/core-language/variables" class="block text-sm transition-colors text-slate-400 hover:text-white"> Variables </a> </li><li> <a href="/docs/core-language/functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Functions </a> </li><li> <a href="/docs/core-language/control-flow" class="block text-sm transition-colors text-slate-400 hover:text-white"> Control Flow </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Data Structures </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/data-structures/arrays-tensors" class="block text-sm transition-colors text-slate-400 hover:text-white"> Arrays &amp; Tensors </a> </li><li> <a href="/docs/data-structures/indexing-slicing" class="block text-sm transition-colors text-slate-400 hover:text-white"> Indexing &amp; Slicing </a> </li><li> <a href="/docs/data-structures/records" class="block text-sm transition-colors text-slate-400 hover:text-white"> Records </a> </li><li> <a href="/docs/data-structures/strings" class="block text-sm transition-colors text-slate-400 hover:text-white"> Strings </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Functional Programming </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/functional-programming/higher-order-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Higher-Order Functions </a> </li><li> <a href="/docs/functional-programming/do-blocks" class="block text-sm transition-colors text-slate-400 hover:text-white"> Do Blocks </a> </li><li> <a href="/docs/functional-programming/recursion" class="block text-sm transition-colors text-slate-400 hover:text-white"> Recursion </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Mathematical Computing </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/mathematical-computing/mathematical-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mathematical Functions </a> </li><li> <a href="/docs/mathematical-computing/linear-algebra" class="block text-sm transition-colors text-slate-400 hover:text-white"> Linear Algebra </a> </li><li> <a href="/docs/mathematical-computing/complex-numbers" class="block text-sm transition-colors text-slate-400 hover:text-white"> Complex Numbers </a> </li><li> <a href="/docs/mathematical-computing/numerical-analysis" class="block text-sm transition-colors text-slate-400 hover:text-white"> Numerical Analysis </a> </li><li> <a href="/docs/mathematical-computing/statistics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Statistics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Specialized Modules </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/specialized-modules/dsp" class="block text-sm transition-colors text-slate-400 hover:text-white"> DSP </a> </li><li> <a href="/docs/specialized-modules/graph-theory" class="block text-sm transition-colors text-slate-400 hover:text-white"> Graph Theory </a> </li><li> <a href="/docs/specialized-modules/optimization" class="block text-sm transition-colors text-slate-400 hover:text-white"> Optimization </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Advanced Topics </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/advanced-topics/best-practices" class="block text-sm transition-colors text-slate-400 hover:text-white"> Best Practices </a> </li><li> <a href="/docs/advanced-topics/examples" class="block text-sm transition-colors text-slate-400 hover:text-white"> Examples </a> </li><li> <a href="/docs/advanced-topics/performance" class="block text-sm transition-colors text-slate-400 hover:text-white"> Performance </a> </li><li> <a href="/docs/advanced-topics/mutability" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mutability </a> </li><li> <a href="/docs/advanced-topics/io-persistence" class="block text-sm transition-colors text-slate-400 hover:text-white"> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div> </div> <!-- Main content --> <div class="min-w-0 flex-1 py-8 lg:pl-8"> <article class="prose prose-invert max-w-none"> <h1 class="font-display text-4xl font-bold tracking-tight text-white"> String Manipulation </h1> <p class="lead text-xl text-slate-400"> String operations, interpolation, and text processing in Achronyme </p>  <p>Strings in Achronyme are a fundamental data type for text processing. This guide covers string literals, functions, operations, and advanced features including case conversion, trimming, searching, and padding.</p>
 <h2 id="string-literals">String Literals</h2>
 <h3 id="basic-string-syntax">Basic String Syntax</h3>
-<p>String literals are enclosed in double quotes:</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> greeting </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "Hello"</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> name </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "Achronyme"</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> empty </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> ""</span></span></code></pre>
+<p>Achronyme supports two types of string literals:</p>
+<ol>
+<li><strong>Double-quoted strings</strong> - Literal strings (no interpolation)</li>
+<li><strong>Single-quoted strings</strong> - Template strings with interpolation</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>let greeting = "Hello"          // Literal string</span></span>
+<span class="line"><span>let name = "Achronyme"          // Literal string</span></span>
+<span class="line"><span>let empty = ""                  // Empty string</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>let message = 'Hello, ${name}!' // Interpolated string</span></span></code></pre>
 <h3 id="escape-sequences">Escape Sequences</h3>
 <p>Achronyme supports the following escape sequences within string literals:</p>
 
@@ -54,24 +60,103 @@ Achronyme
 
 
 
-<table><thead><tr><th>Escape Sequence</th><th>Result</th><th>Description</th></tr></thead><tbody><tr><td>\n</td><td>Newline</td><td>Line break</td></tr><tr><td>\t</td><td>Tab</td><td>Horizontal tab</td></tr><tr><td>\r</td><td>Carriage Return</td><td>Carriage return character</td></tr><tr><td>\</td><td>Backslash</td><td>Literal backslash character</td></tr><tr><td>”</td><td>Double Quote</td><td>Literal double quote character</td></tr></tbody></table>
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Escape Sequence</th><th>Result</th><th>Description</th></tr></thead><tbody><tr><td>\n</td><td>Newline</td><td>Line break</td></tr><tr><td>\t</td><td>Tab</td><td>Horizontal tab</td></tr><tr><td>\r</td><td>Carriage Return</td><td>Carriage return character</td></tr><tr><td>\</td><td>Backslash</td><td>Literal backslash character</td></tr><tr><td>”</td><td>Double Quote</td><td>Literal double quote character</td></tr><tr><td>’</td><td>Single Quote</td><td>Literal single quote character</td></tr><tr><td>$</td><td>Dollar Sign</td><td>Literal $ (in single-quoted strings)</td></tr></tbody></table>
 <h3 id="unicode-support">Unicode Support</h3>
 <p>Strings fully support Unicode characters, including emoji and international characters.</p>
+<h2 id="string-interpolation">String Interpolation</h2>
+<p>Single-quoted strings support string interpolation using <code>${expression}</code> syntax.</p>
+<h3 id="basic-interpolation">Basic Interpolation</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>let name = "Alice"</span></span>
+<span class="line"><span>let age = 30</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>'Hello, ${name}!'                    // "Hello, Alice!"</span></span>
+<span class="line"><span>'You are ${age} years old'           // "You are 30 years old"</span></span>
+<span class="line"><span>'Next year you will be ${age + 1}'   // "Next year you will be 31"</span></span></code></pre>
+<h3 id="expressions-in-interpolation">Expressions in Interpolation</h3>
+<p>You can use any valid expression inside <code>${}</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>// Arithmetic</span></span>
+<span class="line"><span>'Sum: ${10 + 20}'                    // "Sum: 30"</span></span>
+<span class="line"><span>'Product: ${5 * 7}'                  // "Product: 35"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>// Function calls</span></span>
+<span class="line"><span>'Square root: ${sqrt(16)}'           // "Square root: 4"</span></span>
+<span class="line"><span>'Uppercase: ${upper("hello")}'       // "Uppercase: HELLO"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>// Conditional expressions</span></span>
+<span class="line"><span>let age = 25</span></span>
+<span class="line"><span>'Status: ${if(age >= 18) { "adult" } else { "minor" }}'  // "Status: adult"</span></span></code></pre>
+<h3 id="record-field-access">Record Field Access</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>let point = {x: 10, y: 20}</span></span>
+<span class="line"><span>'Point: (${point.x}, ${point.y})'    // "Point: (10, 20)"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>let user = {name: "Bob", email: "bob@example.com"}</span></span>
+<span class="line"><span>'User ${user.name} - ${user.email}'  // "User Bob - bob@example.com"</span></span></code></pre>
+<h3 id="multiple-interpolations">Multiple Interpolations</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>let first = "John"</span></span>
+<span class="line"><span>let last = "Doe"</span></span>
+<span class="line"><span>let age = 42</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>'Name: ${first} ${last}, Age: ${age}'</span></span>
+<span class="line"><span>// "Name: John Doe, Age: 42"</span></span></code></pre>
+<h3 id="escaping-in-interpolated-strings">Escaping in Interpolated Strings</h3>
+<p>To include a literal <code>${</code> in an interpolated string, escape the dollar sign:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>'Price: \${100}'                     // "Price: ${100}"</span></span>
+<span class="line"><span>'Use \${variable} syntax'            // "Use ${variable} syntax"</span></span>
+<span class="line"><span>'It\'s working!'                     // "It's working!"</span></span></code></pre>
+<h3 id="important-double-vs-single-quotes">Important: Double vs Single Quotes</h3>
+<p><strong>Single quotes (<code>'...'</code>)</strong> - Interpolation enabled:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>let name = "Alice"</span></span>
+<span class="line"><span>'Hello, ${name}!'                    // "Hello, Alice!"</span></span></code></pre>
+<p><strong>Double quotes (<code>"..."</code>)</strong> - Literal string, NO interpolation:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>let name = "Alice"</span></span>
+<span class="line"><span>"Hello, ${name}!"                    // "Hello, ${name}!" (literal)</span></span></code></pre>
+<h3 id="practical-examples">Practical Examples</h3>
+<p><strong>Formatting Messages:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>let formatGreeting = (name, time) => 'Good ${time}, ${name}!'</span></span>
+<span class="line"><span>formatGreeting("Alice", "morning")   // "Good morning, Alice!"</span></span></code></pre>
+<p><strong>Building URLs:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>let userId = 123</span></span>
+<span class="line"><span>let action = "profile"</span></span>
+<span class="line"><span>let url = 'https://api.com/users/${userId}/${action}'</span></span>
+<span class="line"><span>// "https://api.com/users/123/profile"</span></span></code></pre>
+<p><strong>Logging with Values:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>let value = 42</span></span>
+<span class="line"><span>let max = 100</span></span>
+<span class="line"><span>'Progress: ${value}/${max} (${(value / max) * 100}%)'</span></span>
+<span class="line"><span>// "Progress: 42/100 (42%)"</span></span></code></pre>
+<p><strong>Conditional Formatting:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>let count = 5</span></span>
+<span class="line"><span>'You have ${count} ${if(count == 1) { "item" } else { "items" }}'</span></span>
+<span class="line"><span>// "You have 5 items"</span></span></code></pre>
+<p><strong>Mathematical Expressions:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>let radius = 5</span></span>
+<span class="line"><span>'Circle area: ${PI * radius^2}'     // "Circle area: 78.53981633974483"</span></span>
+<span class="line"><span>'Circumference: ${2 * PI * radius}' // "Circumference: 31.41592653589793"</span></span></code></pre>
 <h2 id="string-operators">String Operators</h2>
 <h3 id="string-concatenation-with">String Concatenation with +</h3>
 <p>Strings can be concatenated using the <code>+</code> operator:</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#9ECBFF">"hello"</span><span style="color:#F97583"> +</span><span style="color:#9ECBFF"> " "</span><span style="color:#F97583"> +</span><span style="color:#9ECBFF"> "world"</span><span style="color:#6A737D">  // "hello world"</span></span>
-<span class="line"><span style="color:#9ECBFF">"a"</span><span style="color:#F97583"> +</span><span style="color:#9ECBFF"> "b"</span><span style="color:#F97583"> +</span><span style="color:#9ECBFF"> "c"</span><span style="color:#6A737D">          // "abc"</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> greeting </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "Hello"</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> name </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "Alice"</span></span>
-<span class="line"><span style="color:#E1E4E8">greeting </span><span style="color:#F97583">+</span><span style="color:#9ECBFF"> ", "</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> name </span><span style="color:#F97583">+</span><span style="color:#9ECBFF"> "!"</span><span style="color:#6A737D">  // "Hello, Alice!"</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>"hello" + " " + "world"  // "hello world"</span></span>
+<span class="line"><span>"a" + "b" + "c"          // "abc"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>let greeting = "Hello"</span></span>
+<span class="line"><span>let name = "Alice"</span></span>
+<span class="line"><span>greeting + ", " + name + "!"  // "Hello, Alice!"</span></span></code></pre>
 <h3 id="string-equality">String Equality</h3>
 <p>Strings support equality and inequality comparison operators.</p>
 <p><strong>Operators:</strong> ==, !=</p>
 <p><strong>Examples:</strong></p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#9ECBFF">"hello"</span><span style="color:#F97583"> ==</span><span style="color:#9ECBFF"> "hello"</span><span style="color:#6A737D">  // true</span></span>
-<span class="line"><span style="color:#9ECBFF">"hello"</span><span style="color:#F97583"> !=</span><span style="color:#9ECBFF"> "world"</span><span style="color:#6A737D">  // true</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>"hello" == "hello"  // true</span></span>
+<span class="line"><span>"hello" != "world"  // true</span></span></code></pre>
 <p><strong>Case Sensitivity:</strong> String comparison is case-sensitive.</p>
 <h2 id="string-functions">String Functions</h2>
 <h3 id="basic-functions">Basic Functions</h3>
@@ -80,193 +165,332 @@ Achronyme
 <p><strong>Signature:</strong> concat(String, String) -> String</p>
 <p><strong>Note:</strong> String concatenation is now also available via the <code>+</code> operator.</p>
 <p><strong>Examples:</strong></p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">concat</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Hello"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">" World"</span><span style="color:#E1E4E8">)      </span><span style="color:#6A737D">// "Hello World"</span></span>
-<span class="line"><span style="color:#B392F0">concat</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Achronyme"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">" Language"</span><span style="color:#E1E4E8">)</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#6A737D">// Equivalent using + operator</span></span>
-<span class="line"><span style="color:#9ECBFF">"Hello"</span><span style="color:#F97583"> +</span><span style="color:#9ECBFF"> " World"</span><span style="color:#6A737D">             // "Hello World"</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>concat("Hello", " World")      // "Hello World"</span></span>
+<span class="line"><span>concat("Achronyme", " Language")</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>// Equivalent using + operator</span></span>
+<span class="line"><span>"Hello" + " World"             // "Hello World"</span></span></code></pre>
 <h4 id="lengths">length(s)</h4>
 <p>Returns the length of a string in characters.</p>
 <p><strong>Signature:</strong> length(String) -> Number</p>
 <p><strong>Examples:</strong></p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">length</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"hello"</span><span style="color:#E1E4E8">)    </span><span style="color:#6A737D">// 5</span></span>
-<span class="line"><span style="color:#B392F0">length</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"testing"</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// 7</span></span>
-<span class="line"><span style="color:#B392F0">length</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">)         </span><span style="color:#6A737D">// 0</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>length("hello")    // 5</span></span>
+<span class="line"><span>length("testing")  // 7</span></span>
+<span class="line"><span>length("")         // 0</span></span></code></pre>
 <h3 id="case-conversion">Case Conversion</h3>
 <h4 id="uppers">upper(s)</h4>
 <p>Converts a string to uppercase.</p>
 <p><strong>Signature:</strong> upper(String) -> String</p>
 <p><strong>Examples:</strong></p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">upper</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"hello"</span><span style="color:#E1E4E8">)         </span><span style="color:#6A737D">// "HELLO"</span></span>
-<span class="line"><span style="color:#B392F0">upper</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Hello World"</span><span style="color:#E1E4E8">)   </span><span style="color:#6A737D">// "HELLO WORLD"</span></span>
-<span class="line"><span style="color:#B392F0">upper</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"ALREADY UPPER"</span><span style="color:#E1E4E8">) </span><span style="color:#6A737D">// "ALREADY UPPER"</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>upper("hello")         // "HELLO"</span></span>
+<span class="line"><span>upper("Hello World")   // "HELLO WORLD"</span></span>
+<span class="line"><span>upper("ALREADY UPPER") // "ALREADY UPPER"</span></span></code></pre>
 <h4 id="lowers">lower(s)</h4>
 <p>Converts a string to lowercase.</p>
 <p><strong>Signature:</strong> lower(String) -> String</p>
 <p><strong>Examples:</strong></p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">lower</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"HELLO"</span><span style="color:#E1E4E8">)        </span><span style="color:#6A737D">// "hello"</span></span>
-<span class="line"><span style="color:#B392F0">lower</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Hello World"</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// "hello world"</span></span>
-<span class="line"><span style="color:#B392F0">lower</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"already lower"</span><span style="color:#E1E4E8">)</span><span style="color:#6A737D">// "already lower"</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>lower("HELLO")        // "hello"</span></span>
+<span class="line"><span>lower("Hello World")  // "hello world"</span></span>
+<span class="line"><span>lower("already lower")// "already lower"</span></span></code></pre>
 <h3 id="whitespace-handling">Whitespace Handling</h3>
 <h4 id="trims">trim(s)</h4>
 <p>Removes whitespace from both ends of a string.</p>
 <p><strong>Signature:</strong> trim(String) -> String</p>
 <p><strong>Examples:</strong></p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">trim</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"  hello  "</span><span style="color:#E1E4E8">)      </span><span style="color:#6A737D">// "hello"</span></span>
-<span class="line"><span style="color:#B392F0">trim</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF">\n\t</span><span style="color:#9ECBFF">hello</span><span style="color:#79B8FF">\t\n</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// "hello"</span></span>
-<span class="line"><span style="color:#B392F0">trim</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"hello"</span><span style="color:#E1E4E8">)          </span><span style="color:#6A737D">// "hello"</span></span>
-<span class="line"><span style="color:#B392F0">trim</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"   "</span><span style="color:#E1E4E8">)            </span><span style="color:#6A737D">// ""</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>trim("  hello  ")      // "hello"</span></span>
+<span class="line"><span>trim("\n\thello\t\n")  // "hello"</span></span>
+<span class="line"><span>trim("hello")          // "hello"</span></span>
+<span class="line"><span>trim("   ")            // ""</span></span></code></pre>
 <h4 id="trim_starts">trim_start(s)</h4>
 <p>Removes whitespace from the start of a string.</p>
 <p><strong>Signature:</strong> trim_start(String) -> String</p>
 <p><strong>Examples:</strong></p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">trim_start</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"  hello  "</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// "hello  "</span></span>
-<span class="line"><span style="color:#B392F0">trim_start</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF">\n\t</span><span style="color:#9ECBFF">hello"</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// "hello"</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>trim_start("  hello  ")  // "hello  "</span></span>
+<span class="line"><span>trim_start("\n\thello")  // "hello"</span></span></code></pre>
 <h4 id="trim_ends">trim_end(s)</h4>
 <p>Removes whitespace from the end of a string.</p>
 <p><strong>Signature:</strong> trim_end(String) -> String</p>
 <p><strong>Examples:</strong></p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">trim_end</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"  hello  "</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// "  hello"</span></span>
-<span class="line"><span style="color:#B392F0">trim_end</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"hello</span><span style="color:#79B8FF">\n\t</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// "hello"</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>trim_end("  hello  ")  // "  hello"</span></span>
+<span class="line"><span>trim_end("hello\n\t")  // "hello"</span></span></code></pre>
 <h3 id="search-functions">Search Functions</h3>
 <h4 id="starts_withs-prefix">starts_with(s, prefix)</h4>
 <p>Checks if a string starts with a given prefix.</p>
 <p><strong>Signature:</strong> starts_with(String, String) -> Boolean</p>
 <p><strong>Examples:</strong></p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">starts_with</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"hello world"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"hello"</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// true</span></span>
-<span class="line"><span style="color:#B392F0">starts_with</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"hello world"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"world"</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// false</span></span>
-<span class="line"><span style="color:#B392F0">starts_with</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"hello"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"hello"</span><span style="color:#E1E4E8">)        </span><span style="color:#6A737D">// true</span></span>
-<span class="line"><span style="color:#B392F0">starts_with</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"hello"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">)             </span><span style="color:#6A737D">// true (empty prefix)</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>starts_with("hello world", "hello")  // true</span></span>
+<span class="line"><span>starts_with("hello world", "world")  // false</span></span>
+<span class="line"><span>starts_with("hello", "hello")        // true</span></span>
+<span class="line"><span>starts_with("hello", "")             // true (empty prefix)</span></span></code></pre>
 <h4 id="ends_withs-suffix">ends_with(s, suffix)</h4>
 <p>Checks if a string ends with a given suffix.</p>
 <p><strong>Signature:</strong> ends_with(String, String) -> Boolean</p>
 <p><strong>Examples:</strong></p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">ends_with</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"hello world"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"world"</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// true</span></span>
-<span class="line"><span style="color:#B392F0">ends_with</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"hello world"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"hello"</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// false</span></span>
-<span class="line"><span style="color:#B392F0">ends_with</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"world"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"world"</span><span style="color:#E1E4E8">)        </span><span style="color:#6A737D">// true</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ends_with("hello world", "world")  // true</span></span>
+<span class="line"><span>ends_with("hello world", "hello")  // false</span></span>
+<span class="line"><span>ends_with("world", "world")        // true</span></span></code></pre>
 <h4 id="containss-substring">contains(s, substring)</h4>
 <p>Checks if a string contains a substring.</p>
 <p><strong>Signature:</strong> contains(String, String) -> Boolean</p>
-<p><strong>Note:</strong> This function also works with arrays. See <a href="../functional-programming/higher-order-functions.md">Higher-Order Functions</a> for array usage.</p>
+<p><strong>Note:</strong> This function also works with arrays. See <a href="11-higher-order-functions.md">Higher-Order Functions</a> for array usage.</p>
 <p><strong>Examples:</strong></p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">contains</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"hello world"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"world"</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// true</span></span>
-<span class="line"><span style="color:#B392F0">contains</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"hello"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"bye"</span><span style="color:#E1E4E8">)          </span><span style="color:#6A737D">// false</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>contains("hello world", "world")  // true</span></span>
+<span class="line"><span>contains("hello", "bye")          // false</span></span></code></pre>
 <h3 id="string-manipulation">String Manipulation</h3>
 <h4 id="replaces-pattern-replacement">replace(s, pattern, replacement)</h4>
 <p>Replaces all occurrences of a pattern with a replacement string.</p>
 <p><strong>Signature:</strong> replace(String, String, String) -> String</p>
 <p><strong>Examples:</strong></p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">replace</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"hello world"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"world"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"rust"</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// "hello rust"</span></span>
-<span class="line"><span style="color:#B392F0">replace</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"aaa"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"a"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"b"</span><span style="color:#E1E4E8">)                 </span><span style="color:#6A737D">// "bbb"</span></span>
-<span class="line"><span style="color:#B392F0">replace</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"hello"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"xyz"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"abc"</span><span style="color:#E1E4E8">)           </span><span style="color:#6A737D">// "hello" (no match)</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>replace("hello world", "world", "rust")  // "hello rust"</span></span>
+<span class="line"><span>replace("aaa", "a", "b")                 // "bbb"</span></span>
+<span class="line"><span>replace("hello", "xyz", "abc")           // "hello" (no match)</span></span></code></pre>
 <h4 id="splits-delimiter">split(s, delimiter)</h4>
 <p>Splits a string by a delimiter into an array of strings.</p>
 <p><strong>Signature:</strong> split(String, String) -> Vector</p>
 <p><strong>Examples:</strong></p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">split</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"a,b,c"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">","</span><span style="color:#E1E4E8">)              </span><span style="color:#6A737D">// ["a", "b", "c"]</span></span>
-<span class="line"><span style="color:#B392F0">split</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"hello world test"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">" "</span><span style="color:#E1E4E8">)   </span><span style="color:#6A737D">// ["hello", "world", "test"]</span></span>
-<span class="line"><span style="color:#B392F0">split</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"hello"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">","</span><span style="color:#E1E4E8">)              </span><span style="color:#6A737D">// ["hello"] (no delimiter found)</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>split("a,b,c", ",")              // ["a", "b", "c"]</span></span>
+<span class="line"><span>split("hello world test", " ")   // ["hello", "world", "test"]</span></span>
+<span class="line"><span>split("hello", ",")              // ["hello"] (no delimiter found)</span></span></code></pre>
 <h4 id="joinarray-delimiter">join(array, delimiter)</h4>
 <p>Joins an array of strings with a delimiter.</p>
 <p><strong>Signature:</strong> join(Vector, String) -> String</p>
 <p><strong>Examples:</strong></p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">join</span><span style="color:#E1E4E8">([</span><span style="color:#9ECBFF">"a"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"b"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"c"</span><span style="color:#E1E4E8">], </span><span style="color:#9ECBFF">","</span><span style="color:#E1E4E8">)       </span><span style="color:#6A737D">// "a,b,c"</span></span>
-<span class="line"><span style="color:#B392F0">join</span><span style="color:#E1E4E8">([</span><span style="color:#9ECBFF">"hello"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"world"</span><span style="color:#E1E4E8">], </span><span style="color:#9ECBFF">" "</span><span style="color:#E1E4E8">)    </span><span style="color:#6A737D">// "hello world"</span></span>
-<span class="line"><span style="color:#B392F0">join</span><span style="color:#E1E4E8">([</span><span style="color:#9ECBFF">"a"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"b"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"c"</span><span style="color:#E1E4E8">], </span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">)        </span><span style="color:#6A737D">// "abc"</span></span>
-<span class="line"><span style="color:#B392F0">join</span><span style="color:#E1E4E8">([</span><span style="color:#9ECBFF">"hello"</span><span style="color:#E1E4E8">], </span><span style="color:#9ECBFF">","</span><span style="color:#E1E4E8">)             </span><span style="color:#6A737D">// "hello"</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>join(["a", "b", "c"], ",")       // "a,b,c"</span></span>
+<span class="line"><span>join(["hello", "world"], " ")    // "hello world"</span></span>
+<span class="line"><span>join(["a", "b", "c"], "")        // "abc"</span></span>
+<span class="line"><span>join(["hello"], ",")             // "hello"</span></span></code></pre>
 <h3 id="padding-functions">Padding Functions</h3>
 <h4 id="pad_starts-length-fill_char">pad_start(s, length, fill_char?)</h4>
 <p>Pads a string at the start to reach a target length.</p>
 <p><strong>Signature:</strong> pad_start(String, Number, String?) -> String</p>
 <p><strong>Default fill character:</strong> space (’ ’)</p>
 <p><strong>Examples:</strong></p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">pad_start</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"5"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">)         </span><span style="color:#6A737D">// "  5"</span></span>
-<span class="line"><span style="color:#B392F0">pad_start</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"5"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"0"</span><span style="color:#E1E4E8">)    </span><span style="color:#6A737D">// "005"</span></span>
-<span class="line"><span style="color:#B392F0">pad_start</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"hello"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">)     </span><span style="color:#6A737D">// "hello" (already long enough)</span></span>
-<span class="line"><span style="color:#B392F0">pad_start</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"42"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"0"</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// "0000000042"</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>pad_start("5", 3)         // "  5"</span></span>
+<span class="line"><span>pad_start("5", 3, "0")    // "005"</span></span>
+<span class="line"><span>pad_start("hello", 3)     // "hello" (already long enough)</span></span>
+<span class="line"><span>pad_start("42", 10, "0")  // "0000000042"</span></span></code></pre>
 <h4 id="pad_ends-length-fill_char">pad_end(s, length, fill_char?)</h4>
 <p>Pads a string at the end to reach a target length.</p>
 <p><strong>Signature:</strong> pad_end(String, Number, String?) -> String</p>
 <p><strong>Default fill character:</strong> space (’ ’)</p>
 <p><strong>Examples:</strong></p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#B392F0">pad_end</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"5"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">)        </span><span style="color:#6A737D">// "5  "</span></span>
-<span class="line"><span style="color:#B392F0">pad_end</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"5"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"0"</span><span style="color:#E1E4E8">)   </span><span style="color:#6A737D">// "500"</span></span>
-<span class="line"><span style="color:#B392F0">pad_end</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"hello"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">)    </span><span style="color:#6A737D">// "hello" (already long enough)</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>pad_end("5", 3)        // "5  "</span></span>
+<span class="line"><span>pad_end("5", 3, "0")   // "500"</span></span>
+<span class="line"><span>pad_end("hello", 3)    // "hello" (already long enough)</span></span></code></pre>
 <h2 id="string-indexing-and-slicing">String Indexing and Slicing</h2>
 <p>Strings support both single-character indexing and range-based slicing.</p>
 <h3 id="single-character-indexing">Single Character Indexing</h3>
 <p><strong>Syntax:</strong> string[index]</p>
 <p>Returns a single character as a string.</p>
 <p><strong>Examples:</strong></p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> word </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "hello"</span></span>
-<span class="line"><span style="color:#E1E4E8">word[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">]    </span><span style="color:#6A737D">// "h"</span></span>
-<span class="line"><span style="color:#E1E4E8">word[</span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">]   </span><span style="color:#6A737D">// "o" (last character)</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>let word = "hello"</span></span>
+<span class="line"><span>word[0]    // "h"</span></span>
+<span class="line"><span>word[-1]   // "o" (last character)</span></span></code></pre>
 <h3 id="string-slicing">String Slicing</h3>
 <p><strong>Syntax:</strong> string[start..end], string[start..], string[..end], string[..]</p>
 <p>Returns a substring as a string.</p>
 <p><strong>Examples:</strong></p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> message </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "Hello, World!"</span></span>
-<span class="line"><span style="color:#E1E4E8">message[</span><span style="color:#79B8FF">0..5</span><span style="color:#E1E4E8">]   </span><span style="color:#6A737D">// "Hello"</span></span>
-<span class="line"><span style="color:#E1E4E8">message[</span><span style="color:#79B8FF">7.</span><span style="color:#E1E4E8">.]    </span><span style="color:#6A737D">// "World!"</span></span>
-<span class="line"><span style="color:#E1E4E8">message[.</span><span style="color:#79B8FF">.5</span><span style="color:#E1E4E8">]    </span><span style="color:#6A737D">// "Hello"</span></span>
-<span class="line"><span style="color:#E1E4E8">message[</span><span style="color:#F97583">-</span><span style="color:#79B8FF">6.</span><span style="color:#E1E4E8">.]   </span><span style="color:#6A737D">// "World!"</span></span></code></pre>
-<h2 id="practical-examples">Practical Examples</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>let message = "Hello, World!"</span></span>
+<span class="line"><span>message[0..5]   // "Hello"</span></span>
+<span class="line"><span>message[7..]    // "World!"</span></span>
+<span class="line"><span>message[..5]    // "Hello"</span></span>
+<span class="line"><span>message[-6..]   // "World!"</span></span></code></pre>
+<p><strong>Implementation:</strong> index_string() in crates/achronyme-eval/src/handlers/indexing.rs (lines 127-147)</p>
+<h2 id="practical-examples-1">Practical Examples</h2>
 <h3 id="text-processing-pipeline">Text Processing Pipeline</h3>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Clean and normalize text</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> process_text</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> text</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> {</span></span>
-<span class="line"><span style="color:#F97583">    let</span><span style="color:#E1E4E8"> cleaned </span><span style="color:#F97583">=</span><span style="color:#B392F0"> trim</span><span style="color:#E1E4E8">(text);</span></span>
-<span class="line"><span style="color:#F97583">    let</span><span style="color:#E1E4E8"> normalized </span><span style="color:#F97583">=</span><span style="color:#B392F0"> lower</span><span style="color:#E1E4E8">(cleaned);</span></span>
-<span class="line"><span style="color:#E1E4E8">    normalized</span></span>
-<span class="line"><span style="color:#E1E4E8">}</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#B392F0">process_text</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"  HELLO WORLD  "</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// "hello world"</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>// Clean and normalize text</span></span>
+<span class="line"><span>let process_text = text => {</span></span>
+<span class="line"><span>    let cleaned = trim(text);</span></span>
+<span class="line"><span>    let normalized = lower(cleaned);</span></span>
+<span class="line"><span>    normalized</span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>process_text("  HELLO WORLD  ")  // "hello world"</span></span></code></pre>
 <h3 id="csv-processing">CSV Processing</h3>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Parse CSV line</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> csv_line </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "Alice,30,Engineer"</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> fields </span><span style="color:#F97583">=</span><span style="color:#B392F0"> split</span><span style="color:#E1E4E8">(csv_line, </span><span style="color:#9ECBFF">","</span><span style="color:#E1E4E8">)</span></span>
-<span class="line"><span style="color:#6A737D">// ["Alice", "30", "Engineer"]</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#6A737D">// Join fields back</span></span>
-<span class="line"><span style="color:#B392F0">join</span><span style="color:#E1E4E8">(fields, </span><span style="color:#9ECBFF">"|"</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// "Alice|30|Engineer"</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>// Parse CSV line</span></span>
+<span class="line"><span>let csv_line = "Alice,30,Engineer"</span></span>
+<span class="line"><span>let fields = split(csv_line, ",")</span></span>
+<span class="line"><span>// ["Alice", "30", "Engineer"]</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>// Join fields back</span></span>
+<span class="line"><span>join(fields, "|")  // "Alice|30|Engineer"</span></span></code></pre>
 <h3 id="string-formatting-with-map">String Formatting with map</h3>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Format list of names</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> names </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#9ECBFF">"alice"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"bob"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"charlie"</span><span style="color:#E1E4E8">]</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> formatted </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">name</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> upper</span><span style="color:#E1E4E8">(name), names)</span></span>
-<span class="line"><span style="color:#B392F0">join</span><span style="color:#E1E4E8">(formatted, </span><span style="color:#9ECBFF">", "</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// "ALICE, BOB, CHARLIE"</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>// Format list of names</span></span>
+<span class="line"><span>let names = ["alice", "bob", "charlie"]</span></span>
+<span class="line"><span>let formatted = map(name => upper(name), names)</span></span>
+<span class="line"><span>join(formatted, ", ")  // "ALICE, BOB, CHARLIE"</span></span></code></pre>
 <h3 id="table-formatting">Table Formatting</h3>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Create formatted table row</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> name </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "Alice"</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> age </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "25"</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> city </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "NYC"</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> row </span><span style="color:#F97583">=</span><span style="color:#B392F0"> pad_end</span><span style="color:#E1E4E8">(name, </span><span style="color:#79B8FF">15</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">+</span><span style="color:#B392F0"> pad_end</span><span style="color:#E1E4E8">(age, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> city</span></span>
-<span class="line"><span style="color:#6A737D">// "Alice          25   NYC"</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>// Create formatted table row</span></span>
+<span class="line"><span>let name = "Alice"</span></span>
+<span class="line"><span>let age = "25"</span></span>
+<span class="line"><span>let city = "NYC"</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>let row = pad_end(name, 15) + pad_end(age, 5) + city</span></span>
+<span class="line"><span>// "Alice          25   NYC"</span></span></code></pre>
 <h3 id="text-transformation">Text Transformation</h3>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Convert semicolon-separated to comma-separated</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> text </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "a;b;c;d"</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> normalized </span><span style="color:#F97583">=</span><span style="color:#B392F0"> replace</span><span style="color:#E1E4E8">(text, </span><span style="color:#9ECBFF">";"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">","</span><span style="color:#E1E4E8">)</span></span>
-<span class="line"><span style="color:#B392F0">split</span><span style="color:#E1E4E8">(normalized, </span><span style="color:#9ECBFF">","</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// ["a", "b", "c", "d"]</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>// Convert semicolon-separated to comma-separated</span></span>
+<span class="line"><span>let text = "a;b;c;d"</span></span>
+<span class="line"><span>let normalized = replace(text, ";", ",")</span></span>
+<span class="line"><span>split(normalized, ",")  // ["a", "b", "c", "d"]</span></span></code></pre>
 <h3 id="case-insensitive-comparison">Case-Insensitive Comparison</h3>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> compare_ignore_case</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">s1</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">s2</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> lower</span><span style="color:#E1E4E8">(s1) </span><span style="color:#F97583">==</span><span style="color:#B392F0"> lower</span><span style="color:#E1E4E8">(s2)</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#B392F0">compare_ignore_case</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"HELLO"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"hello"</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// true</span></span>
-<span class="line"><span style="color:#B392F0">compare_ignore_case</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"World"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"WORLD"</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// true</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>let compare_ignore_case = (s1, s2) => lower(s1) == lower(s2)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>compare_ignore_case("HELLO", "hello")  // true</span></span>
+<span class="line"><span>compare_ignore_case("World", "WORLD")  // true</span></span></code></pre>
 <h2 id="limitations">Limitations</h2>
 <h3 id="no-regex-support">No Regex Support</h3>
 <p>Pattern matching and regular expressions are not supported. Use <code>contains</code>, <code>starts_with</code>, <code>ends_with</code>, and <code>replace</code> for basic pattern operations.</p>
 <h3 id="no-direct-string-iteration">No Direct String Iteration</h3>
 <p>Higher-order functions (map, filter, reduce) do not work with strings directly. Use <code>split</code> to convert to an array first:</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Split into characters, transform, rejoin</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> chars </span><span style="color:#F97583">=</span><span style="color:#B392F0"> split</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"hello"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">)</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> upper_chars </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">c</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> upper</span><span style="color:#E1E4E8">(c), chars)</span></span>
-<span class="line"><span style="color:#B392F0">join</span><span style="color:#E1E4E8">(upper_chars, </span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// "HELLO"</span></span></code></pre>
-<h3 id="no-printf-style-formatting">No Printf-style Formatting</h3>
-<p>There is no formatted string interpolation. Use <code>+</code> operator or <code>concat()</code> to build strings:</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> name </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "Alice"</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> age </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 30</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> message </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "Name: "</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> name </span><span style="color:#F97583">+</span><span style="color:#9ECBFF"> ", Age: "</span><span style="color:#F97583"> +</span><span style="color:#B392F0"> pad_start</span><span style="color:#E1E4E8">(age, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"0"</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>// Split into characters, transform, rejoin</span></span>
+<span class="line"><span>let chars = split("hello", "")</span></span>
+<span class="line"><span>let upper_chars = map(c => upper(c), chars)</span></span>
+<span class="line"><span>join(upper_chars, "")  // "HELLO"</span></span></code></pre>
+<h3 id="printf-style-formatting">Printf-style Formatting</h3>
+<p>While Achronyme now supports string interpolation with <code>'${}'</code>, there is no printf-style format specifiers (like <code>%d</code>, <code>%f</code>, etc.). For precise formatting:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>let name = "Alice"</span></span>
+<span class="line"><span>let age = 30</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>// Use string interpolation (recommended)</span></span>
+<span class="line"><span>let message = 'Name: ${name}, Age: ${age}'</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>// Or concatenation with formatting functions</span></span>
+<span class="line"><span>let formatted = "Score: " + pad_start(age, 3, "0")</span></span></code></pre>
+<h2 id="implementation-details">Implementation Details</h2>
+<h3 id="string-storage">String Storage</h3>
+<ul>
+<li>Type: Value::String(String) in the value enum</li>
+<li>Storage: UTF-8 encoded Rust String</li>
+<li>Memory: Heap-allocated, supports arbitrary length</li>
+</ul>
+<h3 id="built-in-functions">Built-in Functions</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Function</th><th>Arity</th><th>Location</th></tr></thead><tbody><tr><td>concat</td><td>2</td><td>crates/achronyme-eval/src/function_modules/strings.rs</td></tr><tr><td>length</td><td>1</td><td>crates/achronyme-eval/src/function_modules/strings.rs</td></tr><tr><td>upper</td><td>1</td><td>crates/achronyme-eval/src/function_modules/strings.rs</td></tr><tr><td>lower</td><td>1</td><td>crates/achronyme-eval/src/function_modules/strings.rs</td></tr><tr><td>trim</td><td>1</td><td>crates/achronyme-eval/src/function_modules/strings.rs</td></tr><tr><td>trim_start</td><td>1</td><td>crates/achronyme-eval/src/function_modules/strings.rs</td></tr><tr><td>trim_end</td><td>1</td><td>crates/achronyme-eval/src/function_modules/strings.rs</td></tr><tr><td>starts_with</td><td>2</td><td>crates/achronyme-eval/src/function_modules/strings.rs</td></tr><tr><td>ends_with</td><td>2</td><td>crates/achronyme-eval/src/function_modules/strings.rs</td></tr><tr><td>contains</td><td>2</td><td>crates/achronyme-eval/src/function_modules/array.rs (also works with arrays)</td></tr><tr><td>replace</td><td>3</td><td>crates/achronyme-eval/src/function_modules/strings.rs</td></tr><tr><td>split</td><td>2</td><td>crates/achronyme-eval/src/function_modules/strings.rs</td></tr><tr><td>join</td><td>2</td><td>crates/achronyme-eval/src/function_modules/strings.rs</td></tr><tr><td>pad_start</td><td>2-3</td><td>crates/achronyme-eval/src/function_modules/strings.rs</td></tr><tr><td>pad_end</td><td>2-3</td><td>crates/achronyme-eval/src/function_modules/strings.rs</td></tr></tbody></table>
+<h3 id="operators">Operators</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Operator</th><th>Operation</th><th>Location</th></tr></thead><tbody><tr><td>+</td><td>String concatenation</td><td>crates/achronyme-eval/src/handlers/binary_ops.rs (lines 160-163)</td></tr><tr><td>==</td><td>String equality</td><td>crates/achronyme-eval/src/handlers/binary_ops.rs</td></tr><tr><td>!=</td><td>String inequality</td><td>crates/achronyme-eval/src/handlers/binary_ops.rs</td></tr></tbody></table>
+<h3 id="string-parsing">String Parsing</h3>
+<p>String literals are parsed by the Pest PEG parser:</p>
+<ul>
+<li>Grammar Rule: string_literal in crates/achronyme-parser/src/grammar.pest (lines 49-56)</li>
+<li>Character Matching: string_char rule supports escape sequences</li>
+<li>Processing: process_escape_sequences() in crates/achronyme-parser/src/pest_parser.rs (lines 416-445)</li>
+</ul>
 <h2 id="summary">Summary</h2>
 <p>Achronyme provides comprehensive string manipulation capabilities:</p>
+<p><strong>String Literals:</strong></p>
+<ul>
+<li>Double quotes (<code>"..."</code>) - Literal strings</li>
+<li>Single quotes (<code>'...'</code>) - Interpolated strings with <code>${expression}</code></li>
+</ul>
 <p><strong>Operators:</strong></p>
 <ul>
 <li><code>+</code> for concatenation</li>
@@ -284,12 +508,24 @@ Achronyme
 <p><strong>Features:</strong></p>
 <ul>
 <li>Unicode support</li>
+<li>String interpolation (<code>'Hello, ${name}!'</code>)</li>
 <li>Escape sequences</li>
 <li>Indexing and slicing</li>
 <li>Immutable operations</li>
 </ul>
-<hr>
-<p><strong>Next</strong>: <a href="../functional-programming/higher-order-functions.md">Higher-Order Functions</a></p>  </article> <div class="mt-12 border-t border-slate-800 pt-6"> <nav class="flex items-center justify-between"> <div></div> <div></div> </nav> </div> </div> <!-- Right sidebar (table of contents) --> <div class="hidden xl:flex xl:flex-shrink-0"> <div class="w-64 py-8 pl-8 border-l border-slate-800"> <div class="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto"> <div class="space-y-4"><h4 class="font-display text-sm font-semibold text-white">
+<h2 id="related-documentation">Related Documentation</h2>
+<ul>
+<li><a href="03-data-types.md">Data Types</a></li>
+<li><a href="04-operators.md">Operators</a></li>
+<li><a href="10-indexing-slicing.md">Indexing and Slicing</a></li>
+<li><a href="11-higher-order-functions.md">Higher-Order Functions</a></li>
+<li><a href="06-functions.md">Functions</a></li>
+</ul>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li>Test file: crates/achronyme-eval/tests/test_strings.rs</li>
+<li>Test file: crates/achronyme-eval/tests/test_string_functions.rs</li>
+</ul>  </article> <div class="mt-12 border-t border-slate-800 pt-6"> <nav class="flex items-center justify-between"> <div></div> <div></div> </nav> </div> </div> <!-- Right sidebar (table of contents) --> <div class="hidden xl:flex xl:flex-shrink-0"> <div class="w-64 py-8 pl-8 border-l border-slate-800"> <div class="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto"> <div class="space-y-4"><h4 class="font-display text-sm font-semibold text-white">
 On this page
 </h4><nav><ul class="space-y-2.5 text-sm"><li class><a href="#string-literals" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
                 const observer = new IntersectionObserver(
@@ -351,7 +587,127 @@ On this page
                 );
                 const target = document.getElementById($el.getAttribute('href').slice(1));
                 if (target) observer.observe(target);
-              " :class="active && 'font-medium text-purple-400'">Unicode Support</a></li><li class><a href="#string-operators" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+              " :class="active && 'font-medium text-purple-400'">Unicode Support</a></li><li class><a href="#string-interpolation" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">String Interpolation</a></li><li class="ml-4"><a href="#basic-interpolation" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Basic Interpolation</a></li><li class="ml-4"><a href="#expressions-in-interpolation" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Expressions in Interpolation</a></li><li class="ml-4"><a href="#record-field-access" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Record Field Access</a></li><li class="ml-4"><a href="#multiple-interpolations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Multiple Interpolations</a></li><li class="ml-4"><a href="#escaping-in-interpolated-strings" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Escaping in Interpolated Strings</a></li><li class="ml-4"><a href="#important-double-vs-single-quotes" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Important: Double vs Single Quotes</a></li><li class="ml-4"><a href="#practical-examples" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Practical Examples</a></li><li class><a href="#string-operators" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
                 const observer = new IntersectionObserver(
                   (entries) => {
                     entries.forEach((entry) => {
@@ -546,7 +902,7 @@ On this page
                 );
                 const target = document.getElementById($el.getAttribute('href').slice(1));
                 if (target) observer.observe(target);
-              " :class="active && 'font-medium text-purple-400'">String Slicing</a></li><li class><a href="#practical-examples" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+              " :class="active && 'font-medium text-purple-400'">String Slicing</a></li><li class><a href="#practical-examples-1" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
                 const observer = new IntersectionObserver(
                   (entries) => {
                     entries.forEach((entry) => {
@@ -696,7 +1052,7 @@ On this page
                 );
                 const target = document.getElementById($el.getAttribute('href').slice(1));
                 if (target) observer.observe(target);
-              " :class="active && 'font-medium text-purple-400'">No Direct String Iteration</a></li><li class="ml-4"><a href="#no-printf-style-formatting" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+              " :class="active && 'font-medium text-purple-400'">No Direct String Iteration</a></li><li class="ml-4"><a href="#printf-style-formatting" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
                 const observer = new IntersectionObserver(
                   (entries) => {
                     entries.forEach((entry) => {
@@ -711,7 +1067,7 @@ On this page
                 );
                 const target = document.getElementById($el.getAttribute('href').slice(1));
                 if (target) observer.observe(target);
-              " :class="active && 'font-medium text-purple-400'">No Printf-style Formatting</a></li><li class><a href="#summary" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+              " :class="active && 'font-medium text-purple-400'">Printf-style Formatting</a></li><li class><a href="#implementation-details" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
                 const observer = new IntersectionObserver(
                   (entries) => {
                     entries.forEach((entry) => {
@@ -726,4 +1082,109 @@ On this page
                 );
                 const target = document.getElementById($el.getAttribute('href').slice(1));
                 if (target) observer.observe(target);
-              " :class="active && 'font-medium text-purple-400'">Summary</a></li></ul></nav></div> </div> </div> </div> </div> </div> </div>  </body></html>
+              " :class="active && 'font-medium text-purple-400'">Implementation Details</a></li><li class="ml-4"><a href="#string-storage" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">String Storage</a></li><li class="ml-4"><a href="#built-in-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Built-in Functions</a></li><li class="ml-4"><a href="#operators" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Operators</a></li><li class="ml-4"><a href="#string-parsing" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">String Parsing</a></li><li class><a href="#summary" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Summary</a></li><li class><a href="#related-documentation" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Related Documentation</a></li><li class><a href="#see-also" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">See Also</a></li></ul></nav></div> </div> </div> </div> </div> </div> </div>  </body></html>

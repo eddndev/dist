@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en" class="h-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Welcome to the Achronyme programming language - a functional, expression-oriented language for mathematical computing"><meta name="generator" content="Astro v5.15.8"><link rel="canonical" href="http://localhost:4321/docs/getting-started/introduction/"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Achronyme Language Reference | Achronyme</title><!-- Preload fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="/_astro/_slug_.CyadsZWk.css">
+<!DOCTYPE html><html lang="en" class="h-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Welcome to the Achronyme programming language - a functional, expression-oriented language for mathematical computing"><meta name="generator" content="Astro v5.15.8"><link rel="canonical" href="http://localhost:4321/docs/getting-started/introduction/"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Achronyme Language Reference | Achronyme</title><!-- Preload fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="/_astro/_slug_.DqW8sfBE.css">
 <style>[data-astro-cid-k5z7lb4y][x-cloak]{display:none!important}
 </style><script type="module" src="/_astro/page.BE54bNVT.js"></script></head> <body class="h-full bg-slate-950" x-data>  <div class="min-h-full"> <header class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur supports-[backdrop-filter]:bg-slate-950/80"> <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex h-16 items-center justify-between"> <!-- Logo --> <div class="flex items-center"> <a href="/" class="flex items-center space-x-3"> <picture> <source srcset="/logo.avif" type="image/avif"> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';"> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden"> <span class="text-white font-bold text-sm">A</span> </div> <span class="font-display text-xl font-semibold text-white">
 Achronyme
@@ -27,21 +27,36 @@ Achronyme
 <span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { mean, std } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> "stats"</span></span>
 <span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { sin, cos } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> "math"</span></span>
 <span class="line"></span>
-<span class="line"><span style="color:#6A737D">// Define a function</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> square</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#6A737D">// Functions with default and optional parameters</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> greet</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">name</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">greeting</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "Hello"</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#9ECBFF"> '${greeting}, ${name}!'</span></span>
+<span class="line"><span style="color:#B392F0">greet</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Alice"</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// "Hello, Alice!"</span></span>
 <span class="line"></span>
-<span class="line"><span style="color:#6A737D">// Use higher-order functions</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> numbers </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">]</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> squared </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">(square, numbers)</span></span>
+<span class="line"><span style="color:#6A737D">// String interpolation</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> user </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {name: </span><span style="color:#9ECBFF">"Bob"</span><span style="color:#E1E4E8">, age: </span><span style="color:#79B8FF">30</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#9ECBFF">'User ${user.name} is ${user.age} years old'</span></span>
 <span class="line"></span>
-<span class="line"><span style="color:#6A737D">// Numerical integration</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> area </span><span style="color:#F97583">=</span><span style="color:#B392F0"> integral</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D">// For-in loops with break/continue</span></span>
+<span class="line"><span style="color:#E1E4E8">mut sum </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#F97583">for</span><span style="color:#E1E4E8">(x </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">]) {</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8">(x </span><span style="color:#F97583">%</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583"> ==</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">) { </span><span style="color:#F97583">continue</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#E1E4E8">    sum </span><span style="color:#F97583">+=</span><span style="color:#E1E4E8"> x</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
 <span class="line"></span>
-<span class="line"><span style="color:#6A737D">// Records with mutable fields</span></span>
-<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> counter </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> {</span></span>
-<span class="line"><span style="color:#E1E4E8">    mut value: </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">,</span></span>
-<span class="line"><span style="color:#B392F0">    increment</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> do { self.value </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> self.value </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8"> },</span></span>
-<span class="line"><span style="color:#B392F0">    get</span><span style="color:#E1E4E8">: () </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> self.value</span></span>
+<span class="line"><span style="color:#6A737D">// Generators for lazy sequences</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> range</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">n</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> generate {</span></span>
+<span class="line"><span style="color:#E1E4E8">    mut i </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#B392F0">    while</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">i</span><span style="color:#E1E4E8"> &#x3C; </span><span style="color:#FFAB70">n</span><span style="color:#E1E4E8">) { </span><span style="color:#F97583">yield</span><span style="color:#E1E4E8"> i; i </span><span style="color:#F97583">+=</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Records with optional fields</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> User</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> {</span><span style="color:#FFAB70">name</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">email</span><span style="color:#F97583">?:</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> user</span><span style="color:#F97583">:</span><span style="color:#B392F0"> User</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> {name: </span><span style="color:#9ECBFF">"Alice"</span><span style="color:#E1E4E8">}  </span><span style="color:#6A737D">// email is optional</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Pattern matching</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> describe</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> match x {</span></span>
+<span class="line"><span style="color:#79B8FF">    0</span><span style="color:#E1E4E8"> => "zero"</span></span>
+<span class="line"><span style="color:#E1E4E8">    n if (n &#x3C; </span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">) => "negative"</span></span>
+<span class="line"><span style="color:#E1E4E8">    _ => "positive"</span></span>
 <span class="line"><span style="color:#E1E4E8">}</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#6A737D">// Statistical analysis</span></span>
@@ -49,9 +64,23 @@ Achronyme
 <span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> average </span><span style="color:#F97583">=</span><span style="color:#B392F0"> mean</span><span style="color:#E1E4E8">(data)</span></span>
 <span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> stdDev </span><span style="color:#F97583">=</span><span style="color:#B392F0"> std</span><span style="color:#E1E4E8">(data)</span></span></code></pre>
 <h2 id="language-philosophy">Language Philosophy</h2>
-<h3 id="expression-oriented">Expression-Oriented</h3>
-<p>Everything in Achronyme is an expression that returns a value. There are no statements that don’t produce values.</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#B392F0"> if</span><span style="color:#E1E4E8">(x </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// if() is a function that returns a value</span></span></code></pre>
+<h3 id="expression-oriented-with-statements">Expression-Oriented with Statements</h3>
+<p>Achronyme is primarily expression-oriented, where most constructs return values. However, it also supports imperative-style statements for better control flow.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Functional form: if() as a function</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result </span><span style="color:#F97583">=</span><span style="color:#B392F0"> if</span><span style="color:#E1E4E8">(x </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">-</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Statement form: if-else blocks</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> classify</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> if</span><span style="color:#E1E4E8"> (x </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#9ECBFF">    "negative"</span></span>
+<span class="line"><span style="color:#E1E4E8">} else if (x > 0) {</span></span>
+<span class="line"><span style="color:#9ECBFF">    "positive"</span></span>
+<span class="line"><span style="color:#E1E4E8">} else {</span></span>
+<span class="line"><span style="color:#9ECBFF">    "zero"</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// While loops and for-in loops</span></span>
+<span class="line"><span style="color:#E1E4E8">mut sum = 0</span></span>
+<span class="line"><span style="color:#E1E4E8">for(x in [1, 2, 3]) { sum += x }</span></span></code></pre>
 <h3 id="immutable-by-default-mutable-when-needed">Immutable by Default, Mutable When Needed</h3>
 <p>Variables are immutable by default but can be declared mutable with <code>mut</code>:</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Immutable (default)</span></span>
@@ -96,19 +125,31 @@ Achronyme
 <h3 id="modern-syntax">Modern Syntax</h3>
 <ul>
 <li>Lambda functions: <code>x => x^2</code></li>
+<li>Default parameters: <code>(x = 10) => x^2</code></li>
+<li>Optional parameters: <code>(x?: Number) => x</code></li>
+<li>String interpolation: <code>'Hello, ${name}!'</code></li>
 <li>Higher-order functions: <code>map</code>, <code>filter</code>, <code>reduce</code></li>
 <li>Spread operator: <code>[...array1, ...array2]</code></li>
 <li>Records with methods and <code>self</code> reference</li>
+<li>Optional record fields: <code>{field?: Type}</code></li>
+</ul>
+<h3 id="control-flow">Control Flow</h3>
+<ul>
+<li>Pattern matching with <code>match</code> expressions</li>
+<li>Break and continue in loops</li>
+<li>For-in loops for collections</li>
+<li>Generators with <code>yield</code> and <code>generate</code></li>
+<li>Compound assignment: <code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code>, <code>%=</code>, <code>^=</code></li>
 </ul>
 <h2 id="community-and-support">Community and Support</h2>
 <ul>
-<li><strong>GitHub</strong>: <a href="https://github.com/anthropics/achronyme-core">Achronyme Repository</a></li>
+<li><strong>GitHub</strong>: <a href="https://github.com/achronyme/achronyme-core">Achronyme Repository</a></li>
 <li><strong>Issues</strong>: Report bugs or request features</li>
 <li><strong>Examples</strong>: See the <code>examples/soc/</code> directory</li>
 </ul>
 <h2 id="next-steps">Next Steps</h2>
 <ol>
-<li>Start with <a href="installation.md">Getting Started</a> to set up your environment</li>
+<li>Start with <a href="installation.md">Installation</a> to set up your environment</li>
 <li>Learn the <a href="syntax-basics.md">Syntax Basics</a></li>
 <li>Explore <a href="../core-language/data-types.md">Data Types</a></li>
 <li>Try the <a href="../advanced-topics/examples.md">Examples</a></li>
@@ -176,7 +217,7 @@ On this page
                 );
                 const target = document.getElementById($el.getAttribute('href').slice(1));
                 if (target) observer.observe(target);
-              " :class="active && 'font-medium text-purple-400'">Language Philosophy</a></li><li class="ml-4"><a href="#expression-oriented" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+              " :class="active && 'font-medium text-purple-400'">Language Philosophy</a></li><li class="ml-4"><a href="#expression-oriented-with-statements" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
                 const observer = new IntersectionObserver(
                   (entries) => {
                     entries.forEach((entry) => {
@@ -191,7 +232,7 @@ On this page
                 );
                 const target = document.getElementById($el.getAttribute('href').slice(1));
                 if (target) observer.observe(target);
-              " :class="active && 'font-medium text-purple-400'">Expression-Oriented</a></li><li class="ml-4"><a href="#immutable-by-default-mutable-when-needed" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+              " :class="active && 'font-medium text-purple-400'">Expression-Oriented with Statements</a></li><li class="ml-4"><a href="#immutable-by-default-mutable-when-needed" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
                 const observer = new IntersectionObserver(
                   (entries) => {
                     entries.forEach((entry) => {
@@ -326,7 +367,22 @@ On this page
                 );
                 const target = document.getElementById($el.getAttribute('href').slice(1));
                 if (target) observer.observe(target);
-              " :class="active && 'font-medium text-purple-400'">Modern Syntax</a></li><li class><a href="#community-and-support" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+              " :class="active && 'font-medium text-purple-400'">Modern Syntax</a></li><li class="ml-4"><a href="#control-flow" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Control Flow</a></li><li class><a href="#community-and-support" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
                 const observer = new IntersectionObserver(
                   (entries) => {
                     entries.forEach((entry) => {

@@ -1,0 +1,1157 @@
+<!DOCTYPE html><html lang="en" class="h-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Type annotations, union types, and type aliases in Achronyme"><meta name="generator" content="Astro v5.15.8"><link rel="canonical" href="http://localhost:4321/docs/advanced-topics/gradual-type-system/"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Gradual Type System | Achronyme</title><!-- Preload fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="/_astro/_slug_.DqW8sfBE.css">
+<style>[data-astro-cid-k5z7lb4y][x-cloak]{display:none!important}
+</style><script type="module" src="/_astro/page.BE54bNVT.js"></script></head> <body class="h-full bg-slate-950" x-data>  <div class="min-h-full"> <header class="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 backdrop-blur supports-[backdrop-filter]:bg-slate-950/80"> <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex h-16 items-center justify-between"> <!-- Logo --> <div class="flex items-center"> <a href="/" class="flex items-center space-x-3"> <picture> <source srcset="/logo.avif" type="image/avif"> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';"> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden"> <span class="text-white font-bold text-sm">A</span> </div> <span class="font-display text-xl font-semibold text-white">
+Achronyme
+</span> </a> </div> <!-- Center navigation --> <nav class="hidden md:flex items-center justify-center flex-1 space-x-6"> <a href="/docs" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">
+Documentation
+</a> <a href="https://github.com/achronyme/achronyme-core" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-slate-400 hover:text-white transition-colors inline-flex items-center"> <svg class="mr-1.5 h-4 w-4" fill="currentColor" viewBox="0 0 24 24"> <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path> </svg>
+GitHub
+</a> </nav> <!-- Right side - Changelog link + Mobile menu button --> <div class="flex items-center space-x-4"> <a href="/changelog" class="hidden md:block text-sm font-medium text-slate-400 hover:text-white transition-colors">
+Changelog
+</a> <button type="button" class="md:hidden rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.toggle()"> <span class="sr-only">Open menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path> </svg> </button> </div> </div> </div> </header> <div class="fixed inset-0 z-40 lg:hidden" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-cloak data-astro-cid-k5z7lb4y> <!-- Backdrop --> <div class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm" @click="$store.nav.close()" data-astro-cid-k5z7lb4y></div> <!-- Sidebar --> <div class="fixed inset-y-0 left-0 w-full max-w-xs bg-slate-900 shadow-xl" x-show="$store.nav.open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full" data-astro-cid-k5z7lb4y> <div class="flex h-16 items-center justify-between px-6 border-b border-slate-800" data-astro-cid-k5z7lb4y> <a href="/" class="flex items-center space-x-2" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <picture data-astro-cid-k5z7lb4y> <source srcset="/logo.avif" type="image/avif" data-astro-cid-k5z7lb4y> <img src="/logo.png" alt="Achronyme Logo" class="h-8 w-8" onerror="this.parentElement.style.display='none'; this.parentElement.nextElementSibling.style.display='flex';" data-astro-cid-k5z7lb4y> </picture> <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center hidden" data-astro-cid-k5z7lb4y> <span class="text-white font-bold text-sm" data-astro-cid-k5z7lb4y>A</span> </div> <span class="font-display text-xl font-semibold text-white" data-astro-cid-k5z7lb4y>
+Achronyme
+</span> </a> <button type="button" class="rounded-md p-2 text-slate-400 hover:bg-slate-800 hover:text-white" @click="$store.nav.close()" data-astro-cid-k5z7lb4y> <span class="sr-only" data-astro-cid-k5z7lb4y>Close menu</span> <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-astro-cid-k5z7lb4y> <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" data-astro-cid-k5z7lb4y></path> </svg> </button> </div> <nav class="overflow-y-auto p-6 space-y-8" data-astro-cid-k5z7lb4y> <div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Getting Started </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/introduction" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Introduction </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/installation" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Installation </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/getting-started/syntax-basics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Syntax Basics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Core Language </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/data-types" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Data Types </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/operators" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Operators </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/variables" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Variables </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/core-language/control-flow" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Control Flow </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Data Structures </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/arrays-tensors" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Arrays &amp; Tensors </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/indexing-slicing" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Indexing &amp; Slicing </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/records" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Records </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/data-structures/strings" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Strings </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Functional Programming </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/higher-order-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Higher-Order Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/do-blocks" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Do Blocks </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/functional-programming/recursion" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Recursion </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Mathematical Computing </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/mathematical-functions" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mathematical Functions </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/linear-algebra" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Linear Algebra </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/complex-numbers" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Complex Numbers </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/numerical-analysis" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Numerical Analysis </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/mathematical-computing/statistics" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Statistics </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Specialized Modules </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/dsp" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> DSP </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/graph-theory" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Graph Theory </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/specialized-modules/optimization" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Optimization </a> </li> </ul> </div><div data-astro-cid-k5z7lb4y> <h3 class="font-display text-sm font-semibold text-white" data-astro-cid-k5z7lb4y> Advanced Topics </h3> <ul class="mt-3 space-y-2" data-astro-cid-k5z7lb4y> <li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/best-practices" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Best Practices </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/examples" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Examples </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/performance" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Performance </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/mutability" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> Mutability </a> </li><li data-astro-cid-k5z7lb4y> <a href="/docs/advanced-topics/io-persistence" @click="$store.nav.close()" class="block text-sm transition-colors text-slate-400 hover:text-white" data-astro-cid-k5z7lb4y> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div>  <div class="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8"> <div class="flex"> <!-- Left sidebar (navigation) --> <div class="hidden lg:flex lg:flex-shrink-0"> <div class="w-64 py-8 pr-8 border-r border-slate-800"> <div class="sticky top-20"> <nav class="space-y-8"> <div> <h3 class="font-display text-sm font-semibold text-white"> Getting Started </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/getting-started/introduction" class="block text-sm transition-colors text-slate-400 hover:text-white"> Introduction </a> </li><li> <a href="/docs/getting-started/installation" class="block text-sm transition-colors text-slate-400 hover:text-white"> Installation </a> </li><li> <a href="/docs/getting-started/syntax-basics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Syntax Basics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Core Language </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/core-language/data-types" class="block text-sm transition-colors text-slate-400 hover:text-white"> Data Types </a> </li><li> <a href="/docs/core-language/operators" class="block text-sm transition-colors text-slate-400 hover:text-white"> Operators </a> </li><li> <a href="/docs/core-language/variables" class="block text-sm transition-colors text-slate-400 hover:text-white"> Variables </a> </li><li> <a href="/docs/core-language/functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Functions </a> </li><li> <a href="/docs/core-language/control-flow" class="block text-sm transition-colors text-slate-400 hover:text-white"> Control Flow </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Data Structures </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/data-structures/arrays-tensors" class="block text-sm transition-colors text-slate-400 hover:text-white"> Arrays &amp; Tensors </a> </li><li> <a href="/docs/data-structures/indexing-slicing" class="block text-sm transition-colors text-slate-400 hover:text-white"> Indexing &amp; Slicing </a> </li><li> <a href="/docs/data-structures/records" class="block text-sm transition-colors text-slate-400 hover:text-white"> Records </a> </li><li> <a href="/docs/data-structures/strings" class="block text-sm transition-colors text-slate-400 hover:text-white"> Strings </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Functional Programming </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/functional-programming/higher-order-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Higher-Order Functions </a> </li><li> <a href="/docs/functional-programming/do-blocks" class="block text-sm transition-colors text-slate-400 hover:text-white"> Do Blocks </a> </li><li> <a href="/docs/functional-programming/recursion" class="block text-sm transition-colors text-slate-400 hover:text-white"> Recursion </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Mathematical Computing </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/mathematical-computing/mathematical-functions" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mathematical Functions </a> </li><li> <a href="/docs/mathematical-computing/linear-algebra" class="block text-sm transition-colors text-slate-400 hover:text-white"> Linear Algebra </a> </li><li> <a href="/docs/mathematical-computing/complex-numbers" class="block text-sm transition-colors text-slate-400 hover:text-white"> Complex Numbers </a> </li><li> <a href="/docs/mathematical-computing/numerical-analysis" class="block text-sm transition-colors text-slate-400 hover:text-white"> Numerical Analysis </a> </li><li> <a href="/docs/mathematical-computing/statistics" class="block text-sm transition-colors text-slate-400 hover:text-white"> Statistics </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Specialized Modules </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/specialized-modules/dsp" class="block text-sm transition-colors text-slate-400 hover:text-white"> DSP </a> </li><li> <a href="/docs/specialized-modules/graph-theory" class="block text-sm transition-colors text-slate-400 hover:text-white"> Graph Theory </a> </li><li> <a href="/docs/specialized-modules/optimization" class="block text-sm transition-colors text-slate-400 hover:text-white"> Optimization </a> </li> </ul> </div><div> <h3 class="font-display text-sm font-semibold text-white"> Advanced Topics </h3> <ul class="mt-3 space-y-2"> <li> <a href="/docs/advanced-topics/best-practices" class="block text-sm transition-colors text-slate-400 hover:text-white"> Best Practices </a> </li><li> <a href="/docs/advanced-topics/examples" class="block text-sm transition-colors text-slate-400 hover:text-white"> Examples </a> </li><li> <a href="/docs/advanced-topics/performance" class="block text-sm transition-colors text-slate-400 hover:text-white"> Performance </a> </li><li> <a href="/docs/advanced-topics/mutability" class="block text-sm transition-colors text-slate-400 hover:text-white"> Mutability </a> </li><li> <a href="/docs/advanced-topics/io-persistence" class="block text-sm transition-colors text-slate-400 hover:text-white"> I/O &amp; Persistence </a> </li> </ul> </div> </nav> </div> </div> </div> <!-- Main content --> <div class="min-w-0 flex-1 py-8 lg:pl-8"> <article class="prose prose-invert max-w-none"> <h1 class="font-display text-4xl font-bold tracking-tight text-white"> Gradual Type System </h1> <p class="lead text-xl text-slate-400"> Type annotations, union types, and type aliases in Achronyme </p>  <p>Achronyme supports a gradual type system that allows you to add optional type annotations to your code. This provides the flexibility of dynamic typing with the safety benefits of static typing when you need them.</p>
+<h2 id="overview">Overview</h2>
+<p>The gradual type system in Achronyme:</p>
+<ul>
+<li>Is <strong>optional</strong> - all existing untyped code continues to work</li>
+<li>Provides <strong>type annotations</strong> for variables, parameters, and return types</li>
+<li>Supports <strong>union types</strong> for values that can be multiple types</li>
+<li>Allows <strong>type aliases</strong> for creating custom type names</li>
+<li>Includes <strong>type inference</strong> that propagates type information from annotations</li>
+<li>Offers <strong>Any</strong> type for opting out of type checking</li>
+</ul>
+<h2 id="basic-type-annotations">Basic Type Annotations</h2>
+<h3 id="variable-type-annotations">Variable Type Annotations</h3>
+<p>Add type annotations after the variable name with a colon:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 42</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> name</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "Alice"</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> active</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Boolean</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> true</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> z</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Complex</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 3</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> 4i</span></span></code></pre>
+<h3 id="function-parameter-annotations">Function Parameter Annotations</h3>
+<p>Annotate function parameters to specify expected types:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> square</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">x</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> greet</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">name</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> concat</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Hello, "</span><span style="color:#E1E4E8">, name)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> toggle</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">flag</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Boolean</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#F97583"> !</span><span style="color:#E1E4E8">flag</span></span></code></pre>
+<h3 id="return-type-annotations">Return Type Annotations</h3>
+<p>Specify the return type after the parameter list:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> square</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">x</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> isPositive</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">x</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Boolean</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> describe</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">x</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> concat</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Value: "</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">str</span><span style="color:#E1E4E8">(x))</span></span></code></pre>
+<h3 id="complete-function-signatures">Complete Function Signatures</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Full type signature</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> add</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">a</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">b</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> b</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Multiple parameters with different types</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> formatValue</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">label</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">value</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    concat</span><span style="color:#E1E4E8">(label, </span><span style="color:#9ECBFF">": "</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">str</span><span style="color:#E1E4E8">(value))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Complex number operations</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> magnitude</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">z</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Complex</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> sqrt</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">real</span><span style="color:#E1E4E8">(z)</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#F97583"> +</span><span style="color:#B392F0"> imag</span><span style="color:#E1E4E8">(z)</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<h2 id="core-types">Core Types</h2>
+<p>Achronyme provides the following built-in type names:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Type</th><th>Description</th><th>Example</th></tr></thead><tbody><tr><td><code>Number</code></td><td>64-bit floating point</td><td><code>42</code>, <code>3.14</code></td></tr><tr><td><code>String</code></td><td>Text strings</td><td><code>"hello"</code></td></tr><tr><td><code>Boolean</code></td><td>Logical values</td><td><code>true</code>, <code>false</code></td></tr><tr><td><code>Complex</code></td><td>Complex numbers</td><td><code>3 + 4i</code></td></tr><tr><td><code>Edge</code></td><td>Graph edges</td><td><code>A -> B</code></td></tr><tr><td><code>Generator</code></td><td>Generator/iterator</td><td><code>generate { yield 1 }</code></td></tr><tr><td><code>Function</code></td><td>Any callable function</td><td><code>(x) => x^2</code></td></tr><tr><td><code>Error</code></td><td>Error value</td><td><code>throw "error"</code></td></tr><tr><td><code>Any</code></td><td>Any type (opt-out)</td><td>All values</td></tr></tbody></table>
+<h2 id="union-types">Union Types</h2>
+<p>Union types allow a value to be one of several types, using the <code>|</code> operator:</p>
+<h3 id="basic-union-types">Basic Union Types</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Value can be Number or String</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> value</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> String</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 42</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> value</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> String</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "hello"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Multiple union members</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> result</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> String</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> Boolean</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> true</span></span></code></pre>
+<h3 id="optional-types-with-null">Optional Types with null</h3>
+<p>The most common use of union types is for optional values:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Optional number (can be Number or null)</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> maybeNumber</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> |</span><span style="color:#79B8FF"> null</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 42</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> maybeNumber</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> |</span><span style="color:#79B8FF"> null</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> null</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Optional string</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> maybeName</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#F97583"> |</span><span style="color:#79B8FF"> null</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "Alice"</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> maybeName</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#F97583"> |</span><span style="color:#79B8FF"> null</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> null</span></span></code></pre>
+<h3 id="union-types-in-functions">Union Types in Functions</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Function that returns optional value</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> findIndex</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">arr</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">target</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> |</span><span style="color:#79B8FF"> null</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let idx </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    let found </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> false</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#6A737D">    // search logic...</span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">found</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">idx</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">null</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Parameter that accepts multiple types</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> stringify</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">value</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> String</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> Boolean</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#B392F0">    str</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">value</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Return different types based on condition</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> parse</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">input</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> String</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // Try to parse as number, return string on failure</span></span>
+<span class="line"><span style="color:#E1E4E8">    let num </span><span style="color:#F97583">=</span><span style="color:#B392F0"> parseNumber</span><span style="color:#E1E4E8">(input);</span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">num</span><span style="color:#E1E4E8"> != </span><span style="color:#FFAB70">null</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">num</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">input</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="practical-union-type-examples">Practical Union Type Examples</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Configuration value that can be multiple types</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> config</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> String</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> Boolean</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "development"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Safe division returning null on error</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> safeDivide</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">a</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">b</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> |</span><span style="color:#79B8FF"> null</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(b </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">null</span><span style="color:#E1E4E8">, a </span><span style="color:#F97583">/</span><span style="color:#E1E4E8"> b)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Result type pattern</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> validateAge</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">age</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#F97583"> |</span><span style="color:#79B8FF"> null</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(age </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 0</span><span style="color:#F97583"> ||</span><span style="color:#E1E4E8"> age </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 150</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">       "Invalid age"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">       null</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<h2 id="function-types">Function Types</h2>
+<p>Function types describe the signature of a function using colon syntax for consistency with other type annotations:</p>
+<h3 id="basic-function-type-syntax">Basic Function Type Syntax</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Type for a function that takes Number and returns Number</span></span>
+<span class="line"><span style="color:#E1E4E8">(Number): Number</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Type for a function that takes two Numbers and returns Number</span></span>
+<span class="line"><span style="color:#E1E4E8">(Number, Number): Number</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Type for a function that takes no arguments</span></span>
+<span class="line"><span style="color:#E1E4E8">()</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span></span></code></pre>
+<h3 id="annotating-higher-order-functions">Annotating Higher-Order Functions</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Function that takes a function as parameter</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> applyTwice</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">f</span><span style="color:#F97583">:</span><span style="color:#E1E4E8"> (</span><span style="color:#B392F0">Number</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">x</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    f</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">f</span><span style="color:#E1E4E8">(x))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> square</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">x</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#B392F0">applyTwice</span><span style="color:#E1E4E8">(square, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// 81</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Function that returns a function</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> makeMultiplier</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">factor</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#E1E4E8"> (</span><span style="color:#B392F0">Number</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#E1E4E8">    (</span><span style="color:#FFAB70">x</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> factor</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> double </span><span style="color:#F97583">=</span><span style="color:#B392F0"> makeMultiplier</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#B392F0">double</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D">// 10</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Predicate function type</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> findFirst</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">arr</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">predicate</span><span style="color:#F97583">:</span><span style="color:#E1E4E8"> (</span><span style="color:#B392F0">Any</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Boolean</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> |</span><span style="color:#79B8FF"> null</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // Find first element matching predicate</span></span>
+<span class="line"><span style="color:#E1E4E8">    let found </span><span style="color:#F97583">=</span><span style="color:#B392F0"> filter</span><span style="color:#E1E4E8">(predicate, arr);</span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">len</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">found</span><span style="color:#E1E4E8">) > 0, found[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">], null)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="complex-function-types">Complex Function Types</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Transformer function type</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> mapValues</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">data</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">transform</span><span style="color:#F97583">:</span><span style="color:#E1E4E8"> (</span><span style="color:#B392F0">Any</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    map</span><span style="color:#E1E4E8">(transform, data)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Reducer function type</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> customReduce</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#FFAB70">    arr</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">    reducer</span><span style="color:#F97583">:</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">Any</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">Any</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">    initial</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> reduce</span><span style="color:#E1E4E8">(reducer, initial, arr)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Comparison function type</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> sortBy</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#FFAB70">    arr</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#B392F0">    compare</span><span style="color:#F97583">:</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">Any</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">Any</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // Sort implementation using compare function</span></span>
+<span class="line"><span style="color:#E1E4E8">    arr</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="type-aliases">Type Aliases</h2>
+<p>Create custom type names using the <code>type</code> keyword:</p>
+<h3 id="basic-type-aliases">Basic Type Aliases</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Alias for a primitive type</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Age</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> Number</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Name</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> String</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Active</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> Boolean</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> userAge</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Age</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 30</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> userName</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Name</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "Bob"</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> isActive</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Active</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> true</span></span></code></pre>
+<h3 id="alias-for-union-types">Alias for Union Types</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Optional types</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> OptionalNumber</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> |</span><span style="color:#79B8FF"> null</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> OptionalString</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> String</span><span style="color:#F97583"> |</span><span style="color:#79B8FF"> null</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Result types</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Result</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> String</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> Boolean</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Status codes</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Status</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> String</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> maybeValue</span><span style="color:#F97583">:</span><span style="color:#B392F0"> OptionalNumber</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 42</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> errorMessage</span><span style="color:#F97583">:</span><span style="color:#B392F0"> OptionalString</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> null</span></span></code></pre>
+<h3 id="alias-for-function-types">Alias for Function Types</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Common function signatures</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> NumberTransform</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#B392F0">Number</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Predicate</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#B392F0">Any</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Boolean</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> BinaryOp</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">Number</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">Number</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Comparator</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">Any</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">Any</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Use the aliases</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> square</span><span style="color:#F97583">:</span><span style="color:#B392F0"> NumberTransform</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">x</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> isPositive</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Predicate</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">x</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> add</span><span style="color:#F97583">:</span><span style="color:#B392F0"> BinaryOp</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">a</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">b</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> b</span></span></code></pre>
+<h3 id="complex-type-alias-examples">Complex Type Alias Examples</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Mathematical function type</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> MathFunc</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#B392F0">Number</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Callback with optional result</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Callback</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#B392F0">Any</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> |</span><span style="color:#79B8FF"> null</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Event handler type</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> EventHandler</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">String</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">Any</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Boolean</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Data processor</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Processor</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#B392F0">Any</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Using aliases for cleaner signatures</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> compose</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#FFAB70">    f</span><span style="color:#F97583">:</span><span style="color:#B392F0"> MathFunc</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">    g</span><span style="color:#F97583">:</span><span style="color:#B392F0"> MathFunc</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> MathFunc</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">x</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> f</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">g</span><span style="color:#E1E4E8">(x))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> processWithCallback</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#FFAB70">    data</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">    callback</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Callback</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> |</span><span style="color:#79B8FF"> null</span><span style="color:#F97583"> =></span><span style="color:#B392F0"> callback</span><span style="color:#E1E4E8">(data)</span></span></code></pre>
+<h2 id="edge-type-for-graphs">Edge Type for Graphs</h2>
+<p>The <code>Edge</code> type represents graph edges:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Typed edge creation</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> edge</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Edge</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> A</span><span style="color:#F97583"> -></span><span style="color:#79B8FF"> B</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Function working with edges</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> getWeight</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">e</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Edge</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // Extract weight from edge metadata</span></span>
+<span class="line"><span style="color:#E1E4E8">    e.weight</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Creating typed graph edges</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> createEdge</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">from</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">to</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Edge</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#E1E4E8">    from </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> to</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// With metadata</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> weightedEdge</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">from</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">to</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">weight</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Edge</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#E1E4E8">    from </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> to : {weight: weight}</span></span></code></pre>
+<h2 id="type-inference">Type Inference</h2>
+<p>Achronyme’s type system infers types from annotations:</p>
+<h3 id="inference-from-annotations">Inference from Annotations</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Type is inferred from annotation</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> x</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 10</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> y </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 5</span><span style="color:#6A737D">  // y is inferred as Number</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Function return type inference</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> multiply</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">a</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">b</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> a </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> b</span></span>
+<span class="line"><span style="color:#6A737D">// Return type inferred as Number from operation</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Inference through function calls</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> numbers </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> doubled </span><span style="color:#F97583">=</span><span style="color:#B392F0"> map</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">x</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">, numbers)</span></span>
+<span class="line"><span style="color:#6A737D">// doubled inferred as array of Numbers</span></span></code></pre>
+<h3 id="lambda-parameter-inference">Lambda Parameter Inference</h3>
+<p>When a lambda is passed to a typed function, its parameters can be inferred:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Typed higher-order function</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> applyToAll</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#B392F0">f</span><span style="color:#F97583">:</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">Number</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">arr</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    map</span><span style="color:#E1E4E8">(f, arr)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Lambda parameter type inferred from context</span></span>
+<span class="line"><span style="color:#B392F0">applyToAll</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">, [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#6A737D">// x is inferred as Number from the function type</span></span></code></pre>
+<h3 id="inference-in-complex-scenarios">Inference in Complex Scenarios</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Chain of inferred types</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> processData</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">input</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#E1E4E8">    let doubled </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> input </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">;      </span><span style="color:#6A737D">// Number (inferred)</span></span>
+<span class="line"><span style="color:#E1E4E8">    let squared </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> doubled</span><span style="color:#F97583">^</span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8">;       </span><span style="color:#6A737D">// Number (inferred)</span></span>
+<span class="line"><span style="color:#B392F0">    str</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">squared</span><span style="color:#E1E4E8">)                   </span><span style="color:#6A737D">// String (explicit return)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Inference with conditionals</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> classify</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">x</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(x </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"negative"</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">if</span><span style="color:#E1E4E8">(x </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"positive"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"zero"</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"><span style="color:#6A737D">    // All branches return String, type is consistent</span></span></code></pre>
+<h2 id="the-any-type">The Any Type</h2>
+<p>The <code>Any</code> type opts out of type checking for maximum flexibility:</p>
+<h3 id="using-any-for-dynamic-code">Using Any for Dynamic Code</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Accept any type</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> identity</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">x</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Process unknown data</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> processUnknown</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">data</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // Handle different types at runtime</span></span>
+<span class="line"><span style="color:#E1E4E8">    data</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Mixed type collections</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#E1E4E8"> mixedArray</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"hello"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">true</span><span style="color:#E1E4E8">, {x: </span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">}]</span></span></code></pre>
+<h3 id="any-in-type-aliases">Any in Type Aliases</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Generic container</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Container</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> Any</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Flexible function type</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> AnyTransform</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">Any</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> Any</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Mixed result type</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> FlexibleResult</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> |</span><span style="color:#79B8FF"> null</span></span></code></pre>
+<h3 id="when-to-use-any">When to Use Any</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Working with external/untyped data</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> parseJSON</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">text</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // Parse and return arbitrary structure</span></span>
+<span class="line"><span style="color:#E1E4E8">    {}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Interoperating with dynamic code</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> callDynamic</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">func</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">args</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    func</span><span style="color:#E1E4E8">(args)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Prototyping before adding types</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> experimentalFeature</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">input</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // Quick prototype, add types later</span></span>
+<span class="line"><span style="color:#E1E4E8">    input</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="1-start-with-critical-functions">1. Start with Critical Functions</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Good: Type critical mathematical functions</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> computeInterest</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#FFAB70">    principal</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">    rate</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">    time</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> principal </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> rate)</span><span style="color:#F97583">^</span><span style="color:#E1E4E8">time</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Good: Type public API functions</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> validateInput</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">value</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Boolean</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // Validation logic</span></span>
+<span class="line"><span style="color:#E1E4E8">    true</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="2-use-union-types-for-safety">2. Use Union Types for Safety</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Good: Explicit optional types</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> findUser</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">id</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> |</span><span style="color:#79B8FF"> null</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // Return null if not found</span></span>
+<span class="line"><span style="color:#E1E4E8">    null</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Good: Error handling with unions</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> parseConfig</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">text</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> String</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // Return error message string on failure</span></span>
+<span class="line"><span style="color:#9ECBFF">    "Error: invalid config"</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="3-create-meaningful-type-aliases">3. Create Meaningful Type Aliases</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Good: Domain-specific types</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> UserId</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> Number</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Email</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> String</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Timestamp</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> Number</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> ValidationResult</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> Boolean</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> String</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Better than raw types</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> sendNotification</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#FFAB70">    userId</span><span style="color:#F97583">:</span><span style="color:#B392F0"> UserId</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">    email</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Email</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">    timestamp</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Timestamp</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> ValidationResult</span><span style="color:#F97583"> =></span><span style="color:#79B8FF"> true</span></span></code></pre>
+<h3 id="4-document-complex-function-signatures">4. Document Complex Function Signatures</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Good: Clear function type documentation</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> DataProcessor</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">Any</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> |</span><span style="color:#79B8FF"> null</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> ErrorHandler</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">String</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> Boolean</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> processWithRetry</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#FFAB70">    data</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">    processor</span><span style="color:#F97583">:</span><span style="color:#B392F0"> DataProcessor</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">    onError</span><span style="color:#F97583">:</span><span style="color:#B392F0"> ErrorHandler</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">    maxRetries</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> |</span><span style="color:#79B8FF"> null</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // Implementation</span></span>
+<span class="line"><span style="color:#E1E4E8">    null</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="5-gradual-migration">5. Gradual Migration</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Start untyped</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> oldFunction</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> x</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Add parameter type</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> partiallyTyped</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">x</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Add return type</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> fullyTyped</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">x</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Create type alias for reuse</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Transform</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">Number</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> Number</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> aliasedType</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Transform</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">x</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span></span></code></pre>
+<h3 id="6-use-any-sparingly">6. Use Any Sparingly</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#6A737D">// Avoid: Too much Any defeats the purpose</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> badFunction</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">x</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">y</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">z</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> x</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Better: Specific types where possible</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> betterFunction</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">x</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">y</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">z</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Boolean</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Number</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(z, x, x </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// OK: Any for truly dynamic scenarios</span></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> jsonParse</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">text</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // Parsing returns unknown structure</span></span>
+<span class="line"><span style="color:#E1E4E8">    {}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="common-patterns">Common Patterns</h2>
+<h3 id="optional-parameters">Optional Parameters</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> OptionalConfig</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> |</span><span style="color:#79B8FF"> null</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> initialize</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">config</span><span style="color:#F97583">:</span><span style="color:#B392F0"> OptionalConfig</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Boolean</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#B392F0">    if</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">config</span><span style="color:#E1E4E8"> == </span><span style="color:#FFAB70">null</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">       do</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">           // Use defaults</span></span>
+<span class="line"><span style="color:#FFAB70">           true</span></span>
+<span class="line"><span style="color:#E1E4E8">       },</span></span>
+<span class="line"><span style="color:#FFAB70">       do</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">           // Use provided config</span></span>
+<span class="line"><span style="color:#FFAB70">           true</span></span>
+<span class="line"><span style="color:#E1E4E8">       })</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="result-types">Result Types</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Success</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> {</span><span style="color:#FFAB70">status</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">data</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Error</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> {</span><span style="color:#FFAB70">status</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">message</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Result</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> Success</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> Error</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> fetchData</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">url</span><span style="color:#F97583">:</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Result</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // Return success or error</span></span>
+<span class="line"><span style="color:#E1E4E8">    {</span><span style="color:#B392F0">status</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"success"</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">data</span><span style="color:#E1E4E8">: []}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="callback-patterns">Callback Patterns</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Callback</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">Any</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> |</span><span style="color:#79B8FF"> null</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> ErrorCallback</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">String</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> Boolean</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> asyncOperation</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#FFAB70">    onSuccess</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Callback</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">    onError</span><span style="color:#F97583">:</span><span style="color:#B392F0"> ErrorCallback</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Boolean</span><span style="color:#F97583"> =></span><span style="color:#E1E4E8"> do {</span></span>
+<span class="line"><span style="color:#6A737D">    // Perform operation</span></span>
+<span class="line"><span style="color:#E1E4E8">    true</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="pipeline-types">Pipeline Types</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="javascript"><code><span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Transform</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">Any</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> Any</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">let</span><span style="color:#B392F0"> pipeline</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> (</span><span style="color:#FFAB70">transforms</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">initial</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Any</span><span style="color:#F97583"> =></span></span>
+<span class="line"><span style="color:#B392F0">    reduce</span><span style="color:#E1E4E8">((</span><span style="color:#FFAB70">acc</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">f</span><span style="color:#F97583">:</span><span style="color:#B392F0"> Transform</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=></span><span style="color:#B392F0"> f</span><span style="color:#E1E4E8">(acc), initial, transforms)</span></span></code></pre>
+<h2 id="summary">Summary</h2>
+<p>The gradual type system in Achronyme provides:</p>
+<ul>
+<li><strong>Basic type annotations</strong>: <code>Number</code>, <code>String</code>, <code>Boolean</code>, <code>Complex</code>, <code>Edge</code></li>
+<li><strong>Union types</strong>: <code>Type1 | Type2</code> for values that can be multiple types</li>
+<li><strong>Optional types</strong>: <code>Type | null</code> for nullable values</li>
+<li><strong>Function types</strong>: <code>(Params): ReturnType</code> for function signatures</li>
+<li><strong>Type aliases</strong>: <code>type Name = TypeDefinition</code> for custom type names</li>
+<li><strong>Any type</strong>: Opt-out of type checking for dynamic code</li>
+<li><strong>Type inference</strong>: Automatic type propagation from annotations</li>
+</ul>
+<p>Key benefits:</p>
+<ul>
+<li><strong>Gradual adoption</strong>: Add types incrementally to existing code</li>
+<li><strong>Safety</strong>: Catch type errors before runtime</li>
+<li><strong>Documentation</strong>: Types serve as documentation</li>
+<li><strong>Flexibility</strong>: Use <code>Any</code> when needed for dynamic scenarios</li>
+<li><strong>Expressiveness</strong>: Union and function types handle complex scenarios</li>
+</ul>
+<p>Remember:</p>
+<ul>
+<li>Types are <strong>optional</strong> - untyped code still works</li>
+<li>Use types for <strong>critical</strong> functions first</li>
+<li>Create <strong>meaningful aliases</strong> for domain concepts</li>
+<li>Union types are great for <strong>error handling</strong> and <strong>optional values</strong></li>
+<li><strong>Any</strong> should be used sparingly and intentionally</li>
+</ul>
+<hr>
+<p><strong>Next</strong>: Continue exploring the language with <a href="24-examples.md">Examples</a> or review <a href="23-best-practices.md">Best Practices</a></p>  </article> <div class="mt-12 border-t border-slate-800 pt-6"> <nav class="flex items-center justify-between"> <div></div> <div></div> </nav> </div> </div> <!-- Right sidebar (table of contents) --> <div class="hidden xl:flex xl:flex-shrink-0"> <div class="w-64 py-8 pl-8 border-l border-slate-800"> <div class="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto"> <div class="space-y-4"><h4 class="font-display text-sm font-semibold text-white">
+On this page
+</h4><nav><ul class="space-y-2.5 text-sm"><li class><a href="#overview" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Overview</a></li><li class><a href="#basic-type-annotations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Basic Type Annotations</a></li><li class="ml-4"><a href="#variable-type-annotations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Variable Type Annotations</a></li><li class="ml-4"><a href="#function-parameter-annotations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Function Parameter Annotations</a></li><li class="ml-4"><a href="#return-type-annotations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Return Type Annotations</a></li><li class="ml-4"><a href="#complete-function-signatures" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Complete Function Signatures</a></li><li class><a href="#core-types" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Core Types</a></li><li class><a href="#union-types" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Union Types</a></li><li class="ml-4"><a href="#basic-union-types" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Basic Union Types</a></li><li class="ml-4"><a href="#optional-types-with-null" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Optional Types with null</a></li><li class="ml-4"><a href="#union-types-in-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Union Types in Functions</a></li><li class="ml-4"><a href="#practical-union-type-examples" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Practical Union Type Examples</a></li><li class><a href="#function-types" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Function Types</a></li><li class="ml-4"><a href="#basic-function-type-syntax" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Basic Function Type Syntax</a></li><li class="ml-4"><a href="#annotating-higher-order-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Annotating Higher-Order Functions</a></li><li class="ml-4"><a href="#complex-function-types" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Complex Function Types</a></li><li class><a href="#type-aliases" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Type Aliases</a></li><li class="ml-4"><a href="#basic-type-aliases" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Basic Type Aliases</a></li><li class="ml-4"><a href="#alias-for-union-types" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Alias for Union Types</a></li><li class="ml-4"><a href="#alias-for-function-types" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Alias for Function Types</a></li><li class="ml-4"><a href="#complex-type-alias-examples" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Complex Type Alias Examples</a></li><li class><a href="#edge-type-for-graphs" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Edge Type for Graphs</a></li><li class><a href="#type-inference" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Type Inference</a></li><li class="ml-4"><a href="#inference-from-annotations" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Inference from Annotations</a></li><li class="ml-4"><a href="#lambda-parameter-inference" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Lambda Parameter Inference</a></li><li class="ml-4"><a href="#inference-in-complex-scenarios" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Inference in Complex Scenarios</a></li><li class><a href="#the-any-type" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">The Any Type</a></li><li class="ml-4"><a href="#using-any-for-dynamic-code" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Using Any for Dynamic Code</a></li><li class="ml-4"><a href="#any-in-type-aliases" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Any in Type Aliases</a></li><li class="ml-4"><a href="#when-to-use-any" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">When to Use Any</a></li><li class><a href="#best-practices" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Best Practices</a></li><li class="ml-4"><a href="#1-start-with-critical-functions" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">1. Start with Critical Functions</a></li><li class="ml-4"><a href="#2-use-union-types-for-safety" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">2. Use Union Types for Safety</a></li><li class="ml-4"><a href="#3-create-meaningful-type-aliases" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">3. Create Meaningful Type Aliases</a></li><li class="ml-4"><a href="#4-document-complex-function-signatures" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">4. Document Complex Function Signatures</a></li><li class="ml-4"><a href="#5-gradual-migration" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">5. Gradual Migration</a></li><li class="ml-4"><a href="#6-use-any-sparingly" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">6. Use Any Sparingly</a></li><li class><a href="#common-patterns" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Common Patterns</a></li><li class="ml-4"><a href="#optional-parameters" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Optional Parameters</a></li><li class="ml-4"><a href="#result-types" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Result Types</a></li><li class="ml-4"><a href="#callback-patterns" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Callback Patterns</a></li><li class="ml-4"><a href="#pipeline-types" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Pipeline Types</a></li><li class><a href="#summary" class="block text-slate-400 hover:text-white transition-colors" x-data="{ active: false }" x-init="
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    entries.forEach((entry) => {
+                      if (entry.isIntersecting) {
+                        active = true;
+                      } else {
+                        active = false;
+                      }
+                    });
+                  },
+                  { rootMargin: '-80px 0px -80% 0px' }
+                );
+                const target = document.getElementById($el.getAttribute('href').slice(1));
+                if (target) observer.observe(target);
+              " :class="active && 'font-medium text-purple-400'">Summary</a></li></ul></nav></div> </div> </div> </div> </div> </div> </div>  </body></html>
